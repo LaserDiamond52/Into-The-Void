@@ -5,7 +5,7 @@ pluginManagement {
             name = 'MinecraftForge'
             url = 'https://maven.minecraftforge.net/'
         }
-        //maven { url = 'https://maven.parchmentmc.org' } // Parchment is currently not functional at the moment (5/4/24)
+        maven { url = 'https://maven.parchmentmc.org' } // Parchment is currently not functional at the moment (5/4/24)
     }
 }
 
