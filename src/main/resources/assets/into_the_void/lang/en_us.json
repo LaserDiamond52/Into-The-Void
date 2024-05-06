@@ -1,0 +1,31 @@
+{
+  "item.into_the_void.lonsdaleite": "Lonsdaleite",
+  "item.into_the_void.refined_lonsdaleite": "Refined Lonsdaleite",
+  "item.into_the_void.enderite": "Enderite",
+
+  "item.into_the_void.lonsdaleite_helmet": "Lonsdaleite Helmet",
+  "item.into_the_void.lonsdaleite_chestplate": "Lonsdaleite Chestplate",
+  "item.into_the_void.lonsdaleite_leggings": "Lonsdaleite Leggings",
+  "item.into_the_void.lonsdaleite_boots": "Lonsdaleite Boots",
+
+  "item.into_the_void.lonsdaleite_sword": "Lonsdaleite Sword",
+  "item.into_the_void.lonsdaleite_pickaxe": "Lonsdaleite Pickaxe",
+  "item.into_the_void.lonsdaleite_axe": "Lonsdaleite Axe",
+  "item.into_the_void.lonsdaleite_shovel": "Lonsdaleite Shovel",
+  "item.into_the_void.lonsdaleite_hoe": "Lonsdaleite Hoe",
+
+  "item.into_the_void.enderite_helmet": "Enderite Helmet",
+  "item.into_the_void.enderite_chestplate": "Enderite Chestplate",
+  "item.into_the_void.enderite_leggings": "Enderite Leggings",
+  "item.into_the_void.enderite_boots": "Enderite Boots",
+
+  "block.into_the_void.lonsdaleite_block": "Lonsdaleite Block",
+  "block.into_the_void.refined_lonsdaleite_block": "Refined Lonsdaleite Block",
+  "block.into_the_void.enderite_block": "Enderite Block",
+
+
+  "creative_tab.into_the_void_tab": "Into The Void",
+  "creative_tab.into_the_void_materials": "Into The Void Materials",
+  "creative_tab.into_the_void_blocks": "Into The Void Blocks",
+  "creative_tab.into_the_void_gear": "Into The Void Gear"
+}

@@ -1,0 +1,26 @@
+package net.laserdiamond.intothevoid.item.equipment.tools;
+
+import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.item.ITVItems;
+import net.laserdiamond.intothevoid.util.ITVTags;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.TierSortingRegistry;
+
+import java.util.List;
+
+public class ITVToolTiers {
+
+    public static final Tier LONSDALEITE = TierSortingRegistry.registerTier(
+            new ForgeTier(5, 2500, 5f, 4f, 15,
+                    ITVTags.Blocks.NEEDS_LONSDALEITE_TOOL, () -> Ingredient.of(ITVItems.REFINED_LONSDALEITE.get())),
+            new ResourceLocation(IntoTheVoid.MODID, "lonsdaleite"), List.of(Tiers.NETHERITE), List.of());
+
+    public static final Tier ENDERITE = TierSortingRegistry.registerTier(
+            new ForgeTier(5, 2650, 5f, 4f, 15,
+                    ITVTags.Blocks.NEEDS_ENDERITE_TOOL, () -> Ingredient.of(ITVItems.ENDERITE.get())),
+            new ResourceLocation(IntoTheVoid.MODID, "enderite"), List.of(Tiers.NETHERITE), List.of());
+}
