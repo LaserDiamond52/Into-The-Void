@@ -34,9 +34,18 @@ public abstract class ITVArmorItem extends ArmorItem {
      */
     public abstract boolean simpleArmorItem();
 
-    public abstract UUID[] healthUUID();
-    public abstract UUID[] meleeDamageUUID();
-    public abstract UUID[] speedUUID();
+    protected double[] healthAmount()
+    {
+        return new double[]{0,0,0,0};
+    }
+    protected double[] meleeDamageAmount()
+    {
+        return new double[]{0,0,0,0};
+    }
+    protected double[] speedAmount()
+    {
+        return new double[]{0,0,0,0};
+    }
 
     /**
      * A list of MobEffectInstance objects (potion effects) that the armor set should grant when fully worn
@@ -132,20 +141,16 @@ public abstract class ITVArmorItem extends ArmorItem {
     {
         ItemStack itemStack = event.getItemStack();
 
-        if (itemStack.getItem() instanceof ArmorItem armorItem)
+        if (itemStack.getItem() instanceof ITVArmorItem itvArmorItem)
         {
-            double health = 0;
-            double meleeDamage = 0;
-            double speed = 0;
-            final EquipmentSlot armorSlot = armorItem.getEquipmentSlot();
+            final EquipmentSlot armorSlot = itvArmorItem.getEquipmentSlot();
             final int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(armorSlot);
-            if (this.getMaterial() instanceof ITVArmorMaterials armorMaterials)
-            {
-                health = armorMaterials.getHealthAmount(slot);
-                meleeDamage = armorMaterials.getMeleeDamageAmount(slot);
-                speed = armorMaterials.getSpeedAmount(slot);
-            }
-            final Multimap<Attribute, AttributeModifier> origModifiers = armorItem.getDefaultAttributeModifiers(armorSlot);
+
+            double health = itvArmorItem.healthAmount()[slot];
+            double meleeDamage = itvArmorItem.meleeDamageAmount()[slot];
+            double speed = itvArmorItem.speedAmount()[slot];
+
+            final Multimap<Attribute, AttributeModifier> origModifiers = itvArmorItem.getDefaultAttributeModifiers(armorSlot);
 
             for (Attribute attribute : origModifiers.keySet())
             {
@@ -157,13 +162,14 @@ public abstract class ITVArmorItem extends ArmorItem {
                 }
             }
 
-            UUID healthUUID = healthUUID()[slot];
-            UUID meleeDamageUUID = meleeDamageUUID()[slot];
-            UUID speedUUID = speedUUID()[slot];
+            UUID healthUUID = ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot];
+            UUID meleeDamageUUID = ItemAttributeUUIDs.MELEE_DAMAGE_UUIDS[slot];
+            UUID speedUUID = ItemAttributeUUIDs.ARMOR_SPEED_UUIDS[slot];
 
             itemStack.addAttributeModifier(Attributes.MAX_HEALTH, new AttributeModifier(healthUUID, "health", health, AttributeModifier.Operation.ADDITION), armorSlot);
             itemStack.addAttributeModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(meleeDamageUUID, "melee_damage", meleeDamage, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
             itemStack.addAttributeModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(speedUUID, "speed", speed, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
+
         }
     }
 }
