@@ -1,16 +1,16 @@
-package net.laserdiamond.intothevoid.item.equipment;
+package net.laserdiamond.intothevoid.item.equipment.tools;
 
 import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
 
 /**
- * An interface that helps set smithing recipe ingredients for an equipment item
+ * An interface that helps set smithing recipe ingredients for a tool item
  */
-public interface EquipmentSmithing {
+public interface ToolSmithing {
 
     /**
-     * A list of ItemLike objects that represent the valid materials that may be used to help craft the equipment item
+     * A list of ItemLike objects that represent the valid materials that may be used to help craft the tool item
      * @return A list of ItemLike objects
      */
     List<ItemLike> materials();
@@ -22,8 +22,8 @@ public interface EquipmentSmithing {
     ItemLike template();
 
     /**
-     * An ItemLike object that represents the equipment item to use for the recipe
+     * An ItemLike object that represents the tool item to use for the recipe
      * @return The equipment item as an ItemLike object
      */
-    ItemLike equipmentItem();
+    ItemLike toolItem();
 }

@@ -2,9 +2,7 @@ package net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite;
 
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVSimpleSwordItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
-import net.laserdiamond.intothevoid.item.equipment.EquipmentCrafting;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.sounds.SoundEvent;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolCrafting;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -21,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class LonsdaleiteSwordItem extends ITVSimpleSwordItem implements EquipmentCrafting {
+public final class LonsdaleiteSwordItem extends ITVSimpleSwordItem implements ToolCrafting {
     public LonsdaleiteSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.LONSDALEITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
         MinecraftForge.EVENT_BUS.register(this);

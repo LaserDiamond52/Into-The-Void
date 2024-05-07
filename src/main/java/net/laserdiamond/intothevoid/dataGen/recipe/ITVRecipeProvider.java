@@ -2,14 +2,19 @@ package net.laserdiamond.intothevoid.dataGen.recipe;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.item.ITVItems;
-import net.laserdiamond.intothevoid.item.equipment.EquipmentCrafting;
-import net.laserdiamond.intothevoid.item.equipment.EquipmentSmithing;
+import net.laserdiamond.intothevoid.item.equipment.armor.ArmorCrafting;
+import net.laserdiamond.intothevoid.item.equipment.armor.ArmorSmithing;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolCrafting;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,49 +27,6 @@ import java.util.function.Consumer;
 public class ITVRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ITVRecipeProvider(PackOutput pOutput) {
         super(pOutput);
-    }
-
-    private static final HashMap<Item, Item> CRAFT_ARMOR_RECIPES = new HashMap<>();
-    static
-    {
-        CRAFT_ARMOR_RECIPES.put(ITVItems.LONSDALEITE_HELMET.get(), ITVItems.REFINED_LONSDALEITE.get());
-        CRAFT_ARMOR_RECIPES.put(ITVItems.LONSDALEITE_CHESTPLATE.get(), ITVItems.REFINED_LONSDALEITE.get());
-        CRAFT_ARMOR_RECIPES.put(ITVItems.LONSDALEITE_LEGGINGS.get(), ITVItems.REFINED_LONSDALEITE.get());
-        CRAFT_ARMOR_RECIPES.put(ITVItems.LONSDALEITE_BOOTS.get(), ITVItems.REFINED_LONSDALEITE.get());
-
-    }
-
-    private static final HashMap<Item, CraftToolRecipeWrapper> CRAFT_TOOL_RECIPES = new HashMap<>();
-    static
-    {
-        CraftToolRecipeWrapper lonsdaleiteMaterials = new CraftToolRecipeWrapper(ITVItems.LONSDALEITE.get(), Items.STICK);
-        CRAFT_TOOL_RECIPES.put(ITVItems.LONSDALEITE_SWORD.get(), lonsdaleiteMaterials);
-        CRAFT_TOOL_RECIPES.put(ITVItems.LONSDALEITE_PICKAXE.get(), lonsdaleiteMaterials);
-        CRAFT_TOOL_RECIPES.put(ITVItems.LONSDALEITE_AXE.get(), lonsdaleiteMaterials);
-        CRAFT_TOOL_RECIPES.put(ITVItems.LONSDALEITE_SHOVEL.get(), lonsdaleiteMaterials);
-        CRAFT_TOOL_RECIPES.put(ITVItems.LONSDALEITE_HOE.get(), lonsdaleiteMaterials);
-
-    }
-
-    private static final HashMap<Item, SmithingArmorRecipeWrapper> SMITHING_ARMOR_RECIPES = new HashMap<>();
-    static
-    {
-        SMITHING_ARMOR_RECIPES.put(ITVItems.ENDERITE_HELMET.get(), new SmithingArmorRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_HELMET));
-        SMITHING_ARMOR_RECIPES.put(ITVItems.ENDERITE_CHESTPLATE.get(), new SmithingArmorRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_CHESTPLATE));
-        SMITHING_ARMOR_RECIPES.put(ITVItems.ENDERITE_LEGGINGS.get(), new SmithingArmorRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_LEGGINGS));
-        SMITHING_ARMOR_RECIPES.put(ITVItems.ENDERITE_BOOTS.get(), new SmithingArmorRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_BOOTS));
-
-    }
-
-    private static final HashMap<Item, SmithingToolRecipeWrapper> SMITHING_TOOL_RECIPES = new HashMap<>();
-    static
-    {
-        SMITHING_TOOL_RECIPES.put(ITVItems.ENDERITE_SWORD.get(), new SmithingToolRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_SWORD));
-        SMITHING_TOOL_RECIPES.put(ITVItems.ENDERITE_PICKAXE.get(), new SmithingToolRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_PICKAXE));
-        SMITHING_TOOL_RECIPES.put(ITVItems.ENDERITE_AXE.get(), new SmithingToolRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_AXE));
-        SMITHING_TOOL_RECIPES.put(ITVItems.ENDERITE_SHOVEL.get(), new SmithingToolRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_SHOVEL));
-        SMITHING_TOOL_RECIPES.put(ITVItems.ENDERITE_HOE.get(), new SmithingToolRecipeWrapper(ITVItems.ENDERITE.get(), null, Items.DIAMOND_HOE));
-
     }
 
     @Override
@@ -88,7 +50,82 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
 
     protected static void armorCrafting(Consumer<FinishedRecipe> consumer)
     {
+        for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
+        {
+            Item item = itemRegistryObject.get();
 
+            if (item instanceof ArmorItem armorItem)
+            {
+                EquipmentSlot slot = armorItem.getEquipmentSlot();
+                if (armorItem instanceof ArmorCrafting armorCrafting)
+                {
+                    List<ItemLike> materials = armorCrafting.materials();
+
+                    for (ItemLike material : materials)
+                    {
+                        switch (slot)
+                        {
+                            case HEAD ->
+                            {
+                                ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, armorItem)
+                                        .pattern("XXX")
+                                        .pattern("X X")
+                                        .define('X', material)
+                                        .unlockedBy(getHasName(material), has(material))
+                                        .save(consumer);
+                            }
+                            case CHEST ->
+                            {
+                                ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, armorItem)
+                                        .pattern("X X")
+                                        .pattern("XXX")
+                                        .pattern("XXX")
+                                        .define('X', material)
+                                        .unlockedBy(getHasName(material), has(material))
+                                        .save(consumer);
+                            }
+                            case LEGS ->
+                            {
+                                ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, armorItem)
+                                        .pattern("XXX")
+                                        .pattern("X X")
+                                        .pattern("X X")
+                                        .define('X', material)
+                                        .unlockedBy(getHasName(material), has(material))
+                                        .save(consumer);
+                            }
+                            case FEET ->
+                            {
+                                ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, armorItem)
+                                        .pattern("X X")
+                                        .pattern("X X")
+                                        .define('X', material)
+                                        .unlockedBy(getHasName(material), has(material))
+                                        .save(consumer);
+                            }
+                        }
+                    }
+                } else if (armorItem instanceof ArmorSmithing armorSmithing)
+                {
+
+                    List<ItemLike> materials = armorSmithing.materials();
+                    ItemLike template = armorSmithing.template();
+                    ItemLike equipmentItem = armorSmithing.armorPiece(slot);
+
+                    for (ItemLike material : materials)
+                    {
+                        String currentSmithingPath = armorItem + "_smithing";
+                        SmithingTransformRecipeBuilder.smithing(Ingredient.of(template),
+                                        Ingredient.of(equipmentItem), Ingredient.of(material),
+                                        RecipeCategory.COMBAT, armorItem)
+                                .unlocks(getHasName(material), has(material))
+                                .save(consumer, new ResourceLocation(IntoTheVoid.MODID, currentSmithingPath));
+
+                    }
+                }
+            }
+
+        }
     }
 
     protected static void toolCrafting(Consumer<FinishedRecipe> consumer)
@@ -96,10 +133,10 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
         {
             Item item = itemRegistryObject.get();
-            if (item instanceof EquipmentCrafting equipmentCrafting)
+            if (item instanceof ToolCrafting toolCrafting)
             {
-                List<ItemLike> materials = equipmentCrafting.materials();
-                ItemLike stick = equipmentCrafting.stickMaterial();
+                List<ItemLike> materials = toolCrafting.materials();
+                ItemLike stick = toolCrafting.stickMaterial();
 
                 for (ItemLike materialItem : materials)
                 {
@@ -157,32 +194,21 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
                 }
 
 
-            } else if (item instanceof EquipmentSmithing equipmentSmithing)
+            } else if (item instanceof ToolSmithing toolSmithing)
             {
-                List<ItemLike> materials = equipmentSmithing.materials();
-                ItemLike template = equipmentSmithing.template();
-                ItemLike equipmentPiece = equipmentSmithing.equipmentItem();
+                List<ItemLike> materials = toolSmithing.materials();
+                ItemLike template = toolSmithing.template();
+                ItemLike equipmentPiece = toolSmithing.toolItem();
 
                 for (ItemLike materialItem : materials)
                 {
-                    if (item instanceof SwordItem swordItem)
-                    {
-
-                    } else if (item instanceof PickaxeItem pickaxeItem)
-                    {
-
-                    } else if (item instanceof AxeItem axeItem)
-                    {
-
-                    } else if (item instanceof ShovelItem shovelItem)
-                    {
-
-                    } else if (item instanceof HoeItem hoeItem)
-                    {
-
-                    }
+                    String currentSmithingPath = item + "_smithing";
+                    SmithingTransformRecipeBuilder.smithing(Ingredient.of(template),
+                            Ingredient.of(equipmentPiece), Ingredient.of(materialItem),
+                            RecipeCategory.COMBAT, item)
+                            .unlocks(getHasName(materialItem), has(materialItem))
+                            .save(consumer, new ResourceLocation(IntoTheVoid.MODID, currentSmithingPath));
                 }
-
             }
         }
     }

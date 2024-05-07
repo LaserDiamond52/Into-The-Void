@@ -3,14 +3,14 @@ package net.laserdiamond.intothevoid.item.equipment.tools.enderite;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVSimplePickaxeItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
-import net.laserdiamond.intothevoid.item.equipment.EquipmentSmithing;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class EnderitePickaxeItem extends ITVSimplePickaxeItem implements EquipmentSmithing {
+public final class EnderitePickaxeItem extends ITVSimplePickaxeItem implements ToolSmithing {
     public EnderitePickaxeItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
@@ -24,11 +24,11 @@ public final class EnderitePickaxeItem extends ITVSimplePickaxeItem implements E
 
     @Override
     public ItemLike template() {
-        return null;
+        return ITVItems.ENDERITE_SMITHING_TEMPLATE.get();
     }
 
     @Override
-    public ItemLike equipmentItem() {
+    public ItemLike toolItem() {
         return Items.DIAMOND_PICKAXE;
     }
 }

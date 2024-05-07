@@ -3,14 +3,14 @@ package net.laserdiamond.intothevoid.item.equipment.tools.enderite;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVSimpleShovelItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
-import net.laserdiamond.intothevoid.item.equipment.EquipmentSmithing;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class EnderiteShovelItem extends ITVSimpleShovelItem implements EquipmentSmithing {
+public final class EnderiteShovelItem extends ITVSimpleShovelItem implements ToolSmithing {
     public EnderiteShovelItem(float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
     }
@@ -24,11 +24,11 @@ public final class EnderiteShovelItem extends ITVSimpleShovelItem implements Equ
 
     @Override
     public ItemLike template() {
-        return null;
+        return ITVItems.ENDERITE_SMITHING_TEMPLATE.get();
     }
 
     @Override
-    public ItemLike equipmentItem() {
+    public ItemLike toolItem() {
         return Items.DIAMOND_SHOVEL;
     }
 }

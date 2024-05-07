@@ -1,4 +1,4 @@
-package net.laserdiamond.intothevoid.item.equipment;
+package net.laserdiamond.intothevoid.item.equipment.tools;
 
 import net.minecraft.world.level.ItemLike;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * An interface that helps set the basic crafting ingredients for an equipment item
  */
-public interface EquipmentCrafting {
+public interface ToolCrafting {
 
     /**
      * A list of ItemLike objects that represent the valid materials that may be used to help craft the equipment item
