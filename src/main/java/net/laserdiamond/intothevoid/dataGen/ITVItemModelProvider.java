@@ -4,6 +4,7 @@ import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorItem;
+import net.laserdiamond.intothevoid.item.equipment.tools.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -55,23 +56,23 @@ public class ITVItemModelProvider extends ItemModelProvider {
                     trimmedArmorItem(item);
                 }
 
-            } else if (item.get() instanceof SwordItem)
+            } else if (item.get() instanceof ITVSimpleSwordItem)
             {
                 handheldItem(item);
 
-            } else if (item.get() instanceof PickaxeItem)
+            } else if (item.get() instanceof ITVSimplePickaxeItem)
             {
                 handheldItem(item);
 
-            } else if (item.get() instanceof AxeItem)
+            } else if (item.get() instanceof ITVSimpleAxeItem)
             {
                 handheldItem(item);
 
-            } else if (item.get() instanceof ShovelItem)
+            } else if (item.get() instanceof ITVSimpleShovelItem)
             {
                 handheldItem(item);
 
-            } else if (item.get() instanceof HoeItem)
+            } else if (item.get() instanceof ITVSimpleHoeItem)
             {
                 handheldItem(item);
 

@@ -15,12 +15,12 @@ import java.util.List;
 public class ITVToolTiers {
 
     public static final Tier LONSDALEITE = TierSortingRegistry.registerTier(
-            new ForgeTier(5, 2500, 5f, 4f, 15,
+            new ForgeTier(5, 2500, 9.0f, 4f, 18,
                     ITVTags.Blocks.NEEDS_LONSDALEITE_TOOL, () -> Ingredient.of(ITVItems.REFINED_LONSDALEITE.get())),
             new ResourceLocation(IntoTheVoid.MODID, "lonsdaleite"), List.of(Tiers.NETHERITE), List.of());
 
     public static final Tier ENDERITE = TierSortingRegistry.registerTier(
-            new ForgeTier(5, 2650, 5f, 4f, 15,
+            new ForgeTier(5, 2650, 9.0f, 4f, 18,
                     ITVTags.Blocks.NEEDS_ENDERITE_TOOL, () -> Ingredient.of(ITVItems.ENDERITE.get())),
             new ResourceLocation(IntoTheVoid.MODID, "enderite"), List.of(Tiers.NETHERITE), List.of());
 }

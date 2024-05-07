@@ -3,7 +3,11 @@ package net.laserdiamond.intothevoid.item;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
-import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
+import net.laserdiamond.intothevoid.item.equipment.tools.*;
+import net.laserdiamond.intothevoid.item.equipment.tools.enderite.*;
+import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
+import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleIngredientItem;
+import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -18,6 +22,13 @@ import java.util.List;
  */
 public class ITVItems {
 
+    private static final float SWORD_SPEED_MODIFIER = -2.4f;
+    private static final float PICKAXE_SPEED_MODIFIER = -2.8f;
+    private static final float AXE_SPEED_MODIFIER = -3f;
+    private static final float SHOVEL_SPEED_MODIFIER = -3f;
+    private static final float HOE_SPEED_MODIFIER = 0f;
+
+
     /**
      * A deferred register object of type "Item" that is used to register items
      */
@@ -28,17 +39,17 @@ public class ITVItems {
     /**
      * RegistryObject of type "Item" that represents Lonsdaleite
      */
-    public static final RegistryObject<Item> LONSDALEITE = ITVItems.ITEMS.register("lonsdaleite", () -> new ITVSimpleItem(new Item.Properties()));
+    public static final RegistryObject<Item> LONSDALEITE = ITVItems.ITEMS.register("lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties()));
 
     /**
      * RegistryObject of type "Item" that represents Refined Lonsdaleite
      */
-    public static final RegistryObject<Item> REFINED_LONSDALEITE = ITVItems.ITEMS.register("refined_lonsdaleite", () -> new ITVSimpleItem(new Item.Properties()));
+    public static final RegistryObject<Item> REFINED_LONSDALEITE = ITVItems.ITEMS.register("refined_lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties()));
 
     /**
      * RegistryObject of type "Item" that represents Enderite
      */
-    public static final RegistryObject<Item> ENDERITE = ITVItems.ITEMS.register("enderite", () -> new ITVSimpleItem(new Item.Properties()));
+    public static final RegistryObject<Item> ENDERITE = ITVItems.ITEMS.register("enderite", () -> new ITVSimpleMineralItem(new Item.Properties()));
 
     // Armor
 
@@ -92,33 +103,67 @@ public class ITVItems {
 
     // Tools/Weapons
 
+    /**
+     * RegistryObject of type "Item" that represents a Lonsdaleite sword
+     */
     public static final RegistryObject<Item> LONSDALEITE_SWORD = ITVItems.ITEMS.register("lonsdaleite_sword",
-            () -> new SwordItem(ITVToolTiers.LONSDALEITE, 4, 2, new Item.Properties()));
-
-    public static final RegistryObject<Item> LONSDALEITE_PICKAXE = ITVItems.ITEMS.register("lonsdaleite_pickaxe",
-            () -> new PickaxeItem(ITVToolTiers.LONSDALEITE, 1, 1, new Item.Properties()));
-
-    public static final RegistryObject<Item> LONSDALEITE_AXE = ITVItems.ITEMS.register("lonsdaleite_axe",
-            () -> new AxeItem(ITVToolTiers.LONSDALEITE, 6, 1, new Item.Properties()));
-
-    public static final RegistryObject<Item> LONSDALEITE_SHOVEL = ITVItems.ITEMS.register("lonsdaleite_shovel",
-            () -> new ShovelItem(ITVToolTiers.LONSDALEITE, 0, 1, new Item.Properties()));
-
-    public static final RegistryObject<Item> LONSDALEITE_HOE = ITVItems.ITEMS.register("lonsdaleite_hoe",
-            () -> new HoeItem(ITVToolTiers.LONSDALEITE, 1, 1, new Item.Properties()));
-
-
+            () -> new LonsdaleiteSwordItem(3, SWORD_SPEED_MODIFIER, new Item.Properties()));
 
     /**
-     * A list of Item Registry Objects that are materials
+     * RegistryObject of type "Item" that represents a Lonsdaleite pickaxe
      */
-    public static final List<RegistryObject<Item>> MATERIAL_ITEMS = new ArrayList<>();
-    static
-    {
-        MATERIAL_ITEMS.add(LONSDALEITE);
-        MATERIAL_ITEMS.add(REFINED_LONSDALEITE);
-        MATERIAL_ITEMS.add(ENDERITE);
-    }
+    public static final RegistryObject<Item> LONSDALEITE_PICKAXE = ITVItems.ITEMS.register("lonsdaleite_pickaxe",
+            () -> new LonsdaleitePickaxeItem(1, PICKAXE_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents a Lonsdaleite axe
+     */
+    public static final RegistryObject<Item> LONSDALEITE_AXE = ITVItems.ITEMS.register("lonsdaleite_axe",
+            () -> new LonsdaleiteAxeItem(6, AXE_SPEED_MODIFIER   , new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents a Lonsdaleite shovel
+     */
+    public static final RegistryObject<Item> LONSDALEITE_SHOVEL = ITVItems.ITEMS.register("lonsdaleite_shovel",
+            () -> new LonsdaleiteShovelItem(0, SHOVEL_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents a Lonsdaleite hoe
+     */
+    public static final RegistryObject<Item> LONSDALEITE_HOE = ITVItems.ITEMS.register("lonsdaleite_hoe",
+            () -> new LonsdaleiteHoeItem(1, HOE_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Enderite sword
+     */
+    public static final RegistryObject<Item> ENDERITE_SWORD = ITVItems.ITEMS.register("enderite_sword",
+            () -> new EnderiteSwordItem(3, SWORD_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Enderite pickaxe
+     */
+    public static final RegistryObject<Item> ENDERITE_PICKAXE = ITVItems.ITEMS.register("enderite_pickaxe",
+            () -> new EnderitePickaxeItem(1, PICKAXE_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Enderite axe
+     */
+    public static final RegistryObject<Item> ENDERITE_AXE = ITVItems.ITEMS.register("enderite_axe",
+            () -> new EnderiteAxeItem(6, AXE_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Enderite shovel
+     */
+    public static final RegistryObject<Item> ENDERITE_SHOVEL = ITVItems.ITEMS.register("enderite_shovel",
+            () -> new EnderiteShovelItem(0, SHOVEL_SPEED_MODIFIER, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Enderite hoe
+     */
+    public static final RegistryObject<Item> ENDERITE_HOE = ITVItems.ITEMS.register("enderite_hoe",
+            () -> new EnderiteHoeItem(1, HOE_SPEED_MODIFIER, new Item.Properties()));
+
+
 
     /**
      * Registers all the items under the ITEMS DeferredRegister
