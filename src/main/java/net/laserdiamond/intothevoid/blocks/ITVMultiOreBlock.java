@@ -4,6 +4,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
+import java.util.List;
+
 /**
  * A class that represents an ore block that drops more than 1 of its mineral
  */
@@ -11,8 +13,8 @@ public class ITVMultiOreBlock extends ITVOreBlock {
 
     private final int minCount;
     private final int maxCount;
-    public ITVMultiOreBlock(Properties pProperties, TagKey<Block> miningTag, ItemLike oreDrop, int minCount, int maxCount) {
-        super(pProperties, miningTag, oreDrop);
+    public ITVMultiOreBlock(Properties pProperties, List<TagKey<Block>> miningTags, ItemLike oreDrop, int minCount, int maxCount) {
+        super(pProperties, miningTags, oreDrop);
         this.minCount = minCount;
         this.maxCount = maxCount;
     }

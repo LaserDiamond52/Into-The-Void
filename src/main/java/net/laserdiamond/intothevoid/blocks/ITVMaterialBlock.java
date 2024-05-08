@@ -5,11 +5,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 
-public final class ITVMaterialBlock extends ITVSimpleBlock {
+import java.util.List;
+
+public class ITVMaterialBlock extends ITVSimpleBlock {
 
     private final RegistryObject<Item> itemToDrop;
-    public ITVMaterialBlock(Properties pProperties, TagKey<Block> miningTag, RegistryObject<Item> itemToDrop) {
-        super(pProperties, miningTag);
+    public ITVMaterialBlock(Properties pProperties, List<TagKey<Block>> miningTags, RegistryObject<Item> itemToDrop) {
+        super(pProperties, miningTags);
         this.itemToDrop = itemToDrop;
     }
 

@@ -9,6 +9,7 @@ import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleIngredientItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
+import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -55,7 +56,7 @@ public class ITVItems {
     /**
      * RegistryObject of type "Item" that represents an Enderite Upgrade Smithing Template
      */
-    public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new ITVSmithingTemplateItem(new Item.Properties()));
+    public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new EnderiteSmithingTemplate(new Item.Properties()));
 
     /**
      * RegistryObject of type "Item" that represents an iron handle
