@@ -52,8 +52,15 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> ENDERITE = ITEMS.register("enderite", () -> new ITVSimpleMineralItem(new Item.Properties()));
 
-
+    /**
+     * RegistryObject of type "Item" that represents an Enderite Upgrade Smithing Template
+     */
     public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new ITVSmithingTemplateItem(new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an iron handle
+     */
+    public static final RegistryObject<Item> IRON_HANDLE = ITEMS.register("iron_handle", () -> new ITVSimpleItem(new Item.Properties()));
 
     // Armor
 

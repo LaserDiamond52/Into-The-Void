@@ -1,5 +1,6 @@
 package net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite;
 
+import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVSimpleHoeItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolCrafting;
@@ -27,6 +28,6 @@ public final class LonsdaleiteHoeItem extends ITVSimpleHoeItem implements ToolCr
 
     @Override
     public ItemLike stickMaterial() {
-        return Items.STICK;
+        return ITVItems.IRON_HANDLE.get();
     }
 }

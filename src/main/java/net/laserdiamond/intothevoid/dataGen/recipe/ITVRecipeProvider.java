@@ -36,6 +36,8 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlockCrafting(consumer);
         armorCrafting(consumer);
         toolCrafting(consumer);
+
+        ironHandle(consumer);
     }
 
     protected static void smeltingRecipe(Consumer<FinishedRecipe> consumer)
@@ -46,6 +48,16 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
     protected static void oreBlockCrafting(Consumer<FinishedRecipe> consumer)
     {
 
+    }
+
+    protected static void ironHandle(Consumer<FinishedRecipe> consumer)
+    {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ITVItems.IRON_HANDLE.get())
+                .pattern("X")
+                .pattern("X")
+                .define('X', Items.IRON_INGOT)
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(consumer);
     }
 
     protected static void armorCrafting(Consumer<FinishedRecipe> consumer)
