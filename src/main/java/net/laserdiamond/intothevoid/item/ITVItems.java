@@ -10,8 +10,16 @@ import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleIngredientItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
+import net.laserdiamond.intothevoid.util.TextColor;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -59,9 +67,19 @@ public class ITVItems {
     public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new EnderiteSmithingTemplate(new Item.Properties()));
 
     /**
-     * RegistryObject of type "Item" that represents an iron handle
+     * RegistryObject of type "Item" that represents an Iron Handle
      */
     public static final RegistryObject<Item> IRON_HANDLE = ITEMS.register("iron_handle", () -> new ITVSimpleItem(new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents a Dragon Bone
+     */
+    public static final RegistryObject<Item> DRAGON_BONE = ITEMS.register("dragon_bone", () -> new ITVSimpleItem(new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents Dragon Hide
+     */
+    public static final RegistryObject<Item> DRAGON_HIDE = ITEMS.register("dragon_hide", () -> new ITVSimpleItem(new Item.Properties()));
 
     // Armor
 

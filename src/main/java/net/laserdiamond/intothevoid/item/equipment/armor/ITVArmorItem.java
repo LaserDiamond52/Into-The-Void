@@ -1,7 +1,9 @@
 package net.laserdiamond.intothevoid.item.equipment.armor;
 
 import com.google.common.collect.Multimap;
+import net.laserdiamond.intothevoid.item.CustomToolTips;
 import net.laserdiamond.intothevoid.item.equipment.ItemAttributeUUIDs;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -11,10 +13,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -34,14 +38,28 @@ public abstract class ITVArmorItem extends ArmorItem {
      */
     public abstract boolean simpleArmorItem();
 
+    /**
+     * The amount of health each armor piece should give the player when worn
+     * @return The health values for the armor in a double array (index 0 = helmet, 1 = chestplate, etc...)
+     */
     protected double[] healthAmount()
     {
         return new double[]{0,0,0,0};
     }
+
+    /**
+     * The bonus melee damage percent increase each armor piece should give the player when worn
+     * @return The melee damage percent increase each armor piece grants (index 0 = helmet, 1 = chestplate, etc...)
+     */
     protected double[] meleeDamageAmount()
     {
         return new double[]{0,0,0,0};
     }
+
+    /**
+     * The movement speed percent increase each armor piece should give the player when worn
+     * @return The movement speed percent increase each armor piece grants (index 0 = helmet, 1 = chestplate, etc...)
+     */
     protected double[] speedAmount()
     {
         return new double[]{0,0,0,0};
@@ -108,15 +126,6 @@ public abstract class ITVArmorItem extends ArmorItem {
     }
 
     /**
-     * The tooltips that should be present on the armor pieces
-     * @return a List of String objects representing the tooltips of the armor
-     */
-    protected List<String> tooltips()
-    {
-        return new ArrayList<>();
-    }
-
-    /**
      * Maps each armor piece equipment slot to the corresponding integer value for retrieving values from to following methods:
      * <p>getHealthAmount</p>
      * <p>getMeleeDamageAmount</p>
@@ -129,6 +138,22 @@ public abstract class ITVArmorItem extends ArmorItem {
         EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.CHEST, 1);
         EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.LEGS, 2);
         EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.FEET, 3);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        if (pStack.getItem() instanceof CustomToolTips customToolTips)
+        {
+            if (customToolTips.hideDefaultToolTips())
+            {
+                for (ItemStack.TooltipPart tooltipPart : ItemStack.TooltipPart.values())
+                {
+                    pStack.hideTooltipPart(tooltipPart);
+                }
+            }
+            pTooltipComponents.addAll(customToolTips.toolTip());
+        }
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
     /**

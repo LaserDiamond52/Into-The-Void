@@ -1,9 +1,12 @@
 package net.laserdiamond.intothevoid.item.equipment.armor.armorItems;
 
+import net.laserdiamond.intothevoid.item.CustomToolTips;
 import net.laserdiamond.intothevoid.item.equipment.armor.ArmorCrafting;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorMaterials;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
