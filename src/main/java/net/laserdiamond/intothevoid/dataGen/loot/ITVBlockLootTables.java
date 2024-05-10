@@ -1,9 +1,6 @@
 package net.laserdiamond.intothevoid.dataGen.loot;
 
-import net.laserdiamond.intothevoid.blocks.ITVBlocks;
-import net.laserdiamond.intothevoid.blocks.ITVMultiOreBlock;
-import net.laserdiamond.intothevoid.blocks.ITVOreBlock;
-import net.laserdiamond.intothevoid.blocks.ITVSelfDropBlock;
+import net.laserdiamond.intothevoid.blocks.*;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
@@ -40,6 +37,9 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
             } else if (blockItem instanceof ITVOreBlock itvOreBlock)
             {
                 this.add(itvOreBlock, block -> createOreDrop(itvOreBlock, itvOreBlock.getOreDrop().get()));
+            } else if (blockItem instanceof ITVWoodLogBlock itvWoodLogBlock)
+            {
+                this.dropSelf(itvWoodLogBlock);
             }
         }
     }

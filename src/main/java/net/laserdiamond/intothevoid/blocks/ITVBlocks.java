@@ -63,6 +63,16 @@ public class ITVBlocks {
      */
     public static final RegistryObject<Block> METEORITE_LONSDALEITE_ORE = registerSimpleBlock("meteorite_lonsdaleite_ore", () -> new ITVOreBlock(BlockBehaviour.Properties.copy(Blocks.ANCIENT_DEBRIS).sound(SoundType.DEEPSLATE), UniformInt.of(20,30), List.of(Tags.Blocks.NEEDS_NETHERITE_TOOL, BlockTags.MINEABLE_WITH_PICKAXE), ITVItems.LONSDALEITE));
 
+    /**
+     * A RegistryObject of type "Block" that represents a Chorus Log
+     */
+    public static final RegistryObject<Block> CHORUS_LOG = registerSimpleBlock("chorus_log", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), false));
+    public static final RegistryObject<Block> CHORUS_WOOD = registerSimpleBlock("chorus_wood", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), false));
+    public static final RegistryObject<Block> STRIPPED_CHORUS_LOG = registerSimpleBlock("stripped_chorus_log", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), true));
+    public static final RegistryObject<Block> STRIPPED_CHORUS_WOOD = registerSimpleBlock("stripped_chorus_wood", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), true));
+    //public static final RegistryObject<Block> CHORUS_PLANKS = registerSimpleBlock("chorus_planks", () -> new ITVSimpleBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(3F)));
+    //public static final RegistryObject<Block> CHORUS_LEAVES = registerSimpleBlock("chorus_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block)
     {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

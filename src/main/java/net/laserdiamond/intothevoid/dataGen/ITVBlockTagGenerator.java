@@ -4,6 +4,7 @@ import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.blocks.ITVBlocks;
 import net.laserdiamond.intothevoid.blocks.ITVOreBlock;
 import net.laserdiamond.intothevoid.blocks.ITVSimpleBlock;
+import net.laserdiamond.intothevoid.blocks.ITVWoodLogBlock;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
@@ -37,6 +38,12 @@ public class ITVBlockTagGenerator extends BlockTagsProvider {
                 for (TagKey<Block> tagKey : itvOreBlock.getMiningTags())
                 {
                     this.tag(tagKey).add(itvOreBlock);
+                }
+            } else if (block instanceof ITVWoodLogBlock itvWoodLogBlock)
+            {
+                for (TagKey<Block> tagKey : itvWoodLogBlock.getBlockTags())
+                {
+                    this.tag(tagKey).add(itvWoodLogBlock);
                 }
             }
 
