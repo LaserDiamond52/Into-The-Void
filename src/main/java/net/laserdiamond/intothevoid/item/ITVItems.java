@@ -1,6 +1,7 @@
 package net.laserdiamond.intothevoid.item;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonBorneArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.*;
@@ -130,6 +131,16 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> ENDERITE_BOOTS = ITEMS.register("enderite_boots",
             () -> new EnderiteArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
+
+
+    public static final RegistryObject<Item> DRAGONBORNE_HELMET = ITEMS.register("dragonborne_helmet",
+            () -> new DragonBorneArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> DRAGONBORNE_CHESTPLATE = ITEMS.register("dragonborne_chestplate",
+            () -> new DragonBorneArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> DRAGONBORNE_LEGGINGS = ITEMS.register("dragonborne_leggings",
+            () -> new DragonBorneArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> DRAGONBORNE_BOOTS = ITEMS.register("dragonborne_boots",
+            () -> new DragonBorneArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
 
     // Tools/Weapons
 

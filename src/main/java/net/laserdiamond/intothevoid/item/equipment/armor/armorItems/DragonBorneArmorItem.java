@@ -10,7 +10,7 @@ public final class DragonBorneArmorItem extends ITVArmorItem {
 
     @Override
     protected double[] meleeDamageAmount() {
-        return new double[]{5,5,5,5};
+        return new double[]{0.05,0.05,0.05,0.05};
     }
 
     @Override
