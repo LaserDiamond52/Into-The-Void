@@ -2,6 +2,7 @@ package net.laserdiamond.intothevoid.dataGen;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.blocks.ITVBlocks;
+import net.laserdiamond.intothevoid.blocks.ITVOreBlock;
 import net.laserdiamond.intothevoid.blocks.ITVSimpleBlock;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
@@ -19,9 +20,16 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
 
         for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
         {
-            if (blockRegistryObject.get() instanceof ITVSimpleBlock)
+            Block block = blockRegistryObject.get();
+            if (block instanceof ITVSimpleBlock)
             {
                 blockWithItem(blockRegistryObject);
+            } else if (block instanceof ITVOreBlock itvOreBlock)
+            {
+                if (itvOreBlock.isSimple())
+                {
+                    blockWithItem(blockRegistryObject);
+                }
             }
         }
     }

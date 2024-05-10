@@ -30,6 +30,10 @@
   "block.into_the_void.lonsdaleite_block": "Lonsdaleite Block",
   "block.into_the_void.refined_lonsdaleite_block": "Refined Lonsdaleite Block",
   "block.into_the_void.enderite_block": "Enderite Block",
+  "block.into_the_void.enderite_ore": "Enderite Ore",
+  "block.into_the_void.lonsdaleite_ore": "Lonsdaleite Ore",
+  "block.into_the_void.endstone_lonsdaleite_ore": "Endstone Lonsdaleite Ore",
+  "block.into_the_void.meteorite_lonsdaleite_ore": "Meteorite Lonsdaleite Ore",
 
 
   "creative_tab.into_the_void_tab": "Into The Void",

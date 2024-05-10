@@ -1,6 +1,8 @@
 package net.laserdiamond.intothevoid.dataGen.loot;
 
 import net.laserdiamond.intothevoid.blocks.ITVBlocks;
+import net.laserdiamond.intothevoid.blocks.ITVMultiOreBlock;
+import net.laserdiamond.intothevoid.blocks.ITVOreBlock;
 import net.laserdiamond.intothevoid.blocks.ITVSelfDropBlock;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -25,20 +28,41 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
 
-        for (RegistryObject<Block> block : ITVBlocks.BLOCKS.getEntries())
+        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
         {
-            if (block.get() instanceof ITVSelfDropBlock itvSelfDropBlock)
+            Block blockItem = blockRegistryObject.get();
+            if (blockItem instanceof ITVSelfDropBlock itvSelfDropBlock)
             {
                 this.dropSelf(itvSelfDropBlock);
+            } else if (blockItem instanceof ITVMultiOreBlock itvMultiOreBlock)
+            {
+                this.add(itvMultiOreBlock, block -> createMultiOreDrop(itvMultiOreBlock, itvMultiOreBlock.getOreDrop().get(), itvMultiOreBlock.getMinCount(), itvMultiOreBlock.getMaxCount()));
+            } else if (blockItem instanceof ITVOreBlock itvOreBlock)
+            {
+                this.add(itvOreBlock, block -> createOreDrop(itvOreBlock, itvOreBlock.getOreDrop().get()));
             }
         }
     }
 
+    /**
+     * Creates a loot table for the block that resembles that of an ore block
+     * @param pBlock The ore block
+     * @param pItem The mineral dropped from the ore block when mined
+     * @return LootTable.Builder
+     */
     @Override
-    protected LootTable.Builder createOreDrop(Block pBlock, Item pItem) {
+    protected LootTable.Builder createOreDrop(@NotNull Block pBlock, @NotNull Item pItem) {
         return super.createOreDrop(pBlock, pItem);
     }
 
+    /**
+     * Creates a loot table for the block that resembles that of an ore that drops more than 1 of its ore drop
+     * @param block The ore block
+     * @param item The mineral dropped from the ore block when mined
+     * @param minCount The minimum amount of minerals dropped
+     * @param maxCount The maximum amount of minerals dropped
+     * @return LootTable.Builder
+     */
     protected LootTable.Builder createMultiOreDrop(Block block, Item item, float minCount, float maxCount)
     {
         return createSilkTouchDispatchTable(block,
