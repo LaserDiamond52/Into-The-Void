@@ -3,7 +3,6 @@ package net.laserdiamond.intothevoid.blocks;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -72,6 +71,42 @@ public class ITVBlocks {
     public static final RegistryObject<Block> STRIPPED_CHORUS_WOOD = registerSimpleBlock("stripped_chorus_wood", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), true));
     //public static final RegistryObject<Block> CHORUS_PLANKS = registerSimpleBlock("chorus_planks", () -> new ITVSimpleBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(3F)));
     //public static final RegistryObject<Block> CHORUS_LEAVES = registerSimpleBlock("chorus_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+
+    public enum WoodTypes
+    {
+        CHORUS (CHORUS_LOG, CHORUS_WOOD, STRIPPED_CHORUS_LOG, STRIPPED_CHORUS_WOOD, "stripped_chorus_log");
+
+        private final RegistryObject<Block> logBlock, woodBlock, strippedLogBlock, strippedWoodBlock;
+        private final String strippedLogName;
+
+        WoodTypes(RegistryObject<Block> logBlock, RegistryObject<Block> woodBlock, RegistryObject<Block> strippedLogBlock, RegistryObject<Block> strippedWoodBlock, String strippedLogName) {
+            this.logBlock = logBlock;
+            this.woodBlock = woodBlock;
+            this.strippedLogBlock = strippedLogBlock;
+            this.strippedWoodBlock = strippedWoodBlock;
+            this.strippedLogName = strippedLogName;
+        }
+
+        public RegistryObject<Block> getLogBlock() {
+            return logBlock;
+        }
+
+        public RegistryObject<Block> getWoodBlock() {
+            return woodBlock;
+        }
+
+        public RegistryObject<Block> getStrippedLogBlock() {
+            return strippedLogBlock;
+        }
+
+        public RegistryObject<Block> getStrippedWoodBlock() {
+            return strippedWoodBlock;
+        }
+
+        public String getStrippedLogName() {
+            return strippedLogName;
+        }
+    }
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block)
     {

@@ -35,18 +35,29 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
                 {
                     blockWithItem(blockRegistryObject);
                 }
-            } else if (block instanceof ITVWoodLogBlock itvWoodLogBlock)
-            {
-                logBlock((itvWoodLogBlock));
-                axisBlock(itvWoodLogBlock, blockTexture(itvWoodLogBlock), blockTexture(itvWoodLogBlock));
-                if (itvWoodLogBlock.isStripped())
-                {
-                    //logBlock(itvWoodLogBlock);
-                    axisBlock(itvWoodLogBlock, blockTexture(itvWoodLogBlock), new ResourceLocation(IntoTheVoid.MODID, "blocks/" + itvWoodLogBlock + "_top"));
-                }
-                blockItem(blockRegistryObject);
-
             }
+        }
+
+        for (ITVBlocks.WoodTypes woodTypes : ITVBlocks.WoodTypes.values())
+        {
+            RegistryObject<Block> logBlock = woodTypes.getLogBlock();
+            RegistryObject<Block> woodBlock = woodTypes.getWoodBlock();
+            RegistryObject<Block> strippedLogBlock = woodTypes.getStrippedLogBlock();
+            RegistryObject<Block> strippedWoodBlock = woodTypes.getStrippedWoodBlock();
+            String strippedName = woodTypes.getStrippedLogName();
+
+            logBlock((RotatedPillarBlock) logBlock.get());
+            axisBlock(((RotatedPillarBlock) woodBlock.get()), blockTexture(logBlock.get()), blockTexture(logBlock.get()));
+
+            axisBlock(((RotatedPillarBlock) strippedLogBlock.get()), blockTexture(strippedLogBlock.get()),
+                    new ResourceLocation(IntoTheVoid.MODID, "block/" + strippedName + "_top"));
+            axisBlock(((RotatedPillarBlock) strippedWoodBlock.get()), blockTexture(strippedLogBlock.get()),
+                    blockTexture(strippedLogBlock.get()));
+
+            blockItem(logBlock);
+            blockItem(woodBlock);
+            blockItem(strippedLogBlock);
+            blockItem(strippedWoodBlock);
         }
     }
 
@@ -57,6 +68,6 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
 
     private void blockItem(RegistryObject<Block> blockRegistryObject)
     {
-        simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(IntoTheVoid.MODID + ":blocks/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
+        simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(IntoTheVoid.MODID + ":block/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
     }
 }
