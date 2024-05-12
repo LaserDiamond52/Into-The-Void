@@ -23,4 +23,10 @@ public class ITVToolTiers {
             new ForgeTier(5, 2650, 9.0f, 4f, 18,
                     ITVTags.Blocks.NEEDS_ENDERITE_TOOL, () -> Ingredient.of(ITVItems.ENDERITE.get())),
             new ResourceLocation(IntoTheVoid.MODID, "enderite"), List.of(Tiers.NETHERITE), List.of());
+
+    public static final Tier DRAGONBORNE = TierSortingRegistry.registerTier(
+            new ForgeTier(6, 3350, 11.0f, 5f, 21,
+                    ITVTags.Blocks.NEEDS_DRAGONBORNE_TOOL, () -> Ingredient.of(ITVItems.DRAGON_BONE.get())),
+            new ResourceLocation(IntoTheVoid.MODID, "dragonborne"), List.of(Tiers.NETHERITE), List.of()
+    );
 }

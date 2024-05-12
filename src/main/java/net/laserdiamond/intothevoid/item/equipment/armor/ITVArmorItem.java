@@ -4,16 +4,15 @@ import com.google.common.collect.Multimap;
 import net.laserdiamond.intothevoid.item.CustomToolTips;
 import net.laserdiamond.intothevoid.item.equipment.ItemAttributeUUIDs;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -29,7 +28,6 @@ public abstract class ITVArmorItem extends ArmorItem {
 
     public ITVArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     /**
@@ -74,8 +72,6 @@ public abstract class ITVArmorItem extends ArmorItem {
         return new ArrayList<>();
     }
 
-
-
     /**
      * A method that runs whenever a player is wearing armor
      * @param stack The itemStack the player is going to equip themselves with in their armor slots in the inventory
@@ -87,7 +83,11 @@ public abstract class ITVArmorItem extends ArmorItem {
     {
         if (!level.isClientSide())
         {
-            if (hasFullSetOn(player))
+            if (!hasFullArmorOn(player))
+            {
+                return;
+            }
+            if (hasFullSetOn(player, this.getMaterial()))
             {
                 for (MobEffectInstance effectInstance : armorEffects())
                 {
@@ -95,11 +95,35 @@ public abstract class ITVArmorItem extends ArmorItem {
 
                     if (!hasPlayerEffect)
                     {
-                        player.addEffect(new MobEffectInstance(effectInstance));
+                        player.addEffect(effectInstance);
                     }
                 }
             }
+            if (hasFullSetOn(player, ArmorMaterials.NETHERITE))
+            {
+                boolean hasFireResistance = player.hasEffect(MobEffects.FIRE_RESISTANCE);
+
+                if (!hasFireResistance)
+                {
+                    player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100,0,false, false, true));
+                }
+            }
         }
+    }
+
+    /**
+     * Checks if the player has all their armor slots occupied
+     * @param player The player wearing the armor
+     * @return True if all armor slots are occupied, false if not
+     */
+    protected boolean hasFullArmorOn(Player player)
+    {
+        ItemStack boots = player.getInventory().getArmor(0);
+        ItemStack leggings = player.getInventory().getArmor(1);
+        ItemStack chestplate = player.getInventory().getArmor(2);
+        ItemStack helmet = player.getInventory().getArmor(3);
+
+        return !boots.isEmpty() && !leggings.isEmpty() && !chestplate.isEmpty() && !helmet.isEmpty();
     }
 
     /**
@@ -107,7 +131,7 @@ public abstract class ITVArmorItem extends ArmorItem {
      * @param player The player wearing the armor set
      * @return True if the player is wearing the full set, false if not
      */
-    protected boolean hasFullSetOn(Player player)
+    protected boolean hasFullSetOn(Player player, ArmorMaterial armorMaterial)
     {
         for (ItemStack armorStack : player.getInventory().armor)
         {
@@ -122,7 +146,7 @@ public abstract class ITVArmorItem extends ArmorItem {
         ArmorItem chestplate = ((ArmorItem) player.getInventory().getArmor(2).getItem());
         ArmorItem helmet = ((ArmorItem) player.getInventory().getArmor(3).getItem());
 
-        return helmet.getMaterial() == this.getMaterial() && chestplate.getMaterial() == this.getMaterial() && leggings.getMaterial() == this.getMaterial() && boots.getMaterial() == this.getMaterial();
+        return helmet.getMaterial() == armorMaterial && chestplate.getMaterial() == armorMaterial && leggings.getMaterial() == armorMaterial && boots.getMaterial() == armorMaterial;
     }
 
     /**
@@ -142,6 +166,7 @@ public abstract class ITVArmorItem extends ArmorItem {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+
         if (pStack.getItem() instanceof CustomToolTips customToolTips)
         {
             if (customToolTips.hideDefaultToolTips())
@@ -153,20 +178,8 @@ public abstract class ITVArmorItem extends ArmorItem {
             }
             pTooltipComponents.addAll(customToolTips.toolTip());
         }
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-    }
 
-    /**
-     * Applies the additional attribute modifiers to the armor piece
-     * @param event ItemAttributeModifierEvent
-     */
-    @SuppressWarnings("unused")
-    @SubscribeEvent
-    public void applyAttributes(final ItemAttributeModifierEvent event)
-    {
-        ItemStack itemStack = event.getItemStack();
-
-        if (itemStack.getItem() instanceof ITVArmorItem itvArmorItem)
+        if (pStack.getItem() instanceof ITVArmorItem itvArmorItem)
         {
             final EquipmentSlot armorSlot = itvArmorItem.getEquipmentSlot();
             final int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(armorSlot);
@@ -175,26 +188,23 @@ public abstract class ITVArmorItem extends ArmorItem {
             double meleeDamage = itvArmorItem.meleeDamageAmount()[slot];
             double speed = itvArmorItem.speedAmount()[slot];
 
-            final Multimap<Attribute, AttributeModifier> origModifiers = itvArmorItem.getDefaultAttributeModifiers(armorSlot);
+            final Multimap<Attribute, AttributeModifier> modifiers = itvArmorItem.getDefaultAttributeModifiers(armorSlot);
 
-            for (Attribute attribute : origModifiers.keySet())
+            for (Attribute attribute : modifiers.keySet())
             {
-                Collection<AttributeModifier> modifiers = origModifiers.get(attribute);
+                Collection<AttributeModifier> attributeModifiers = modifiers.get(attribute);
 
-                for (AttributeModifier attributeModifier : modifiers)
+                for (AttributeModifier attributeModifier : attributeModifiers)
                 {
-                    itemStack.addAttributeModifier(attribute, attributeModifier, armorSlot);
+                    pStack.addAttributeModifier(attribute, attributeModifier, armorSlot);
                 }
             }
 
-            UUID healthUUID = ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot];
-            UUID meleeDamageUUID = ItemAttributeUUIDs.MELEE_DAMAGE_UUIDS[slot];
-            UUID speedUUID = ItemAttributeUUIDs.ARMOR_SPEED_UUIDS[slot];
-
-            itemStack.addAttributeModifier(Attributes.MAX_HEALTH, new AttributeModifier(healthUUID, "health", health, AttributeModifier.Operation.ADDITION), armorSlot);
-            itemStack.addAttributeModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(meleeDamageUUID, "melee_damage", meleeDamage, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
-            itemStack.addAttributeModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(speedUUID, "speed", speed, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
-
+            pStack.addAttributeModifier(Attributes.MAX_HEALTH, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "health", health, AttributeModifier.Operation.ADDITION), armorSlot);
+            pStack.addAttributeModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "meleeDamage", meleeDamage, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
+            pStack.addAttributeModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "speed", speed, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
         }
+
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

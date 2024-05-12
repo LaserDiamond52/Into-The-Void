@@ -5,11 +5,13 @@ import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonBorneA
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.*;
+import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneSwordItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.enderite.*;
 import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleIngredientItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
+import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.DragonborneSmithingTemplate;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
 import net.laserdiamond.intothevoid.util.TextColor;
 import net.minecraft.ChatFormatting;
@@ -66,6 +68,9 @@ public class ITVItems {
      * RegistryObject of type "Item" that represents an Enderite Upgrade Smithing Template
      */
     public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new EnderiteSmithingTemplate(new Item.Properties()));
+
+
+    public static final RegistryObject<Item> DRAGONBORNE_SMITHING_TEMPLATE = ITEMS.register("dragonborne_upgrade_smithing_template", () -> new DragonborneSmithingTemplate(new Item.Properties()));
 
     /**
      * RegistryObject of type "Item" that represents an Iron Handle
@@ -205,6 +210,7 @@ public class ITVItems {
             () -> new EnderiteHoeItem(1, HOE_SPEED_MODIFIER, new Item.Properties()));
 
 
+    public static final RegistryObject<Item> DRAGONBORNE_SWORD = ITEMS.register("dragonborne_sword", () -> new DragonborneSwordItem(7, SWORD_SPEED_MODIFIER, new Item.Properties()));
 
     /**
      * Registers all the items under the ITEMS DeferredRegister

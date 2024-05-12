@@ -2,12 +2,15 @@ package net.laserdiamond.intothevoid;
 
 import com.mojang.logging.LogUtils;
 import net.laserdiamond.intothevoid.blocks.ITVBlocks;
+import net.laserdiamond.intothevoid.client.ITVKeyBindings;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
+import net.laserdiamond.intothevoid.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -109,6 +112,19 @@ public class IntoTheVoid
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        }
+
+        @SubscribeEvent
+        public static void registerKeys(RegisterKeyMappingsEvent event)
+        {
+            event.register(ITVKeyBindings.INSTANCE.abilityActivate);
+        }
+
+        @SubscribeEvent
+        public static void commonSetup(final FMLCommonSetupEvent event)
+        {
+            PacketHandler.register();
         }
     }
 

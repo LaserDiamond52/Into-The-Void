@@ -3,6 +3,7 @@
   "item.into_the_void.refined_lonsdaleite": "Refined Lonsdaleite",
   "item.into_the_void.enderite": "Enderite",
   "item.into_the_void.enderite_upgrade_smithing_template": "Smithing Template",
+  "item.into_the_void.dragonborne_upgrade_smithing_template": "Smithing Template",
   "item.into_the_void.iron_handle": "Iron Handle",
   "item.into_the_void.dragon_bone": "Dragon Bone",
   "item.into_the_void.dragon_hide": "Dragon Hide",
@@ -23,6 +24,8 @@
   "item.into_the_void.enderite_axe": "Enderite Axe",
   "item.into_the_void.enderite_shovel": "Enderite Shovel",
   "item.into_the_void.enderite_hoe": "Enderite Hoe",
+
+  "item.into_the_void.dragonborne_sword": "Dragonborne Sword",
 
   "item.into_the_void.enderite_helmet": "Enderite Helmet",
   "item.into_the_void.enderite_chestplate": "Enderite Chestplate",

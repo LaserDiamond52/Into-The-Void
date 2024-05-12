@@ -17,6 +17,7 @@ public class ITVTags {
     {
         public static final TagKey<Block> NEEDS_LONSDALEITE_TOOL = tag("needs_lonsdaleite_tool");
         public static final TagKey<Block> NEEDS_ENDERITE_TOOL = tag("needs_enderite_tool");
+        public static final TagKey<Block> NEEDS_DRAGONBORNE_TOOL = tag("needs_dragonborne_tool");
 
         private static TagKey<Block> tag(String name)
         {
