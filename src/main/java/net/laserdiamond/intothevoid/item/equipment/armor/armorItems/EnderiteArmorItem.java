@@ -5,6 +5,7 @@ import net.laserdiamond.intothevoid.item.equipment.armor.ArmorSmithing;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorMaterials;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,6 +37,13 @@ public final class EnderiteArmorItem extends ITVArmorItem implements ArmorSmithi
             materials.add(material.getItem());
         }
         return materials;
+    }
+
+    @Override
+    public List<MobEffectInstance> armorEffects() {
+        //List<MobEffectInstance> effects = new ArrayList<>();
+        effects.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
+        return super.armorEffects();
     }
 
     @Override

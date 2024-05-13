@@ -3,9 +3,12 @@ package net.laserdiamond.intothevoid;
 import com.mojang.logging.LogUtils;
 import net.laserdiamond.intothevoid.blocks.ITVBlocks;
 import net.laserdiamond.intothevoid.client.ITVKeyBindings;
+import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
+import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
+import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneCooldown;
 import net.laserdiamond.intothevoid.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.*;
@@ -23,6 +26,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(IntoTheVoid.MODID)
 public class IntoTheVoid
@@ -32,14 +40,19 @@ public class IntoTheVoid
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    public static final List<GKeyAbility> G_KEY_ABILITIES = new ArrayList<>();
+
     public IntoTheVoid()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ITVItems.register(modEventBus); // Register items in DeferredRegistry for items
         ITVBlocks.register(modEventBus); // Register blocks in DeferredRegistry for blocks
+        ITVEffects.register(modEventBus); // Register mob effects in DeferredRegistry for effects
         CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
         registerListeners(modEventBus);
+
+        DragonborneCooldown.setupCooldown();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -130,6 +143,5 @@ public class IntoTheVoid
 
     private void registerListeners(IEventBus eventBus)
     {
-
     }
 }

@@ -1,5 +1,7 @@
 package net.laserdiamond.intothevoid.network.packet;
 
+import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,10 +29,15 @@ public class GKeyAbilityActivate {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             // ON THE SERVER!
-            ServerPlayer player = context.getSender();
-            ServerLevel level = player.serverLevel().getLevel();
+            //ServerPlayer player = context.getSender();
+            //ServerLevel level = player.serverLevel().getLevel();
 
-            EntityType.FIREBALL.spawn(level, player.blockPosition(), MobSpawnType.COMMAND);
+            //EntityType.FIREBALL.spawn(level, player.blockPosition(), MobSpawnType.COMMAND);
+
+            for (GKeyAbility gKeyAbility : IntoTheVoid.G_KEY_ABILITIES)
+            {
+                gKeyAbility.onKeyPress(context);
+            }
         });
         return true;
     }

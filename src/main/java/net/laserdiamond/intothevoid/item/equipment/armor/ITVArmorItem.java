@@ -1,5 +1,6 @@
 package net.laserdiamond.intothevoid.item.equipment.armor;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.laserdiamond.intothevoid.item.CustomToolTips;
 import net.laserdiamond.intothevoid.item.equipment.ItemAttributeUUIDs;
@@ -26,8 +27,45 @@ import java.util.*;
  */
 public abstract class ITVArmorItem extends ArmorItem {
 
+    public final List<MobEffectInstance> effects;
+    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+
     public ITVArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
+        effects = new ArrayList<>();
+
+        int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(pType.getSlot());
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
+        UUID uuid = ItemAttributeUUIDs.ARMOR_UUIDS[slot];
+        attributeBuilder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", this.getDefense(), AttributeModifier.Operation.ADDITION));
+        attributeBuilder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", this.getToughness(), AttributeModifier.Operation.ADDITION));
+        if (this.knockbackResistance > 0.0F) {
+            attributeBuilder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", this.knockbackResistance, AttributeModifier.Operation.ADDITION));
+        }
+        if (healthAmount()[slot] != 0.0)
+        {
+            attributeBuilder.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "Armor health", healthAmount()[slot], AttributeModifier.Operation.ADDITION));
+        }
+        if (meleeDamageAmount()[slot] != 0.0)
+        {
+            attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Armor melee damage", meleeDamageAmount()[slot], AttributeModifier.Operation.MULTIPLY_BASE));
+        }
+        if (speedAmount()[slot] != 0)
+        {
+            attributeBuilder.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, "Armor speed", speedAmount()[slot], AttributeModifier.Operation.MULTIPLY_BASE));
+        }
+
+        this.defaultModifiers = attributeBuilder.build();
+    }
+
+    /**
+     * Gets the default attribute modifiers for the armor piece
+     * @param pEquipmentSlot The equipment slot of the armor piece
+     * @return The default attribute modifiers for the armor piece as a Multimap
+     */
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot pEquipmentSlot) {
+        return pEquipmentSlot == this.type.getSlot() ? this.defaultModifiers : super.getDefaultAttributeModifiers(pEquipmentSlot); // Copy what the parenting class does, except with OUR defaultModifiers Multimap
     }
 
     /**
@@ -69,7 +107,7 @@ public abstract class ITVArmorItem extends ArmorItem {
      */
     public List<MobEffectInstance> armorEffects()
     {
-        return new ArrayList<>();
+        return effects;
     }
 
     /**
@@ -177,32 +215,6 @@ public abstract class ITVArmorItem extends ArmorItem {
                 }
             }
             pTooltipComponents.addAll(customToolTips.toolTip());
-        }
-
-        if (pStack.getItem() instanceof ITVArmorItem itvArmorItem)
-        {
-            final EquipmentSlot armorSlot = itvArmorItem.getEquipmentSlot();
-            final int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(armorSlot);
-
-            double health = itvArmorItem.healthAmount()[slot];
-            double meleeDamage = itvArmorItem.meleeDamageAmount()[slot];
-            double speed = itvArmorItem.speedAmount()[slot];
-
-            final Multimap<Attribute, AttributeModifier> modifiers = itvArmorItem.getDefaultAttributeModifiers(armorSlot);
-
-            for (Attribute attribute : modifiers.keySet())
-            {
-                Collection<AttributeModifier> attributeModifiers = modifiers.get(attribute);
-
-                for (AttributeModifier attributeModifier : attributeModifiers)
-                {
-                    pStack.addAttributeModifier(attribute, attributeModifier, armorSlot);
-                }
-            }
-
-            pStack.addAttributeModifier(Attributes.MAX_HEALTH, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "health", health, AttributeModifier.Operation.ADDITION), armorSlot);
-            pStack.addAttributeModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "meleeDamage", meleeDamage, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
-            pStack.addAttributeModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(ItemAttributeUUIDs.ARMOR_HEALTH_UUIDS[slot], "speed", speed, AttributeModifier.Operation.MULTIPLY_BASE), armorSlot);
         }
 
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);

@@ -1,34 +1,20 @@
 package net.laserdiamond.intothevoid.item;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
-import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonBorneArmorItem;
+import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonborneArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
-import net.laserdiamond.intothevoid.item.equipment.tools.*;
 import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneSwordItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.enderite.*;
 import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
-import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleIngredientItem;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
-import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.DragonborneSmithingTemplate;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
-import net.laserdiamond.intothevoid.util.TextColor;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class that contains Registries and Lists for all "Into The Void" mod items
@@ -69,7 +55,9 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> ENDERITE_SMITHING_TEMPLATE = ITEMS.register("enderite_upgrade_smithing_template", () -> new EnderiteSmithingTemplate(new Item.Properties()));
 
-
+    /**
+     * RegistryObject of type "Item" that represents a Dragonborne Upgrade Smithing Template
+     */
     public static final RegistryObject<Item> DRAGONBORNE_SMITHING_TEMPLATE = ITEMS.register("dragonborne_upgrade_smithing_template", () -> new DragonborneSmithingTemplate(new Item.Properties()));
 
     /**
@@ -137,15 +125,29 @@ public class ITVItems {
     public static final RegistryObject<Item> ENDERITE_BOOTS = ITEMS.register("enderite_boots",
             () -> new EnderiteArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
 
-
+    /**
+     * RegistryObject of type "Item" that represents a Dragonborne Helmet
+     */
     public static final RegistryObject<Item> DRAGONBORNE_HELMET = ITEMS.register("dragonborne_helmet",
-            () -> new DragonBorneArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
+            () -> new DragonborneArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents a Dragonborne Chestplate
+     */
     public static final RegistryObject<Item> DRAGONBORNE_CHESTPLATE = ITEMS.register("dragonborne_chestplate",
-            () -> new DragonBorneArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            () -> new DragonborneArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents Dragonborne Leggings
+     */
     public static final RegistryObject<Item> DRAGONBORNE_LEGGINGS = ITEMS.register("dragonborne_leggings",
-            () -> new DragonBorneArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties()));
+            () -> new DragonborneArmorItem(ArmorItem.Type.LEGGINGS, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents Dragonborne Boots
+     */
     public static final RegistryObject<Item> DRAGONBORNE_BOOTS = ITEMS.register("dragonborne_boots",
-            () -> new DragonBorneArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
+            () -> new DragonborneArmorItem(ArmorItem.Type.BOOTS, new Item.Properties()));
 
     // Tools/Weapons
 
@@ -209,7 +211,9 @@ public class ITVItems {
     public static final RegistryObject<Item> ENDERITE_HOE = ITEMS.register("enderite_hoe",
             () -> new EnderiteHoeItem(1, HOE_SPEED_MODIFIER, new Item.Properties()));
 
-
+    /**
+     * RegistryObject of type "Item" that represents a Dragonborne Sword
+     */
     public static final RegistryObject<Item> DRAGONBORNE_SWORD = ITEMS.register("dragonborne_sword", () -> new DragonborneSwordItem(7, SWORD_SPEED_MODIFIER, new Item.Properties()));
 
     /**

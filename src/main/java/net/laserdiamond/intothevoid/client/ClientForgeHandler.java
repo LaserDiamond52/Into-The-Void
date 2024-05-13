@@ -19,9 +19,6 @@ public class ClientForgeHandler {
         Minecraft minecraft = Minecraft.getInstance();
         if (ITVKeyBindings.INSTANCE.abilityActivate.consumeClick())
         {
-            //ITVKeyBindings.INSTANCE.abilityActivate.consumeClick();
-            minecraft.player.sendSystemMessage(Component.literal("ability used!"));
-
             PacketHandler.sendToServer(new GKeyAbilityActivate());
         }
     }
