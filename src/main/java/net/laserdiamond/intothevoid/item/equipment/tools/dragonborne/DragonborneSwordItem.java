@@ -31,7 +31,7 @@ public final class DragonborneSwordItem extends ITVComplexSwordItem implements G
         ServerPlayer serverPlayer = context.getSender();
         ServerLevel level = serverPlayer.serverLevel().getLevel();
 
-        if (serverPlayer.getMainHandItem().getItem() instanceof DragonborneSwordItem)
+        if (serverPlayer.getMainHandItem().getItem() == this)
         {
             if (DragonborneCooldown.checkCooldown(serverPlayer))
             {

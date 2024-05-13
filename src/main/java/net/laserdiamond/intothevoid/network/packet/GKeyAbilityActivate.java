@@ -29,10 +29,6 @@ public class GKeyAbilityActivate {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             // ON THE SERVER!
-            //ServerPlayer player = context.getSender();
-            //ServerLevel level = player.serverLevel().getLevel();
-
-            //EntityType.FIREBALL.spawn(level, player.blockPosition(), MobSpawnType.COMMAND);
 
             for (GKeyAbility gKeyAbility : IntoTheVoid.G_KEY_ABILITIES)
             {

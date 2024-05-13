@@ -44,10 +44,10 @@
   "block.into_the_void.lonsdaleite_ore": "Lonsdaleite Ore",
   "block.into_the_void.endstone_lonsdaleite_ore": "Endstone Lonsdaleite Ore",
   "block.into_the_void.meteorite_lonsdaleite_ore": "Meteorite Lonsdaleite Ore",
-  "block.into_the_void.chorus_log": "Chorus Log",
-  "block.into_the_void.stripped_chorus_log": "Stripped Chorus Log",
-  "block.into_the_void.chorus_wood": "Chorus Wood",
-  "block.into_the_void.stripped_chorus_wood": "Stripped Chorus Wood",
+  "block.into_the_void.purpur_log": "Purpur Log",
+  "block.into_the_void.stripped_purpur_log": "Stripped Purpur Log",
+  "block.into_the_void.purpur_wood": "Purpur Wood",
+  "block.into_the_void.stripped_purpur_wood": "Stripped Purpur Wood",
 
   "effect.into_the_void.absolute_damage": "Absolute Damage",
 
