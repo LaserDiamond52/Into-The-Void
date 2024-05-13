@@ -216,6 +216,7 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> DRAGONBORNE_SWORD = ITEMS.register("dragonborne_sword", () -> new DragonborneSwordItem(7, SWORD_SPEED_MODIFIER, new Item.Properties()));
 
+
     /**
      * Registers all the items under the ITEMS DeferredRegister
      * @param eventBus The mod's event bus
