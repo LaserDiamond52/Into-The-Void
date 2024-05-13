@@ -69,22 +69,20 @@ public class ITVBlocks {
     public static final RegistryObject<Block> PURPUR_WOOD = registerSimpleBlock("purpur_wood", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), false, true, 5,5));
     public static final RegistryObject<Block> STRIPPED_PURPUR_LOG = registerSimpleBlock("stripped_purpur_log", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), true, true, 5, 5));
     public static final RegistryObject<Block> STRIPPED_PURPUR_WOOD = registerSimpleBlock("stripped_purpur_wood", () -> new ITVWoodLogBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN), true, true, 5, 5));
-    //public static final RegistryObject<Block> CHORUS_PLANKS = registerSimpleBlock("chorus_planks", () -> new ITVSimpleBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(3F)));
-    //public static final RegistryObject<Block> CHORUS_LEAVES = registerSimpleBlock("chorus_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    //public static final RegistryObject<Block> PURPUR_PLANKS = registerSimpleBlock("purpur_planks", () -> new ITVSimpleBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(3F)));
+    //public static final RegistryObject<Block> PURPUR_LEAVES = registerSimpleBlock("purpur_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
 
     public enum WoodTypes
     {
-        PURPUR(PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD, "stripped_purpur_log");
+        PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD);
 
         private final RegistryObject<Block> logBlock, woodBlock, strippedLogBlock, strippedWoodBlock;
-        private final String strippedLogName;
 
-        WoodTypes(RegistryObject<Block> logBlock, RegistryObject<Block> woodBlock, RegistryObject<Block> strippedLogBlock, RegistryObject<Block> strippedWoodBlock, String strippedLogName) {
+        WoodTypes(RegistryObject<Block> logBlock, RegistryObject<Block> woodBlock, RegistryObject<Block> strippedLogBlock, RegistryObject<Block> strippedWoodBlock) {
             this.logBlock = logBlock;
             this.woodBlock = woodBlock;
             this.strippedLogBlock = strippedLogBlock;
             this.strippedWoodBlock = strippedWoodBlock;
-            this.strippedLogName = strippedLogName;
         }
 
         public RegistryObject<Block> getLogBlock() {
@@ -101,10 +99,6 @@ public class ITVBlocks {
 
         public RegistryObject<Block> getStrippedWoodBlock() {
             return strippedWoodBlock;
-        }
-
-        public String getStrippedLogName() {
-            return strippedLogName;
         }
     }
 

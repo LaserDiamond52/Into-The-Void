@@ -44,13 +44,13 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
             RegistryObject<Block> woodBlock = woodTypes.getWoodBlock();
             RegistryObject<Block> strippedLogBlock = woodTypes.getStrippedLogBlock();
             RegistryObject<Block> strippedWoodBlock = woodTypes.getStrippedWoodBlock();
-            String strippedName = woodTypes.getStrippedLogName();
+            String strippedLogName = strippedLogBlock.getId().toString().replaceAll(IntoTheVoid.MODID + ":", "");
 
             logBlock((RotatedPillarBlock) logBlock.get());
             axisBlock(((RotatedPillarBlock) woodBlock.get()), blockTexture(logBlock.get()), blockTexture(logBlock.get()));
 
             axisBlock(((RotatedPillarBlock) strippedLogBlock.get()), blockTexture(strippedLogBlock.get()),
-                    new ResourceLocation(IntoTheVoid.MODID, "block/" + strippedName + "_top"));
+                    new ResourceLocation(IntoTheVoid.MODID, "block/" + strippedLogName + "_top"));
             axisBlock(((RotatedPillarBlock) strippedWoodBlock.get()), blockTexture(strippedLogBlock.get()),
                     blockTexture(strippedLogBlock.get()));
 
