@@ -18,6 +18,7 @@ public class ITVTags {
         public static final TagKey<Block> NEEDS_LONSDALEITE_TOOL = tag("needs_lonsdaleite_tool");
         public static final TagKey<Block> NEEDS_ENDERITE_TOOL = tag("needs_enderite_tool");
         public static final TagKey<Block> NEEDS_DRAGONBORNE_TOOL = tag("needs_dragonborne_tool");
+        public static final TagKey<Block> PURPUR_LOG = tag("purpur_logs");
 
         private static TagKey<Block> tag(String name)
         {
@@ -27,6 +28,7 @@ public class ITVTags {
 
     public static class Items
     {
+        public static final TagKey<Item> PURPUR_LOG = tag("purpur_logs");
 
         private static TagKey<Item> tag(String name)
         {

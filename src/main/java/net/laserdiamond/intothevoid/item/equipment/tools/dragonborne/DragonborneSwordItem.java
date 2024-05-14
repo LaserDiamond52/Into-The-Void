@@ -11,6 +11,8 @@ import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.projectile.DragonFireball;
@@ -35,6 +37,7 @@ public final class DragonborneSwordItem extends ITVComplexSwordItem implements G
         {
             if (DragonborneCooldown.checkCooldown(serverPlayer))
             {
+                level.playSound(null, serverPlayer.getOnPos(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.PLAYERS, 100, 1);
                 Vec3 playerView = serverPlayer.getLookAngle();
                 double x = serverPlayer.getX();
                 double eyeY = serverPlayer.getEyeY();

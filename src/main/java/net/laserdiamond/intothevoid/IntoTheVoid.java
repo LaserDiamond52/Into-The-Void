@@ -1,7 +1,10 @@
 package net.laserdiamond.intothevoid;
 
 import com.mojang.logging.LogUtils;
-import net.laserdiamond.intothevoid.blocks.ITVBlocks;
+import net.laserdiamond.intothevoid.block.ITVBlocks;
+import net.laserdiamond.intothevoid.block.entity.ITVBlockEntities;
+import net.laserdiamond.intothevoid.block.entity.ITVHangingSignBlockEntity;
+import net.laserdiamond.intothevoid.block.entity.ITVSignBlockEntity;
 import net.laserdiamond.intothevoid.client.ITVKeyBindings;
 import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
@@ -10,9 +13,17 @@ import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneCooldown;
 import net.laserdiamond.intothevoid.network.PacketHandler;
+import net.laserdiamond.intothevoid.util.ITVWoodTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -26,9 +37,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,6 +57,7 @@ public class IntoTheVoid
 
         ITVItems.register(modEventBus); // Register items in DeferredRegistry for items
         ITVBlocks.register(modEventBus); // Register blocks in DeferredRegistry for blocks
+        ITVBlockEntities.register(modEventBus); // Register block entities in DeferredRegistry for block entities
         ITVEffects.register(modEventBus); // Register mob effects in DeferredRegistry for effects
         CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
         registerListeners(modEventBus);
@@ -122,6 +132,7 @@ public class IntoTheVoid
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+            Sheets.addWoodType(ITVWoodTypes.PURPUR);
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
@@ -132,6 +143,13 @@ public class IntoTheVoid
         public static void registerKeys(RegisterKeyMappingsEvent event)
         {
             event.register(ITVKeyBindings.INSTANCE.abilityActivate);
+        }
+
+        @SubscribeEvent
+        public static void registerBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers event)
+        {
+            event.registerBlockEntityRenderer(ITVBlockEntities.ITV_SIGN.get(), SignRenderer::new);
+            event.registerBlockEntityRenderer(ITVBlockEntities.ITV_HANGING_SIGN.get(), HangingSignRenderer::new);
         }
 
         @SubscribeEvent

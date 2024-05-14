@@ -1,4 +1,4 @@
-package net.laserdiamond.intothevoid.blocks;
+package net.laserdiamond.intothevoid.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ITVWoodLogBlock extends RotatedPillarBlock {
+public class ITVWoodLogBlock extends RotatedPillarBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;
     private final boolean isStripped;
@@ -59,15 +59,15 @@ public class ITVWoodLogBlock extends RotatedPillarBlock {
 
         if (context.getItemInHand().getItem() instanceof AxeItem) // Check if action is done with an axe
         {
-            for (ITVBlocks.WoodTypes woodTypes : ITVBlocks.WoodTypes.values()) // Loop through mod wood types
+            for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values()) // Loop through mod wood types
             {
-                if (state.is(woodTypes.getLogBlock().get())) // Check if player attempted to strip the log variant of the wood type
+                if (state.is(woodBlocks.getLogBlock().get())) // Check if player attempted to strip the log variant of the wood type
                 {
-                    return woodTypes.getStrippedLogBlock().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS)); // Change the block to the stripped variant without changing the axis of the block
+                    return woodBlocks.getStrippedLogBlock().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS)); // Change the block to the stripped variant without changing the axis of the block
                 }
-                if (state.is(woodTypes.getWoodBlock().get())) // Check if player attempted to strip the wood variant of the wood type
+                if (state.is(woodBlocks.getWoodBlock().get())) // Check if player attempted to strip the wood variant of the wood type
                 {
-                    return woodTypes.getStrippedWoodBlock().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS)); // Change the block to the stripped variant without changing the axis of the block
+                    return woodBlocks.getStrippedWoodBlock().get().defaultBlockState().setValue(AXIS, state.getValue(AXIS)); // Change the block to the stripped variant without changing the axis of the block
                 }
             }
         }
@@ -75,6 +75,7 @@ public class ITVWoodLogBlock extends RotatedPillarBlock {
         return super.getToolModifiedState(state, context, toolAction, simulate);
     }
 
+    @Override
     public List<TagKey<Block>> getBlockTags() {
         return blockTags;
     }
@@ -82,4 +83,6 @@ public class ITVWoodLogBlock extends RotatedPillarBlock {
     public boolean isStripped() {
         return isStripped;
     }
+
+
 }

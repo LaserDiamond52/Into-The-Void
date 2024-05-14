@@ -1,6 +1,7 @@
 package net.laserdiamond.intothevoid.dataGen;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorItem;
@@ -12,10 +13,12 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.LinkedHashMap;
@@ -76,8 +79,33 @@ public class ITVItemModelProvider extends ItemModelProvider {
             {
                 handheldItem(item);
 
+            } else if (item.get() instanceof SignItem)
+            {
+                simpleItem(item);
+            } else if (item.get() instanceof HangingSignItem)
+            {
+                simpleItem(item);
             }
+        }
 
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        {
+            RegistryObject<Block> planks = woodBlocks.getPlanks();
+            RegistryObject<Block> door = woodBlocks.getDoor();
+            RegistryObject<Block> trapDoor = woodBlocks.getTrapDoor();
+            RegistryObject<Block> fence = woodBlocks.getFence();
+            RegistryObject<Block> button = woodBlocks.getButton();
+
+            simpleBlockItem(door);
+            fenceItem(fence, planks);
+            buttonItem(button, planks);
+
+
+            slabItem(woodBlocks.getSlab(), planks);
+            stairItem(woodBlocks.getStairs(), planks);
+            pressurePlateItem(woodBlocks.getPressurePlate(), planks);
+            trapDoorItem(trapDoor);
+            fenceGateItem(woodBlocks.getFenceGate(), planks);
         }
     }
 
@@ -93,6 +121,61 @@ public class ITVItemModelProvider extends ItemModelProvider {
         return withExistingParent(itemRegistryObject.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(IntoTheVoid.MODID, "item/" + itemRegistryObject.getId().getPath()));
+    }
+
+    private ItemModelBuilder fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
+                .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    private ItemModelBuilder buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
+                .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    private ItemModelBuilder slabItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        String path = "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath();
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/slab"))
+                .texture("bottom", new ResourceLocation(IntoTheVoid.MODID, path))
+                .texture("side", new ResourceLocation(IntoTheVoid.MODID, path))
+                .texture("top", new ResourceLocation(IntoTheVoid.MODID, path));
+    }
+
+    private ItemModelBuilder stairItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        String path = "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath();
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/stairs"))
+                .texture("bottom", new ResourceLocation(IntoTheVoid.MODID, path))
+                .texture("side", new ResourceLocation(IntoTheVoid.MODID, path))
+                .texture("top", new ResourceLocation(IntoTheVoid.MODID, path));
+    }
+
+    private ItemModelBuilder pressurePlateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/pressure_plate_up"))
+                .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    private ItemModelBuilder trapDoorItem(RegistryObject<Block> block)
+    {
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_orientable_trapdoor_bottom"))
+                .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+    }
+
+    private ItemModelBuilder fenceGateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_fence_gate"))
+                .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    private ItemModelBuilder simpleBlockItem(RegistryObject<Block> block)
+    {
+        return this.withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(IntoTheVoid.MODID, "item/" + block.getId().getPath()));
     }
 
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject)

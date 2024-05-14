@@ -1,8 +1,7 @@
 package net.laserdiamond.intothevoid.dataGen.loot;
 
-import net.laserdiamond.intothevoid.blocks.*;
+import net.laserdiamond.intothevoid.block.*;
 import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -41,6 +40,31 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
             {
                 this.dropSelf(itvWoodLogBlock);
             }
+        }
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        {
+            RegistryObject<Block> slab = woodBlocks.getSlab();
+            RegistryObject<Block> stairs = woodBlocks.getStairs();
+            RegistryObject<Block> pressurePlate = woodBlocks.getPressurePlate();
+            RegistryObject<Block> door = woodBlocks.getDoor();
+            RegistryObject<Block> trapDoor = woodBlocks.getTrapDoor();
+            RegistryObject<Block> fence = woodBlocks.getFence();
+            RegistryObject<Block> fenceGate = woodBlocks.getFenceGate();
+            RegistryObject<Block> button = woodBlocks.getButton();
+
+            this.add(slab.get(), block -> createSlabItemTable(slab.get()));
+            this.dropSelf(stairs.get());
+            this.dropSelf(pressurePlate.get());
+            this.add(door.get(), block -> createDoorTable(door.get()));
+            this.dropSelf(trapDoor.get());
+            this.dropSelf(fence.get());
+            this.dropSelf(fenceGate.get());
+            this.dropSelf(button.get());
+
+            this.add(woodBlocks.getSign().get(), block -> createSingleItemTable(woodBlocks.getSign().get()));
+            this.add(woodBlocks.getHangingSign().get(), block -> createSingleItemTable(woodBlocks.getSign().get()));
+            this.add(woodBlocks.getWallSign().get(), block -> createSingleItemTable(woodBlocks.getWallSign().get()));
+            this.add(woodBlocks.getWallHangingSign().get(), block -> createSingleItemTable(woodBlocks.getWallSign().get()));
         }
     }
 

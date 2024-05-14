@@ -1,9 +1,8 @@
-package net.laserdiamond.intothevoid.blocks;
+package net.laserdiamond.intothevoid.block;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 

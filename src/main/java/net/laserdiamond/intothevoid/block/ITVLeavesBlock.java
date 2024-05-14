@@ -1,4 +1,4 @@
-package net.laserdiamond.intothevoid.blocks;
+package net.laserdiamond.intothevoid.block;
 
 import net.minecraft.world.level.block.LeavesBlock;
 

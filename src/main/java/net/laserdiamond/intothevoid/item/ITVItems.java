@@ -1,6 +1,7 @@
 package net.laserdiamond.intothevoid.item;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonborneArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
@@ -74,6 +75,15 @@ public class ITVItems {
      * RegistryObject of type "Item" that represents Dragon Hide
      */
     public static final RegistryObject<Item> DRAGON_HIDE = ITEMS.register("dragon_hide", () -> new ITVSimpleItem(new Item.Properties()));
+
+    // Block Entity
+
+    public static final RegistryObject<Item> PURPUR_WOOD_SIGN = ITEMS.register("purpur_wood_sign",
+            () -> new SignItem(new Item.Properties().stacksTo(16), ITVBlocks.PURPUR_WOOD_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_SIGN.get()));
+
+    public static final RegistryObject<Item> PURPUR_WOOD_HANGING_SIGN = ITEMS.register("purpur_wood_hanging_sign",
+            () -> new HangingSignItem(ITVBlocks.PURPUR_WOOD_HANGING_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
+
 
     // Armor
 

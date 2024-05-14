@@ -1,6 +1,7 @@
 package net.laserdiamond.intothevoid.dataGen.recipe;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.armor.ArmorCrafting;
 import net.laserdiamond.intothevoid.item.equipment.armor.ArmorSmithing;
@@ -9,18 +10,18 @@ import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -37,7 +38,8 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         armorCrafting(consumer);
         toolCrafting(consumer);
 
-        ironHandle(consumer);
+        stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get());
+        woodSetCrafting(consumer);
     }
 
     protected static void smeltingRecipe(Consumer<FinishedRecipe> consumer)
@@ -50,13 +52,13 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
 
     }
 
-    protected static void ironHandle(Consumer<FinishedRecipe> consumer)
+    protected static void stickRecipe(Consumer<FinishedRecipe> consumer, Item ingredient, Item result)
     {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ITVItems.IRON_HANDLE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result)
                 .pattern("X")
                 .pattern("X")
-                .define('X', Items.IRON_INGOT)
-                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .define('X', ingredient)
+                .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consumer);
     }
 
@@ -222,6 +224,75 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
                             .save(consumer, new ResourceLocation(IntoTheVoid.MODID, currentSmithingPath));
                 }
             }
+        }
+    }
+
+    protected static void woodSetCrafting(Consumer<FinishedRecipe> consumer)
+    {
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        {
+            Block logBlock = woodBlocks.getLogBlock().get();
+            Block strippedLogBlock = woodBlocks.getStrippedLogBlock().get();
+            Block woodBlock = woodBlocks.getWoodBlock().get();
+            Block strippedWoodBlock = woodBlocks.getStrippedWoodBlock().get();
+            Block planksBlock = woodBlocks.getPlanks().get();
+
+            TagKey<Item> logItemTag = woodBlocks.getItemTagKey();
+
+            Ingredient plankIngredients = Ingredient.of(planksBlock);
+            planksFromLog(consumer, planksBlock, logItemTag, 4);
+            woodFromLogs(consumer, woodBlock, logBlock);
+            woodFromLogs(consumer, strippedWoodBlock, strippedLogBlock);
+            // Slab recipe
+            slabBuilder(RecipeCategory.BUILDING_BLOCKS, woodBlocks.getSlab().get(), plankIngredients)
+                    .group("wooden_slab")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Stairs recipe
+            stairBuilder(woodBlocks.getStairs().get(), plankIngredients)
+                    .group("wooden_stairs")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Pressure plate recipe
+            pressurePlateBuilder(RecipeCategory.REDSTONE, woodBlocks.getPressurePlate().get(), plankIngredients)
+                    .group("wooden_pressure_plate")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Door recipe
+            doorBuilder(woodBlocks.getDoor().get(), plankIngredients)
+                    .group("wooden_door")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Trapdoor recipe
+            trapdoorBuilder(woodBlocks.getTrapDoor().get(), plankIngredients)
+                    .group("wooden_trapdoor")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Fence recipe
+            fenceBuilder(woodBlocks.getFence().get(), plankIngredients)
+                    .group("wooden_fence")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Fence Gate recipe
+            fenceGateBuilder(woodBlocks.getFenceGate().get(), plankIngredients)
+                    .group("wooden_fence_gate")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Button recipe
+            buttonBuilder(woodBlocks.getButton().get(), plankIngredients)
+                    .group("wooden_button")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Sign recipe
+            signBuilder(woodBlocks.getSign().get(), plankIngredients)
+                    .group("wooden_sign")
+                    .unlockedBy(getHasName(planksBlock), has(planksBlock))
+                    .save(consumer);
+            // Hanging Sign recipe
+            hangingSign(consumer, woodBlocks.getHangingSign().get(), planksBlock);
+
+            // TODO: Boat Recipe
+
         }
     }
 

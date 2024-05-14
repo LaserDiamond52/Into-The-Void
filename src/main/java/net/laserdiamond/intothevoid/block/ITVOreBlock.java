@@ -1,46 +1,41 @@
-package net.laserdiamond.intothevoid.blocks;
+package net.laserdiamond.intothevoid.block;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.Properties;
 
 /**
  * An ore block that represents an ore block that drops only 1 of its mineral
  */
-public class ITVOreBlock extends DropExperienceBlock {
+public class ITVOreBlock extends DropExperienceBlock implements BlockTaggable {
 
-    private final List<TagKey<Block>> miningTags;
+    private final List<TagKey<Block>> blockTags;
     private final RegistryObject<Item> oreDrop;
     private final boolean isSimple;
 
-    public ITVOreBlock(Properties pProperties, IntProvider xpRange, List<TagKey<Block>> miningTags, RegistryObject<Item> oreDrop) {
+    public ITVOreBlock(Properties pProperties, IntProvider xpRange, List<TagKey<Block>> blockTags, RegistryObject<Item> oreDrop) {
         super(pProperties, xpRange);
-        this.miningTags = miningTags;
+        this.blockTags = blockTags;
         this.isSimple = true;
         this.oreDrop = oreDrop;
     }
 
-    public ITVOreBlock(Properties pProperties, IntProvider xpRange, List<TagKey<Block>> miningTags, RegistryObject<Item> oreDrop, boolean isSimple)
+    public ITVOreBlock(Properties pProperties, IntProvider xpRange, List<TagKey<Block>> blockTags, RegistryObject<Item> oreDrop, boolean isSimple)
     {
         super(pProperties, xpRange);
-        this.miningTags = miningTags;
+        this.blockTags = blockTags;
         this.oreDrop = oreDrop;
         this.isSimple = isSimple;
     }
 
-    /**
-     * A list of the tags that should be applied to the block
-     * @return A list of tags that should be applied to the block
-     */
-    public List<TagKey<Block>> getMiningTags() {
-        return miningTags;
+    @Override
+    public List<TagKey<Block>> getBlockTags() {
+        return blockTags;
     }
 
     /**
@@ -58,6 +53,7 @@ public class ITVOreBlock extends DropExperienceBlock {
     public boolean isSimple() {
         return isSimple;
     }
+
 
 
 }

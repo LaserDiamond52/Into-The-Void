@@ -44,10 +44,23 @@
   "block.into_the_void.lonsdaleite_ore": "Lonsdaleite Ore",
   "block.into_the_void.endstone_lonsdaleite_ore": "Endstone Lonsdaleite Ore",
   "block.into_the_void.meteorite_lonsdaleite_ore": "Meteorite Lonsdaleite Ore",
+
   "block.into_the_void.purpur_log": "Purpur Log",
   "block.into_the_void.stripped_purpur_log": "Stripped Purpur Log",
   "block.into_the_void.purpur_wood": "Purpur Wood",
   "block.into_the_void.stripped_purpur_wood": "Stripped Purpur Wood",
+  "block.into_the_void.purpur_planks": "Purpur Planks",
+  "block.into_the_void.purpur_wood_slab": "Purpur Wood Slab",
+  "block.into_the_void.purpur_wood_stairs": "Purpur Wood Stairs",
+  "block.into_the_void.purpur_wood_pressure_plate": "Purpur Wood Pressure Plate",
+  "block.into_the_void.purpur_wood_door": "Purpur Wood Door",
+  "block.into_the_void.purpur_wood_trapdoor": "Purpur Wood Trapdoor",
+  "block.into_the_void.purpur_wood_fence": "Purpur Wood Fence",
+  "block.into_the_void.purpur_wood_fence_gate": "Purpur Fence Gate",
+  "block.into_the_void.purpur_wood_button": "Purpur Wood Button",
+
+  "block.into_the_void.purpur_wood_sign": "Purpur Wood Sign",
+  "block.into_the_void.purpur_wood_hanging_sign": "Purpur Wood Hanging Sign",
 
   "effect.into_the_void.absolute_damage": "Absolute Damage",
 
