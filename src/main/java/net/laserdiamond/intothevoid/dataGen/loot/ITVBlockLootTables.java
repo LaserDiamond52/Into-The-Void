@@ -41,6 +41,7 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
                 this.dropSelf(itvWoodLogBlock);
             }
         }
+        this.dropSelf(ITVBlocks.REFINERY.get());
         for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
         {
             RegistryObject<Block> slab = woodBlocks.getSlab();

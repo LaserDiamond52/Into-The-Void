@@ -33,7 +33,7 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
                 }
             }
         }
-
+        simpleBlockWithItem(ITVBlocks.REFINERY.get(), new ModelFile.UncheckedModelFile(modLoc("block/refinery")));
         for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
         {
             RegistryObject<Block> logBlock = woodBlocks.getLogBlock();

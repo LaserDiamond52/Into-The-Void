@@ -29,6 +29,7 @@ public class ITVTags {
     public static class Items
     {
         public static final TagKey<Item> PURPUR_LOG = tag("purpur_logs");
+        public static final TagKey<Item> REFINERY_INGREDIENT = tag("refinery_ingredient");
 
         private static TagKey<Item> tag(String name)
         {

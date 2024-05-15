@@ -22,6 +22,11 @@ public class ITVBlockEntities {
                     ITVBlocks.PURPUR_WOOD_HANGING_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_HANGING_SIGN.get())
                     .build(null));
 
+    public static final RegistryObject<BlockEntityType<RefineryBlockEntity>> REFINERY = BLOCK_ENTITIES.register("refinery_be",
+            () -> BlockEntityType.Builder.of(RefineryBlockEntity::new, ITVBlocks.REFINERY.get())
+                    .build(null));
+
+
     public static void register(IEventBus eventBus)
     {
         BLOCK_ENTITIES.register(eventBus);

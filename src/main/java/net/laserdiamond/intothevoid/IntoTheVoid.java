@@ -5,6 +5,7 @@ import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.block.entity.ITVBlockEntities;
 import net.laserdiamond.intothevoid.block.entity.ITVHangingSignBlockEntity;
 import net.laserdiamond.intothevoid.block.entity.ITVSignBlockEntity;
+import net.laserdiamond.intothevoid.block.entity.RefineryBlockEntity;
 import net.laserdiamond.intothevoid.client.ITVKeyBindings;
 import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
@@ -13,9 +14,13 @@ import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneCooldown;
 import net.laserdiamond.intothevoid.network.PacketHandler;
+import net.laserdiamond.intothevoid.screen.ITVMenuTypes;
+import net.laserdiamond.intothevoid.screen.RefineryScreen;
 import net.laserdiamond.intothevoid.util.ITVWoodTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.world.item.*;
@@ -60,6 +65,7 @@ public class IntoTheVoid
         ITVBlockEntities.register(modEventBus); // Register block entities in DeferredRegistry for block entities
         ITVEffects.register(modEventBus); // Register mob effects in DeferredRegistry for effects
         CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
+        ITVMenuTypes.register(modEventBus); // Register Menus and GUIs
         registerListeners(modEventBus);
 
         DragonborneCooldown.setupCooldown();
@@ -133,9 +139,11 @@ public class IntoTheVoid
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             Sheets.addWoodType(ITVWoodTypes.PURPUR);
+            MenuScreens.register(ITVMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
 
         }
 

@@ -117,6 +117,8 @@ public class ITVBlocks {
 
     //public static final RegistryObject<Block> PURPUR_LEAVES = registerSimpleBlock("purpur_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
 
+    public static final RegistryObject<Block> REFINERY = registerSimpleBlock("refinery",
+            () -> new RefineryBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), List.of(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.NEEDS_WOOD_TOOL)));
     public enum WoodBlocks
     {
         PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD,
