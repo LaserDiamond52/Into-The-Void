@@ -119,8 +119,7 @@ public class ITVBlocks {
 
     public static final RegistryObject<Block> REFINERY = registerSimpleBlock("refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), List.of(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.NEEDS_WOOD_TOOL)));
-    public enum WoodBlocks
-    {
+    public enum WoodBlocks {
         PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD,
                 PURPUR_PLANKS, PURPUR_WOOD_SLAB, PURPUR_WOOD_STAIRS, PURPUR_WOOD_PRESSURE_PLATE,
                 PURPUR_WOOD_DOOR, PURPUR_WOOD_TRAPDOOR, PURPUR_WOOD_FENCE, PURPUR_WOOD_FENCE_GATE,

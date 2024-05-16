@@ -1,20 +1,33 @@
 package net.laserdiamond.intothevoid.item;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Class that represents a simple item of this mod
  */
-public class ITVSimpleItem extends Item {
-    public ITVSimpleItem(Properties pProperties) {
+public class ITVSimpleItem extends Item implements ItemTaggable {
+
+    private final List<TagKey<Item>> itemTags;
+
+    public ITVSimpleItem(Properties pProperties)
+    {
         super(pProperties);
+        this.itemTags = new ArrayList<>();
+    }
+
+    public ITVSimpleItem(Properties properties, List<TagKey<Item>> itemTags)
+    {
+        super(properties);
+        this.itemTags = itemTags;
     }
 
     /**
@@ -39,5 +52,10 @@ public class ITVSimpleItem extends Item {
             pTooltipComponents.addAll(customToolTips.toolTip());
         }
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    }
+
+    @Override
+    public List<TagKey<Item>> getItemTags() {
+        return itemTags;
     }
 }

@@ -11,6 +11,7 @@ import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneCooldown;
 import net.laserdiamond.intothevoid.network.PacketHandler;
+import net.laserdiamond.intothevoid.recipe.ITVRecipes;
 import net.laserdiamond.intothevoid.screen.ITVMenuTypes;
 import net.laserdiamond.intothevoid.screen.Refinery.RefineryScreen;
 import net.laserdiamond.intothevoid.util.ITVWoodTypes;
@@ -59,6 +60,7 @@ public class IntoTheVoid
         ITVEffects.register(modEventBus); // Register mob effects in DeferredRegistry for effects
         CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
         ITVMenuTypes.register(modEventBus); // Register Menus and GUIs
+        ITVRecipes.register(modEventBus); // Registers Custom Recipe Serializers
         registerListeners(modEventBus);
 
         DragonborneCooldown.setupCooldown();

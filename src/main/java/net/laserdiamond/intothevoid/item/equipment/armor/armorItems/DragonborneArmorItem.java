@@ -24,7 +24,6 @@ public final class DragonborneArmorItem extends ITVArmorItem {
 
     @Override
     public List<MobEffectInstance> armorEffects() {
-        //List<MobEffectInstance> effects = new ArrayList<>();
         effects.add(new MobEffectInstance(MobEffects.JUMP, 100, 0, false, false, true));
         effects.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
         return super.armorEffects();

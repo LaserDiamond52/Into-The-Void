@@ -24,7 +24,7 @@ public class RefineryMenu extends AbstractContainerMenu {
 
     public RefineryMenu(int containerId, Inventory inv, FriendlyByteBuf extraData)
     {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     private SlotItemHandler water, input, output;
@@ -41,10 +41,11 @@ public class RefineryMenu extends AbstractContainerMenu {
 
         this.be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler ->
         {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 56, 53)); // Input Slot
+            input = new RefineryInputSlot(iItemHandler, 0, 56, 53);
+            this.addSlot(input); // Input Slot
             water = new RefineryWaterSlot(iItemHandler, 1, 56, 17);
             this.addSlot(water); // Water Slot
-            output = new RefineryResultSlot(iItemHandler, 2, 115, 35);
+            output = new RefineryResultSlot(iItemHandler, 2, 116, 35);
             this.addSlot(output); // Output Slot
         });
 
@@ -52,11 +53,19 @@ public class RefineryMenu extends AbstractContainerMenu {
 
     }
 
+    /**
+     * Used to determine if refining is in progress
+     * @return True if refining progress is > 0, otherwise false
+     */
     public boolean isRefining()
     {
         return data.get(0) > 0;
     }
 
+    /**
+     * Used to determine how much of the progress arrow to draw when refining is in progress
+     * @return The progress arrow size based on the current refinery progress
+     */
     public int getScaledProgress()
     {
         int progress = this.data.get(0);
@@ -64,6 +73,19 @@ public class RefineryMenu extends AbstractContainerMenu {
         int progressArrowSize = 24;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    /**
+     * Used to determine how much water is in the refinery
+     * @return The size of the water level based on the current water level in the refinery
+     */
+    public int getScaledWaterLevel()
+    {
+        int waterLevel = this.data.get(2);
+        int maxWaterLevel = this.data.get(3);
+        int waterLevelSize = 14;
+
+        return (maxWaterLevel != 0 && waterLevel != 0) ? (waterLevel * waterLevelSize / maxWaterLevel) : 0;
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -94,10 +116,6 @@ public class RefineryMenu extends AbstractContainerMenu {
             {
                 return ItemStack.EMPTY;
             }
-            // TODO: Figure out how to prevent items from going into slots
-            // We don't want to be able to quick move items into the result slot!
-            // Water Bucket should be the only viable item for the second slot
-            // Add a item tag to items that are able to be put into the refinery
 
         } else if (i < REFINERY_INVENTORY_FIRST_SLOT_INDEX + REFINERY_INVENTORY_SLOT_COUNT)
         {

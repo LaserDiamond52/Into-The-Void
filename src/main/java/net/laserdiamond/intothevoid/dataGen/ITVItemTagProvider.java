@@ -3,6 +3,7 @@ package net.laserdiamond.intothevoid.dataGen;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.*;
 import net.laserdiamond.intothevoid.item.ITVItems;
+import net.laserdiamond.intothevoid.item.ItemTaggable;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -45,6 +46,18 @@ public class ITVItemTagProvider extends ItemTagsProvider {
                     }
                 }
             }
+
+            if (item.get() instanceof ItemTaggable itemTaggable)
+            {
+                if (!itemTaggable.getItemTags().isEmpty())
+                {
+                    for (TagKey<Item> tagKey : itemTaggable.getItemTags())
+                    {
+                        this.tag(tagKey).add(item.get());
+                    }
+                }
+            }
+
         }
 
     }

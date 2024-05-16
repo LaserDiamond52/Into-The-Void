@@ -11,11 +11,14 @@ import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.DragonborneSmithingTemplate;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
+import net.laserdiamond.intothevoid.util.ITVTags;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 /**
  * Class that contains Registries and Lists for all "Into The Void" mod items
@@ -39,7 +42,7 @@ public class ITVItems {
     /**
      * RegistryObject of type "Item" that represents Lonsdaleite
      */
-    public static final RegistryObject<Item> LONSDALEITE = ITEMS.register("lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties()));
+    public static final RegistryObject<Item> LONSDALEITE = ITEMS.register("lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties(), List.of(ITVTags.Items.REFINERY_INGREDIENT)));
 
     /**
      * RegistryObject of type "Item" that represents Refined Lonsdaleite

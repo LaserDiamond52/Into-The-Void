@@ -22,6 +22,8 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -40,6 +42,8 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
 
         stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get());
         woodSetCrafting(consumer);
+
+
     }
 
     protected static void smeltingRecipe(Consumer<FinishedRecipe> consumer)

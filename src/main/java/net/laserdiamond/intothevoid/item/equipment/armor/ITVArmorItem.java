@@ -3,8 +3,10 @@ package net.laserdiamond.intothevoid.item.equipment.armor;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.laserdiamond.intothevoid.item.CustomToolTips;
+import net.laserdiamond.intothevoid.item.ItemTaggable;
 import net.laserdiamond.intothevoid.item.equipment.ItemAttributeUUIDs;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,14 +27,16 @@ import java.util.*;
 /**
  * Abstract class that represents an armor item of this mod
  */
-public abstract class ITVArmorItem extends ArmorItem {
+public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
 
-    public final List<MobEffectInstance> effects;
-    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+    public List<MobEffectInstance> effects;
+    private Multimap<Attribute, AttributeModifier> defaultModifiers;
+    private List<TagKey<Item>> itemTags;
 
     public ITVArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
-        effects = new ArrayList<>();
+        this.effects = new ArrayList<>();
+        this.itemTags = new ArrayList<>();
 
         int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(pType.getSlot());
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
@@ -56,6 +60,13 @@ public abstract class ITVArmorItem extends ArmorItem {
         }
 
         this.defaultModifiers = attributeBuilder.build();
+    }
+
+    public ITVArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties, List<TagKey<Item>> itemTags)
+    {
+        this(pMaterial, pType, pProperties);
+        this.effects = new ArrayList<>();
+        this.itemTags = itemTags;
     }
 
     /**
@@ -218,5 +229,10 @@ public abstract class ITVArmorItem extends ArmorItem {
         }
 
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    }
+
+    @Override
+    public List<TagKey<Item>> getItemTags() {
+        return itemTags;
     }
 }
