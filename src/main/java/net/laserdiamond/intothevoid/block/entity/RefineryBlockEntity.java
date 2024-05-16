@@ -1,7 +1,7 @@
 package net.laserdiamond.intothevoid.block.entity;
 
 import net.laserdiamond.intothevoid.item.ITVItems;
-import net.laserdiamond.intothevoid.screen.RefineryMenu;
+import net.laserdiamond.intothevoid.screen.Refinery.RefineryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

@@ -1,7 +1,10 @@
-package net.laserdiamond.intothevoid.screen;
+package net.laserdiamond.intothevoid.screen.Refinery;
 
 import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.block.entity.RefineryBlockEntity;
+import net.laserdiamond.intothevoid.screen.ITVMenuTypes;
+import net.laserdiamond.intothevoid.screen.Refinery.RefineryResultSlot;
+import net.laserdiamond.intothevoid.screen.Refinery.RefineryWaterSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +27,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
     }
 
+    private SlotItemHandler water, input, output;
     public RefineryMenu(int containerId, Inventory inv, BlockEntity blockEntity, ContainerData data)
     {
         super(ITVMenuTypes.REFINERY_MENU.get(), containerId);
@@ -37,9 +41,11 @@ public class RefineryMenu extends AbstractContainerMenu {
 
         this.be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler ->
         {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 56, 53)); // Water Slot
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 56, 17)); // Input Slot
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 115, 35)); // Output Slot
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 56, 53)); // Input Slot
+            water = new RefineryWaterSlot(iItemHandler, 1, 56, 17);
+            this.addSlot(water); // Water Slot
+            output = new RefineryResultSlot(iItemHandler, 2, 115, 35);
+            this.addSlot(output); // Output Slot
         });
 
         addDataSlots(data);
