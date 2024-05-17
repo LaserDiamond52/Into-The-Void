@@ -22,8 +22,6 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -295,7 +293,9 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
             // Hanging Sign recipe
             hangingSign(consumer, woodBlocks.getHangingSign().get(), planksBlock);
 
-            // TODO: Boat Recipe
+            // Boat recipes
+            woodenBoat(consumer, woodBlocks.getBoat().get(), planksBlock);
+            chestBoat(consumer, woodBlocks.getChestBoat().get(), planksBlock);
 
         }
     }

@@ -1,0 +1,70 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"refinedEndCrystalAnimation": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"end_crystal": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 5, 0]
+						},
+						"2.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"outer2": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [-360, 180, -360]
+						},
+						"2.0": {
+							"vector": [-540, 360, -540]
+						}
+					}
+				},
+				"outer1": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [32.5, 90, 32.5]
+						},
+						"1.0": {
+							"vector": [180, 0, 180]
+						},
+						"1.5": {
+							"vector": [32.5, -90, 327.5]
+						},
+						"2.0": {
+							"vector": [0, 0, 360]
+						}
+					}
+				},
+				"center": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [180, -90, 130]
+						},
+						"2.0": {
+							"vector": [360, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

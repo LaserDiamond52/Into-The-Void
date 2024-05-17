@@ -26,7 +26,7 @@ public class ITVToolTiers {
 
     public static final Tier DRAGONBORNE = TierSortingRegistry.registerTier(
             new ForgeTier(6, 3350, 11.0f, 5f, 21,
-                    ITVTags.Blocks.NEEDS_DRAGONBORNE_TOOL, () -> Ingredient.of(ITVItems.DRAGON_BONE.get())),
+                    ITVTags.Blocks.NEEDS_DRAGONBORNE_TOOL, () -> Ingredient.of(ITVItems.DRAGON_BONE.get(), ITVItems.REFINED_END_CRYSTAL.get())),
             new ResourceLocation(IntoTheVoid.MODID, "dragonborne"), List.of(Tiers.NETHERITE), List.of()
     );
 }

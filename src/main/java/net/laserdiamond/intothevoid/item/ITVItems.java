@@ -2,6 +2,7 @@ package net.laserdiamond.intothevoid.item;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.ITVBlocks;
+import net.laserdiamond.intothevoid.entity.boat.ITVBoatEntity;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonborneArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.LonsdaleiteArmorItem;
@@ -9,9 +10,12 @@ import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.Dragonborne
 import net.laserdiamond.intothevoid.item.equipment.tools.enderite.*;
 import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
+import net.laserdiamond.intothevoid.item.ingredients.refinedEndCrystal.RefinedEndCrystal;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.DragonborneSmithingTemplate;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
+import net.laserdiamond.intothevoid.item.misc.ITVBoatItem;
 import net.laserdiamond.intothevoid.util.ITVTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -79,6 +83,11 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> DRAGON_HIDE = ITEMS.register("dragon_hide", () -> new ITVSimpleItem(new Item.Properties()));
 
+    /**
+     * RegistryObject of type "Item" that represents a Refined End Crystal
+     */
+    public static final RegistryObject<Item> REFINED_END_CRYSTAL = ITEMS.register("refined_end_crystal", () -> new RefinedEndCrystal(new Item.Properties(), List.of(ItemTags.TRIM_MATERIALS)));
+
     // Block Entity
 
     public static final RegistryObject<Item> PURPUR_WOOD_SIGN = ITEMS.register("purpur_wood_sign",
@@ -87,6 +96,13 @@ public class ITVItems {
     public static final RegistryObject<Item> PURPUR_WOOD_HANGING_SIGN = ITEMS.register("purpur_wood_hanging_sign",
             () -> new HangingSignItem(ITVBlocks.PURPUR_WOOD_HANGING_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
 
+    // Spawnables
+
+    public static final RegistryObject<Item> PURPUR_WOOD_BOAT = ITEMS.register("purpur_wood_boat",
+            () -> new ITVBoatItem(false, ITVBoatEntity.Type.PURPUR, new Item.Properties()));
+
+    public static final RegistryObject<Item> PURPUR_WOOD_CHEST_BOAT = ITEMS.register("purpur_wood_chest_boat",
+            () -> new ITVBoatItem(true, ITVBoatEntity.Type.PURPUR, new Item.Properties()));
 
     // Armor
 

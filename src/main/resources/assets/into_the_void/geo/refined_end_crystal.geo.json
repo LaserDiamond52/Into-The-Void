@@ -1,0 +1,47 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "end_crystal",
+					"pivot": [0, 5, 0]
+				},
+				{
+					"name": "outer2",
+					"parent": "end_crystal",
+					"pivot": [0, 5, 0],
+					"cubes": [
+						{"origin": [-1.75, 3.25, -1.75], "size": [3.5, 3.5, 3.5], "pivot": [0, 5, 0], "rotation": [35.26439, 30, 54.73561], "uv": [0, 8]}
+					]
+				},
+				{
+					"name": "outer1",
+					"parent": "end_crystal",
+					"pivot": [0, 5, 0],
+					"rotation": [-32.5, 0, 0],
+					"cubes": [
+						{"origin": [-1.375, 3.625, -1.375], "size": [2.75, 2.75, 2.75], "pivot": [0.375, 4.625, -0.375], "rotation": [0.39875, 8.42145, 5.41207], "uv": [0, 4]}
+					]
+				},
+				{
+					"name": "center",
+					"parent": "end_crystal",
+					"pivot": [0, 5, 0],
+					"rotation": [0, 45, 25],
+					"cubes": [
+						{"origin": [-1, 4, -1], "size": [2, 2, 2], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

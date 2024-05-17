@@ -7,6 +7,10 @@
   "item.into_the_void.iron_handle": "Iron Handle",
   "item.into_the_void.dragon_bone": "Dragon Bone",
   "item.into_the_void.dragon_hide": "Dragon Hide",
+  "item.into_the_void.refined_end_crystal": "Refined End Crystal",
+
+  "item.into_the_void.purpur_wood_boat": "Purpur Wood Boat",
+  "item.into_the_void.purpur_wood_chest_boat": "Purpur Wood Chest Boat",
 
   "item.into_the_void.lonsdaleite_helmet": "Lonsdaleite Helmet",
   "item.into_the_void.lonsdaleite_chestplate": "Lonsdaleite Chestplate",
@@ -62,6 +66,8 @@
   "block.into_the_void.purpur_wood_sign": "Purpur Wood Sign",
   "block.into_the_void.purpur_wood_hanging_sign": "Purpur Wood Hanging Sign",
   "block.into_the_void.refinery": "Refinery",
+
+  "entity.into_the_void.purpur_wood_chest_boat": "Boat with Chest",
 
   "effect.into_the_void.absolute_damage": "Absolute Damage",
 

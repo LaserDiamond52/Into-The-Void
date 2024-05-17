@@ -5,6 +5,9 @@ import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.laserdiamond.intothevoid.block.entity.ITVBlockEntities;
 import net.laserdiamond.intothevoid.client.ITVKeyBindings;
 import net.laserdiamond.intothevoid.effects.ITVEffects;
+import net.laserdiamond.intothevoid.entity.ITVEntities;
+import net.laserdiamond.intothevoid.entity.client.ITVBoatRenderer;
+import net.laserdiamond.intothevoid.entity.client.ITVModelLayers;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
 import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
@@ -17,9 +20,12 @@ import net.laserdiamond.intothevoid.screen.Refinery.RefineryScreen;
 import net.laserdiamond.intothevoid.util.ITVWoodTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -61,6 +67,7 @@ public class IntoTheVoid
         CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
         ITVMenuTypes.register(modEventBus); // Register Menus and GUIs
         ITVRecipes.register(modEventBus); // Registers Custom Recipe Serializers
+        ITVEntities.register(modEventBus); // Registers Entities of this mod
         registerListeners(modEventBus);
 
         DragonborneCooldown.setupCooldown();
@@ -135,10 +142,13 @@ public class IntoTheVoid
         {
             Sheets.addWoodType(ITVWoodTypes.PURPUR);
             MenuScreens.register(ITVMenuTypes.REFINERY_MENU.get(), RefineryScreen::new);
+
+            EntityRenderers.register(ITVEntities.PURPUR_WOOD_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, false));
+            EntityRenderers.register(ITVEntities.PURPUR_WOOD_CHEST_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, true));
+
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-
 
         }
 
@@ -153,6 +163,13 @@ public class IntoTheVoid
         {
             event.registerBlockEntityRenderer(ITVBlockEntities.ITV_SIGN.get(), SignRenderer::new);
             event.registerBlockEntityRenderer(ITVBlockEntities.ITV_HANGING_SIGN.get(), HangingSignRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
+        {
+            event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_BOAT_LAYER, BoatModel::createBodyModel);
+            event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
         }
 
         @SubscribeEvent

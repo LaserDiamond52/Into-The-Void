@@ -17,7 +17,7 @@ public enum ITVArmorMaterials implements ArmorMaterial {
 
     LONSDALEITE("lonsdaleite", 40,new int[]{4,9,7,4},15, SoundEvents.ARMOR_EQUIP_DIAMOND, 4F, 0.05F, () -> Ingredient.of(ITVItems.REFINED_LONSDALEITE.get())),
     ENDERITE("enderite", 40, new int[]{5,10,8,5}, 15, SoundEvents.ARMOR_EQUIP_NETHERITE, 1.5F, 0.2F, () -> Ingredient.of(ITVItems.ENDERITE.get())),
-    DRAGONBORNE("dragonborne", 40, new int[]{6,11,9,6}, 18, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> Ingredient.of(ITVItems.DRAGON_HIDE.get()));
+    DRAGONBORNE("dragonborne", 40, new int[]{6,11,9,6}, 18, SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, 0.2F, () -> Ingredient.of(ITVItems.DRAGON_HIDE.get(), ITVItems.REFINED_END_CRYSTAL.get()));
 
     private final String name;
     private final int durabilityMultiplier;

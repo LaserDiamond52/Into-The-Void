@@ -3,8 +3,10 @@ package net.laserdiamond.intothevoid.item.equipment.tools.dragonborne;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.entity.projectiles.DragonborneFireball;
 import net.laserdiamond.intothevoid.item.GKeyAbility;
+import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVComplexSwordItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
+import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.laserdiamond.intothevoid.util.TextColor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.OutgoingChatMessage;
@@ -18,10 +20,13 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.projectile.DragonFireball;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.LargeFireball;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
-public final class DragonborneSwordItem extends ITVComplexSwordItem implements GKeyAbility {
+import java.util.List;
+
+public final class DragonborneSwordItem extends ITVComplexSwordItem implements GKeyAbility, ToolSmithing {
     public DragonborneSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.DRAGONBORNE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
         IntoTheVoid.G_KEY_ABILITIES.add(this);
@@ -52,5 +57,20 @@ public final class DragonborneSwordItem extends ITVComplexSwordItem implements G
                 serverPlayer.sendSystemMessage(Component.literal(TextColor.RED + "Ability is on cooldown for " + DragonborneCooldown.getCooldown(serverPlayer) + " seconds"));
             }
         }
+    }
+
+    @Override
+    public List<ItemLike> materials() {
+        return List.of(ITVItems.REFINED_END_CRYSTAL.get());
+    }
+
+    @Override
+    public ItemLike template() {
+        return ITVItems.DRAGONBORNE_SMITHING_TEMPLATE.get();
+    }
+
+    @Override
+    public ItemLike toolItem() {
+        return ITVItems.ENDERITE_SWORD.get();
     }
 }
