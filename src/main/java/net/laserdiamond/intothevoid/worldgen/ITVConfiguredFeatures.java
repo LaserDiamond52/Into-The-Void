@@ -59,6 +59,7 @@ public class ITVConfiguredFeatures {
                 BlockStateProvider.simple(ITVBlocks.PURPUR_LEAVES.get()),
                 new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(3), 3),
                 new TwoLayersFeatureSize(1, 0, 2))
+                .dirt(BlockStateProvider.simple(ITVBlocks.NULL_SAND.get()))
                 .build());
 
     }

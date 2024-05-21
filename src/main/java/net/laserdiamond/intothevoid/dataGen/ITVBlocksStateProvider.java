@@ -37,6 +37,12 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
             } else if (block instanceof ITVSaplingBlock)
             {
                 saplingBlock(blockRegistryObject);
+            } else if (block instanceof NullceliumBlock nullceliumBlock)
+            {
+                if (nullceliumBlock.getAllSides())
+                {
+                    blockWithItem(blockRegistryObject);
+                }
             }
         }
         simpleBlockWithItem(ITVBlocks.REFINERY.get(), new ModelFile.UncheckedModelFile(modLoc("block/refinery")));

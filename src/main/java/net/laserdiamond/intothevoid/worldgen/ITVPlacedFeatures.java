@@ -1,10 +1,13 @@
 package net.laserdiamond.intothevoid.worldgen;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
+import net.laserdiamond.intothevoid.block.ITVBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -22,6 +25,8 @@ public class ITVPlacedFeatures {
     public static final ResourceKey<PlacedFeature> END_LONSDALEITE_ORE_PLACED_KEY = registerKey("end_lonsdaleite_ore_placed");
     public static final ResourceKey<PlacedFeature> END_ENDERITE_ORE_PLACED_KEY = registerKey("end_enderite_ore_placed");
 
+    public static final ResourceKey<PlacedFeature> PURPUR_TREE_PLACED_KEY = registerKey("purpur_tree_placed_key");
+
     public static void bootstrap(BootstapContext<PlacedFeature> context)
     {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureHolderGetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -37,6 +42,9 @@ public class ITVPlacedFeatures {
 
         register(context, END_ENDERITE_ORE_PLACED_KEY, configuredFeatureHolderGetter.getOrThrow(ITVConfiguredFeatures.END_ENDERITE_ORE_KEY),
                 ITVOrePlacements.commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-50), VerticalAnchor.absolute(50))));
+
+        register(context, PURPUR_TREE_PLACED_KEY, configuredFeatureHolderGetter.getOrThrow(ITVConfiguredFeatures.PURPUR_TREE_KEY),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 3), ITVBlocks.PURPUR_SAPLING.get()));
     }
 
     private static ResourceKey<PlacedFeature> registerKey(String name)

@@ -18,6 +18,8 @@ import net.laserdiamond.intothevoid.recipe.ITVRecipes;
 import net.laserdiamond.intothevoid.screen.ITVMenuTypes;
 import net.laserdiamond.intothevoid.screen.Refinery.RefineryScreen;
 import net.laserdiamond.intothevoid.util.ITVWoodTypes;
+import net.laserdiamond.intothevoid.worldgen.biome.ITVTerrablender;
+import net.laserdiamond.intothevoid.worldgen.biome.surface.ITVSurfaceRules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.BoatModel;
@@ -27,6 +29,7 @@ import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.levelgen.placement.SurfaceRelativeThresholdFilter;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -41,6 +44,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import terrablender.api.SurfaceRuleManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +72,7 @@ public class IntoTheVoid
         ITVMenuTypes.register(modEventBus); // Register Menus and GUIs
         ITVRecipes.register(modEventBus); // Registers Custom Recipe Serializers
         ITVEntities.register(modEventBus); // Registers Entities of this mod
+        ITVTerrablender.registerBiomes();
         registerListeners(modEventBus);
 
         DragonborneCooldown.setupCooldown();
@@ -84,7 +89,7 @@ public class IntoTheVoid
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, IntoTheVoid.MODID, ITVSurfaceRules.makeRules());
 
     }
 

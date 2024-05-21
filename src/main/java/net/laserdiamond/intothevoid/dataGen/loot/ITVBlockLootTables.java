@@ -53,6 +53,9 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
             } else if (blockItem instanceof ITVSaplingBlock itvSaplingBlock)
             {
                 this.dropSelf(itvSaplingBlock);
+            } else if (blockItem instanceof NullceliumBlock grassBlock)
+            {
+                this.dropSelf(grassBlock);
             }
         }
         this.dropSelf(ITVBlocks.REFINERY.get());

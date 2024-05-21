@@ -123,6 +123,11 @@ public class ITVBlocks {
 
     public static final RegistryObject<Block> REFINERY = registerSimpleBlock("refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), List.of(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.NEEDS_WOOD_TOOL)));
+
+    public static final RegistryObject<Block> NULLCELIUM = registerSimpleBlock("nullcelium", () -> new NullceliumBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK), true, List.of(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MUSHROOM_GROW_BLOCK)));
+
+    public static final RegistryObject<Block> NULL_SAND = registerSimpleBlock("null_sand", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.DIRT), List.of(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.SAND, BlockTags.DIRT)), List.of(ItemTags.DIRT, ItemTags.SAND));
+
     public enum WoodBlocks {
         PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD,
                 PURPUR_PLANKS, PURPUR_WOOD_SLAB, PURPUR_WOOD_STAIRS, PURPUR_WOOD_PRESSURE_PLATE,

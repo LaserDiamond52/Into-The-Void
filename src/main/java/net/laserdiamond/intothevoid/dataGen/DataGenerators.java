@@ -42,6 +42,7 @@ public class DataGenerators {
 
         ITVBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(), new ITVBlockTagGenerator(packOutput, lookUpProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ITVItemTagProvider(packOutput, lookUpProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new ITVBiomeTagProvider(packOutput, lookUpProvider, existingFileHelper));
 
         generator.addProvider(event.includeServer(), new ITVWorldGenProvider(packOutput, lookUpProvider));
     }
