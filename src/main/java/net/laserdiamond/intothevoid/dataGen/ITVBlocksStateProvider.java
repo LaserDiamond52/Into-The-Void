@@ -31,6 +31,12 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
                 {
                     blockWithItem(blockRegistryObject);
                 }
+            } else if (block instanceof ITVLeavesBlock)
+            {
+                blockWithItem(blockRegistryObject);
+            } else if (block instanceof ITVSaplingBlock)
+            {
+                saplingBlock(blockRegistryObject);
             }
         }
         simpleBlockWithItem(ITVBlocks.REFINERY.get(), new ModelFile.UncheckedModelFile(modLoc("block/refinery")));
@@ -89,6 +95,13 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
 
 
         }
+    }
+
+    private void saplingBlock(RegistryObject<Block> blockRegistryObject)
+    {
+        simpleBlock(blockRegistryObject.get(),
+                models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject)

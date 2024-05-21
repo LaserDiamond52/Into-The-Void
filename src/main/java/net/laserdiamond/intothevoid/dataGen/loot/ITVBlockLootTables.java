@@ -14,11 +14,18 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Set;
 
 public class ITVBlockLootTables extends BlockLootSubProvider {
     public ITVBlockLootTables() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    }
+
+    private static final HashMap<Block, Block> LEAVES_SAPLING_MAP = new HashMap<>();
+    static
+    {
+        LEAVES_SAPLING_MAP.put(ITVBlocks.PURPUR_LEAVES.get(), ITVBlocks.PURPUR_SAPLING.get());
     }
 
     @Override
@@ -39,6 +46,13 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
             } else if (blockItem instanceof ITVWoodLogBlock itvWoodLogBlock)
             {
                 this.dropSelf(itvWoodLogBlock);
+            } else if (blockItem instanceof ITVLeavesBlock itvLeavesBlock)
+            {
+                Block saplingBlock = LEAVES_SAPLING_MAP.get(itvLeavesBlock);
+                this.add(itvLeavesBlock, block -> createLeavesDrops(itvLeavesBlock, saplingBlock, NORMAL_LEAVES_SAPLING_CHANCES));
+            } else if (blockItem instanceof ITVSaplingBlock itvSaplingBlock)
+            {
+                this.dropSelf(itvSaplingBlock);
             }
         }
         this.dropSelf(ITVBlocks.REFINERY.get());

@@ -1,0 +1,14 @@
+{
+  "type": "into_the_void:refinery",
+  "ingredients":
+  [
+    {
+      "item": "into_the_void:end_core"
+    }
+  ],
+  "result":
+  {
+    "count": 1,
+    "item": "into_the_void:refined_end_crystal"
+  }
+}

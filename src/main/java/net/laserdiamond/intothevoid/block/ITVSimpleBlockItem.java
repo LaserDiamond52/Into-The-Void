@@ -1,5 +1,6 @@
 package net.laserdiamond.intothevoid.block;
 
+import net.laserdiamond.intothevoid.item.ItemTaggable;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Class that represents a simple block item of this mod. Blocks items of this child class will automatically have their model data generated
  */
-public class ITVSimpleBlockItem extends BlockItem {
+public class ITVSimpleBlockItem extends BlockItem implements ItemTaggable {
 
     private final List<TagKey<Item>> itemTags;
 
@@ -26,6 +27,7 @@ public class ITVSimpleBlockItem extends BlockItem {
         this.itemTags = itemTags;
     }
 
+    @Override
     public List<TagKey<Item>> getItemTags() {
         return itemTags;
     }

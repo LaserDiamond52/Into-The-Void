@@ -2,6 +2,7 @@ package net.laserdiamond.intothevoid.dataGen;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.ITVBlocks;
+import net.laserdiamond.intothevoid.block.ITVSaplingBlock;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.ITVArmorItem;
@@ -87,6 +88,13 @@ public class ITVItemModelProvider extends ItemModelProvider {
                 simpleItem(item);
             }
         }
+        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
+        {
+            if (blockRegistryObject.get() instanceof ITVSaplingBlock)
+            {
+                saplingItem(blockRegistryObject);
+            }
+        }
 
         for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
         {
@@ -121,6 +129,13 @@ public class ITVItemModelProvider extends ItemModelProvider {
         return withExistingParent(itemRegistryObject.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(IntoTheVoid.MODID, "item/" + itemRegistryObject.getId().getPath()));
+    }
+
+    private ItemModelBuilder saplingItem(RegistryObject<Block> block)
+    {
+        return withExistingParent(block.getId().getPath(),
+                new ResourceLocation("item/generated"))
+                .texture("layer0", new ResourceLocation(IntoTheVoid.MODID, "block/" + block.getId().getPath()));
     }
 
     private ItemModelBuilder fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)

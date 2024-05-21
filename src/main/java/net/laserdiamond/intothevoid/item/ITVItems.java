@@ -51,12 +51,12 @@ public class ITVItems {
     /**
      * RegistryObject of type "Item" that represents Refined Lonsdaleite
      */
-    public static final RegistryObject<Item> REFINED_LONSDALEITE = ITEMS.register("refined_lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties()));
+    public static final RegistryObject<Item> REFINED_LONSDALEITE = ITEMS.register("refined_lonsdaleite", () -> new ITVSimpleMineralItem(new Item.Properties(), List.of(ItemTags.BEACON_PAYMENT_ITEMS)));
 
     /**
      * RegistryObject of type "Item" that represents Enderite
      */
-    public static final RegistryObject<Item> ENDERITE = ITEMS.register("enderite", () -> new ITVSimpleMineralItem(new Item.Properties()));
+    public static final RegistryObject<Item> ENDERITE = ITEMS.register("enderite", () -> new ITVSimpleMineralItem(new Item.Properties(), List.of(ItemTags.BEACON_PAYMENT_ITEMS)));
 
     /**
      * RegistryObject of type "Item" that represents an Enderite Upgrade Smithing Template
@@ -88,19 +88,33 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> REFINED_END_CRYSTAL = ITEMS.register("refined_end_crystal", () -> new RefinedEndCrystal(new Item.Properties(), List.of(ItemTags.TRIM_MATERIALS)));
 
+    public static final RegistryObject<Item> END_CORE = ITEMS.register("end_core", () -> new ITVSimpleItem(new Item.Properties(), List.of(ITVTags.Items.REFINERY_INGREDIENT)));
+
     // Block Entity
 
+    /**
+     * RegistryObject of type "Item" that represents a Purpur Wood Sign
+     */
     public static final RegistryObject<Item> PURPUR_WOOD_SIGN = ITEMS.register("purpur_wood_sign",
             () -> new SignItem(new Item.Properties().stacksTo(16), ITVBlocks.PURPUR_WOOD_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_SIGN.get()));
 
+    /**
+     * RegistryObject of type "Item" that represents a Hanging Purpur Wood Sign
+     */
     public static final RegistryObject<Item> PURPUR_WOOD_HANGING_SIGN = ITEMS.register("purpur_wood_hanging_sign",
             () -> new HangingSignItem(ITVBlocks.PURPUR_WOOD_HANGING_SIGN.get(), ITVBlocks.PURPUR_WOOD_WALL_HANGING_SIGN.get(), new Item.Properties().stacksTo(16)));
 
     // Spawnables
 
+    /**
+     * RegistryObject of type "Item" that represents a Purpur Wood Boat
+     */
     public static final RegistryObject<Item> PURPUR_WOOD_BOAT = ITEMS.register("purpur_wood_boat",
             () -> new ITVBoatItem(false, ITVBoatEntity.Type.PURPUR, new Item.Properties()));
 
+    /**
+     * RegistryObject of type "Item" that represents a Purpur Wood Boat with a chest
+     */
     public static final RegistryObject<Item> PURPUR_WOOD_CHEST_BOAT = ITEMS.register("purpur_wood_chest_boat",
             () -> new ITVBoatItem(true, ITVBoatEntity.Type.PURPUR, new Item.Properties()));
 

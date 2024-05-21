@@ -40,7 +40,7 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
 
         stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get());
         woodSetCrafting(consumer);
-
+        endCoreRecipe(consumer);
 
     }
 
@@ -52,6 +52,18 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
     protected static void oreBlockCrafting(Consumer<FinishedRecipe> consumer)
     {
 
+    }
+
+    protected static void endCoreRecipe(Consumer<FinishedRecipe> consumer)
+    {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ITVItems.END_CORE.get())
+                .pattern("XXX")
+                .pattern("X#X")
+                .pattern("XXX")
+                .define('X', Items.END_CRYSTAL)
+                .define('#', Items.NETHER_STAR)
+                .unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
+                .save(consumer);
     }
 
     protected static void stickRecipe(Consumer<FinishedRecipe> consumer, Item ingredient, Item result)

@@ -7,6 +7,7 @@
   "item.into_the_void.iron_handle": "Iron Handle",
   "item.into_the_void.dragon_bone": "Dragon Bone",
   "item.into_the_void.dragon_hide": "Dragon Hide",
+  "item.into_the_void.end_core": "End Core",
   "item.into_the_void.refined_end_crystal": "Refined End Crystal",
 
   "item.into_the_void.purpur_wood_boat": "Purpur Wood Boat",
@@ -62,6 +63,8 @@
   "block.into_the_void.purpur_wood_fence": "Purpur Wood Fence",
   "block.into_the_void.purpur_wood_fence_gate": "Purpur Fence Gate",
   "block.into_the_void.purpur_wood_button": "Purpur Wood Button",
+  "block.into_the_void.purpur_leaves": "Purpur Leaves",
+  "block.into_the_void.purpur_sapling": "Purpur Sapling",
 
   "block.into_the_void.purpur_wood_sign": "Purpur Wood Sign",
   "block.into_the_void.purpur_wood_hanging_sign": "Purpur Wood Hanging Sign",

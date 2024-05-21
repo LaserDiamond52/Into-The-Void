@@ -2,8 +2,10 @@ package net.laserdiamond.intothevoid.block;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.item.ITVItems;
+import net.laserdiamond.intothevoid.item.misc.ITVSaplingBlockItem;
 import net.laserdiamond.intothevoid.util.ITVTags;
 import net.laserdiamond.intothevoid.util.ITVWoodTypes;
+import net.laserdiamond.intothevoid.worldgen.tree.PurpurTreeGrower;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -115,7 +117,9 @@ public class ITVBlocks {
     public static final RegistryObject<Block> PURPUR_WOOD_WALL_HANGING_SIGN = BLOCKS.register("purpur_wood_wall_hanging_sign",
             () -> new ITVWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN), ITVWoodTypes.PURPUR));
 
-    //public static final RegistryObject<Block> PURPUR_LEAVES = registerSimpleBlock("purpur_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistryObject<Block> PURPUR_LEAVES = registerSimpleBlock("purpur_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(), List.of(BlockTags.LEAVES)));
+
+    public static final RegistryObject<Block> PURPUR_SAPLING = registerSaplingBlock("purpur_sapling", () -> new ITVSaplingBlock(new PurpurTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING), List.of(BlockTags.SAPLINGS)), List.of(ItemTags.SAPLINGS));
 
     public static final RegistryObject<Block> REFINERY = registerSimpleBlock("refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), List.of(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.NEEDS_WOOD_TOOL)));
@@ -124,11 +128,12 @@ public class ITVBlocks {
                 PURPUR_PLANKS, PURPUR_WOOD_SLAB, PURPUR_WOOD_STAIRS, PURPUR_WOOD_PRESSURE_PLATE,
                 PURPUR_WOOD_DOOR, PURPUR_WOOD_TRAPDOOR, PURPUR_WOOD_FENCE, PURPUR_WOOD_FENCE_GATE,
                 PURPUR_WOOD_BUTTON, PURPUR_WOOD_SIGN, PURPUR_WOOD_HANGING_SIGN, PURPUR_WOOD_WALL_SIGN,
-                PURPUR_WOOD_WALL_HANGING_SIGN, ITVTags.Blocks.PURPUR_LOG, ITVTags.Items.PURPUR_LOG);
+                PURPUR_WOOD_WALL_HANGING_SIGN, ITVItems.PURPUR_WOOD_BOAT, ITVItems.PURPUR_WOOD_CHEST_BOAT, ITVTags.Blocks.PURPUR_LOG, ITVTags.Items.PURPUR_LOG);
 
         private final RegistryObject<Block> logBlock, woodBlock, strippedLogBlock, strippedWoodBlock,
                 planks, slab, stairs, pressurePlate, door, trapDoor, fence, fenceGate, button, sign,
                 hangingSign, wallSign, wallHangingSign;
+        private final RegistryObject<Item> boat, chestBoat;
         private final TagKey<Block> blockTagKey;
         private final TagKey<Item> itemTagKey;
 
@@ -136,7 +141,7 @@ public class ITVBlocks {
                    RegistryObject<Block> planks, RegistryObject<Block> slab, RegistryObject<Block> stairs, RegistryObject<Block> pressurePlate,
                    RegistryObject<Block> door, RegistryObject<Block> trapDoor, RegistryObject<Block> fence, RegistryObject<Block> fenceGate,
                    RegistryObject<Block> button, RegistryObject<Block> sign, RegistryObject<Block> hangingSign, RegistryObject<Block> wallSign,
-                   RegistryObject<Block> wallHangingSign,TagKey<Block> blockTagKey, TagKey<Item> itemTagKey)
+                   RegistryObject<Block> wallHangingSign, RegistryObject<Item> boat, RegistryObject<Item> chestBoat, TagKey<Block> blockTagKey, TagKey<Item> itemTagKey)
         {
             this.logBlock = logBlock;
             this.woodBlock = woodBlock;
@@ -155,6 +160,8 @@ public class ITVBlocks {
             this.hangingSign = hangingSign;
             this.wallSign = wallSign;
             this.wallHangingSign = wallHangingSign;
+            this.boat = boat;
+            this.chestBoat = chestBoat;
             this.blockTagKey = blockTagKey;
             this.itemTagKey = itemTagKey;
         }
@@ -227,6 +234,14 @@ public class ITVBlocks {
             return wallHangingSign;
         }
 
+        public RegistryObject<Item> getBoat() {
+            return boat;
+        }
+
+        public RegistryObject<Item> getChestBoat() {
+            return chestBoat;
+        }
+
         public TagKey<Block> getBlockTagKey() {
             return blockTagKey;
         }
@@ -234,6 +249,7 @@ public class ITVBlocks {
         public TagKey<Item> getItemTagKey() {
             return itemTagKey;
         }
+
     }
 
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block)
@@ -257,6 +273,13 @@ public class ITVBlocks {
         return toReturn;
     }
 
+    private static <T extends Block>RegistryObject<T> registerSaplingBlock(String name, Supplier<T> block, List<TagKey<Item>> itemTags)
+    {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        registerSaplingBlockItem(name, toReturn, itemTags);
+        return toReturn;
+    }
+
     private static <T extends Block>RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)
     {
         return ITVItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
@@ -270,6 +293,11 @@ public class ITVBlocks {
     private static<T extends Block>RegistryObject<Item> registerSimpleBlockItem(String name, RegistryObject<T> block, List<TagKey<Item>> itemTags)
     {
         return ITVItems.ITEMS.register(name, () -> new ITVSimpleBlockItem(block.get(), new Item.Properties(), itemTags));
+    }
+
+    private static<T extends Block>RegistryObject<Item> registerSaplingBlockItem(String name, RegistryObject<T> block, List<TagKey<Item>> itemTags)
+    {
+        return ITVItems.ITEMS.register(name, () -> new ITVSaplingBlockItem(block.get(), new Item.Properties(), itemTags));
     }
 
     public static void register(IEventBus eventBus)
