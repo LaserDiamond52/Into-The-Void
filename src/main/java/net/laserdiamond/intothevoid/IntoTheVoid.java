@@ -8,6 +8,8 @@ import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.entity.ITVEntities;
 import net.laserdiamond.intothevoid.entity.client.ITVBoatRenderer;
 import net.laserdiamond.intothevoid.entity.client.ITVModelLayers;
+import net.laserdiamond.intothevoid.entity.client.VoidPirateModel;
+import net.laserdiamond.intothevoid.entity.client.VoidPirateRenderer;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
 import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
@@ -29,7 +31,6 @@ import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.levelgen.placement.SurfaceRelativeThresholdFilter;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -150,6 +151,8 @@ public class IntoTheVoid
 
             EntityRenderers.register(ITVEntities.PURPUR_WOOD_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, false));
             EntityRenderers.register(ITVEntities.PURPUR_WOOD_CHEST_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, true));
+            EntityRenderers.register(ITVEntities.VOID_PIRATE.get(), VoidPirateRenderer::new);
+
 
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
@@ -175,6 +178,7 @@ public class IntoTheVoid
         {
             event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_BOAT_LAYER, BoatModel::createBodyModel);
             event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+            event.registerLayerDefinition(ITVModelLayers.VOID_PIRATE, VoidPirateModel::createBodyLayer);
         }
 
         @SubscribeEvent
