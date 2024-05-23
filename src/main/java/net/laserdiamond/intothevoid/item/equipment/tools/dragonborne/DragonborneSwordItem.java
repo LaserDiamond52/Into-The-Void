@@ -1,7 +1,7 @@
 package net.laserdiamond.intothevoid.item.equipment.tools.dragonborne;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
-import net.laserdiamond.intothevoid.entity.projectiles.DragonborneFireball;
+import net.laserdiamond.intothevoid.entity.projectiles.DragonFireballs.DragonborneFireball;
 import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.equipment.tools.ITVComplexSwordItem;
@@ -9,17 +9,10 @@ import net.laserdiamond.intothevoid.item.equipment.tools.ITVToolTiers;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.laserdiamond.intothevoid.util.TextColor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.projectile.DragonFireball;
-import net.minecraft.world.entity.projectile.Fireball;
-import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;

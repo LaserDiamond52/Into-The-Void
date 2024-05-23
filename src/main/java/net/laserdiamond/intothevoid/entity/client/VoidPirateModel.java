@@ -7,23 +7,37 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.laserdiamond.intothevoid.entity.animations.ITVAnimationDefinitions;
 import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	//public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "void_pirate"), "main");
-	private final ModelPart void_pirate;
-	private final ModelPart head;
+public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> implements RotatingHead {
+
+	private final ModelPart void_pirate, body, head, leftLeg, rightLeg, leftArm, rightArm, torso;
+
+	public HumanoidModel.ArmPose rightArmPose, leftArmPose;
 
 	public VoidPirateModel(ModelPart root) {
 		this.void_pirate = root.getChild("void_pirate");
-		this.head = void_pirate.getChild("body").getChild("head");
+		this.body = void_pirate.getChild("body");
+		this.head = body.getChild("head");
+		this.leftLeg = body.getChild("left_leg");
+		this.rightLeg = body.getChild("right_leg");
+		this.leftArm = body.getChild("left_arm");
+		this.rightArm = body.getChild("right_arm");
+		this.torso = body.getChild("torso");
 	}
+
+
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
@@ -61,9 +75,11 @@ public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> {
 
 		this.animateWalk(ITVAnimationDefinitions.VOID_PIRATE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
 		this.animate(((VoidPirateEntity) entity).idleAnimationState, ITVAnimationDefinitions.VOID_PIRATE_IDLE, ageInTicks, 1F);
+		this.animate(((VoidPirateEntity) entity).attackAnimationState, ITVAnimationDefinitions.VOID_PIRATE_ATTACK, ageInTicks);
 	}
 
-	private void headRotation(float headYaw, float headPitch)
+	@Override
+	public void headRotation(float headYaw, float headPitch)
 	{
 		headYaw = Mth.clamp(headYaw, -30f, 30f);
 		headPitch = Mth.clamp(headPitch, -25F, 25F);

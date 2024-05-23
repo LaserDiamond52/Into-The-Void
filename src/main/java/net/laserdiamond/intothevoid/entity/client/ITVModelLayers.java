@@ -9,5 +9,5 @@ public class ITVModelLayers {
     public static final ModelLayerLocation PURPUR_WOOD_BOAT_LAYER = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "boat/purpur_wood"), "main");
     public static final ModelLayerLocation PURPUR_WOOD_CHEST_BOAT_LAYER = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "chest_boat/purpur_wood"), "main");
     public static final ModelLayerLocation VOID_PIRATE = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "void_pirate_layer"), "main");
-
+    public static final ModelLayerLocation ENDER_DRAGON_HATCHLING = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "ender_dragon_hatchling_layer"), "main");
 }

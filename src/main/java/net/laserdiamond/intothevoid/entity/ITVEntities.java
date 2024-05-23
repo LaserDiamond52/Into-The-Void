@@ -3,6 +3,7 @@ package net.laserdiamond.intothevoid.entity;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.entity.boat.ITVBoatEntity;
 import net.laserdiamond.intothevoid.entity.boat.ITVChestBoatEntity;
+import net.laserdiamond.intothevoid.entity.itv.EnderDragonHatchlingEntity;
 import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -24,6 +25,10 @@ public class ITVEntities {
     public static final RegistryObject<EntityType<VoidPirateEntity>> VOID_PIRATE = ENTITY_TYPES.register("void_pirate",
             () -> EntityType.Builder.of(VoidPirateEntity::new, MobCategory.MONSTER)
                     .sized(0.6F, 1.95F).build("void_pirate"));
+
+    public static final RegistryObject<EntityType<EnderDragonHatchlingEntity>> ENDER_DRAGON_HATCHLING = ENTITY_TYPES.register("ender_dragon_hatchling",
+            () -> EntityType.Builder.of(EnderDragonHatchlingEntity::new, MobCategory.MONSTER)
+                    .sized(1.5F, 1.5F).build("ender_dragon_hatchling"));
 
 
     public static void register(IEventBus iEventBus)

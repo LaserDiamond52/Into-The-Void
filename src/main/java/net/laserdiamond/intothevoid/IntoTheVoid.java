@@ -6,10 +6,7 @@ import net.laserdiamond.intothevoid.block.entity.ITVBlockEntities;
 import net.laserdiamond.intothevoid.client.ITVKeyBindings;
 import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.entity.ITVEntities;
-import net.laserdiamond.intothevoid.entity.client.ITVBoatRenderer;
-import net.laserdiamond.intothevoid.entity.client.ITVModelLayers;
-import net.laserdiamond.intothevoid.entity.client.VoidPirateModel;
-import net.laserdiamond.intothevoid.entity.client.VoidPirateRenderer;
+import net.laserdiamond.intothevoid.entity.client.*;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
 import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
@@ -152,6 +149,7 @@ public class IntoTheVoid
             EntityRenderers.register(ITVEntities.PURPUR_WOOD_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, false));
             EntityRenderers.register(ITVEntities.PURPUR_WOOD_CHEST_BOAT.get(), pContext -> new ITVBoatRenderer(pContext, true));
             EntityRenderers.register(ITVEntities.VOID_PIRATE.get(), VoidPirateRenderer::new);
+            EntityRenderers.register(ITVEntities.ENDER_DRAGON_HATCHLING.get(), EnderDragonHatchlingRenderer::new);
 
 
             // Some client setup code
@@ -179,6 +177,7 @@ public class IntoTheVoid
             event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_BOAT_LAYER, BoatModel::createBodyModel);
             event.registerLayerDefinition(ITVModelLayers.PURPUR_WOOD_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
             event.registerLayerDefinition(ITVModelLayers.VOID_PIRATE, VoidPirateModel::createBodyLayer);
+            event.registerLayerDefinition(ITVModelLayers.ENDER_DRAGON_HATCHLING, EnderDragonHatchlingModel::createBodyLayer);
         }
 
         @SubscribeEvent
