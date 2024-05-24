@@ -1,4 +1,4 @@
-package net.laserdiamond.intothevoid.dataGen;
+package net.laserdiamond.intothevoid.dataGen.tags;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.util.ITVTags;

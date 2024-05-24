@@ -3,6 +3,10 @@ package net.laserdiamond.intothevoid.dataGen;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.dataGen.loot.ITVLootTableProvider;
 import net.laserdiamond.intothevoid.dataGen.recipe.ITVRecipeProvider;
+import net.laserdiamond.intothevoid.dataGen.tags.ITVBiomeTagProvider;
+import net.laserdiamond.intothevoid.dataGen.tags.ITVBlockTagGenerator;
+import net.laserdiamond.intothevoid.dataGen.tags.ITVEntityTagProvider;
+import net.laserdiamond.intothevoid.dataGen.tags.ITVItemTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -44,6 +48,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ITVItemTagProvider(packOutput, lookUpProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new ITVBiomeTagProvider(packOutput, lookUpProvider, existingFileHelper));
 
+        generator.addProvider(event.includeServer(), new ITVEntityTagProvider(packOutput, lookUpProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ITVWorldGenProvider(packOutput, lookUpProvider));
     }
 }
