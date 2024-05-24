@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "into_the_void:void_pirate_ship",
+      "weight": 1
+    }
+  ],
+  "placement":{
+    "salt": 1491314376,
+    "spacing": 40,
+    "separation": 17,
+    "type": "minecraft:random_spread"
+  }
+}

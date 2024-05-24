@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_end",
+    "into_the_void:purpur_forest_biome"
+  ]
+}

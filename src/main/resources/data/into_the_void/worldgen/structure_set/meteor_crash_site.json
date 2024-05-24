@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "into_the_void:meteor_crash_site",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1354696660,
+    "spacing": 52,
+    "separation": 15,
+    "type": "minecraft:random_spread"
+  }
+}
