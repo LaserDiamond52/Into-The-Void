@@ -274,10 +274,6 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> ENDER_DRAGON_HATCHLING_SPAWN_EGG = ITEMS.register("ender_dragon_hatchling_spawn_egg", () -> new ForgeSpawnEggItem(ITVEntities.ENDER_DRAGON_HATCHLING, 197379, 9715891, new Item.Properties()));
 
-    /**
-     * Registers all the items under the ITEMS DeferredRegister
-     * @param eventBus The mod's event bus
-     */
 
     /**
      * A HashMap mapping ore mineral items to their block variants. Used for recipes
@@ -290,6 +286,10 @@ public class ITVItems {
         ORE_MATERIAL_TO_BLOCK.put(ENDERITE, ITVBlocks.ENDERITE_BLOCK);
     }
 
+    /**
+     * Registers all the items under the ITEMS DeferredRegister
+     * @param eventBus The mod's event bus
+     */
     public static void register(IEventBus eventBus)
     {
         ITEMS.register(eventBus);

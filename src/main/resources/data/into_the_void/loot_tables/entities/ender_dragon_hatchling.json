@@ -53,30 +53,6 @@
           ]
         }
       ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "into_the_void:end_core",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:entity_properties",
-              "entity": "killer",
-              "predicate": {
-                "type": "#into_the_void:void_pirate"
-              }
-            }
-          ]
-        }
-      ]
     }
   ]
 }

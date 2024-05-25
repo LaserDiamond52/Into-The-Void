@@ -14,6 +14,7 @@ import java.util.List;
 public class ITVButtonBlock extends ButtonBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;
+
     public ITVButtonBlock(Properties pProperties, BlockSetType pType, int pTicksToStayPressed, boolean pArrowsCanPress) {
         super(pProperties, pType, pTicksToStayPressed, pArrowsCanPress);
         this.blockTags = new ArrayList<>();

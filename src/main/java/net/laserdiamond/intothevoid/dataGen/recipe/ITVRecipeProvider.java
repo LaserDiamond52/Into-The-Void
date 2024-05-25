@@ -23,6 +23,7 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -36,13 +37,26 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     /**
-     * Builds out all the recipes to .json files
+     * HashMap that maps a List of ItemLike objects to an OreRecipeResultWrapper object. Used to help make ore smelting recipes
+     */
+    private static final HashMap<List<ItemLike>, OreRecipeResultWrapper> ORE_SMELTING_MAP = new HashMap<>();
+    static
+    {
+        ORE_SMELTING_MAP.put(List.of(ITVBlocks.LONSDALEITE_ORE.get().asItem(), ITVBlocks.METEORITE_LONSDALEITE_ORE.get().asItem(), ITVBlocks.ENDSTONE_LONSDALEITE_ORE.get().asItem()),
+                new OreRecipeResultWrapper(ITVItems.LONSDALEITE, RecipeCategory.MISC, 15, 400));
+
+        ORE_SMELTING_MAP.put(List.of(ITVBlocks.ENDERITE_ORE.get().asItem()),
+                new OreRecipeResultWrapper(ITVItems.ENDERITE, RecipeCategory.MISC, 12, 400));
+    }
+
+    /**
+     * Builds out all the recipes to json files
      * @param consumer The FinishedRecipe Consumer
      */
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
-        smeltingRecipe(consumer);
+        smeltingRecipes(consumer);
         oreMaterialBlockCrafting(consumer);
         armorCrafting(consumer);
         toolCrafting(consumer);
@@ -84,9 +98,15 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
      * Adds all smelting recipes of this mod
      * @param consumer The FinishedRecipe Consumer
      */
-    protected static void smeltingRecipe(Consumer<FinishedRecipe> consumer)
+    protected static void smeltingRecipes(Consumer<FinishedRecipe> consumer)
     {
-
+        for (List<ItemLike> ingredients : ORE_SMELTING_MAP.keySet())
+        {
+            OreRecipeResultWrapper recipeResultWrapper = ORE_SMELTING_MAP.get(ingredients);
+            String groupName = recipeResultWrapper.result().getId().getPath();
+            smelting(consumer, ingredients, recipeResultWrapper.recipeCategory(), recipeResultWrapper.result().get(), recipeResultWrapper.experience(), recipeResultWrapper.cookingTime(), groupName);
+            oreBlasting(consumer, ingredients, recipeResultWrapper.recipeCategory(), recipeResultWrapper.result().get(), recipeResultWrapper.experience(), recipeResultWrapper.cookingTime() / 2, groupName);
+        }
     }
 
     /**

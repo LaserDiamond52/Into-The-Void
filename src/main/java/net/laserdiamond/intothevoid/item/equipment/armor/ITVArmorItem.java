@@ -30,7 +30,7 @@ import java.util.*;
 public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
 
     public List<MobEffectInstance> effects;
-    private Multimap<Attribute, AttributeModifier> defaultModifiers;
+    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
     private List<TagKey<Item>> itemTags;
 
     public ITVArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {

@@ -22,7 +22,7 @@ public class GKeyAbilityActivate {
     public void toBytes(FriendlyByteBuf buf) {}
 
     /**
-     * Handles the functionality of packets sent from the client to the server. Anything that runs inside this method is running server side in-game
+     * Handles the functionality of packets sent from the client to the server. Anything that runs inside the NetworkEvent Context in this method is running server side in-game
      * @param supplier A supplier of the Network Event Context
      * @return True (no instance where it returns false right now)
      */

@@ -70,7 +70,7 @@ public class IntoTheVoid
      */
     public IntoTheVoid()
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus(); // Mod event bus used to register events
 
         registerListeners(modEventBus);
         DragonborneCooldown.setupCooldown();

@@ -47,6 +47,8 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
     private int maxWaterLevel = 100;
 
     public RefineryBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        // Sets up the Refinery Block's data when placed
+
         super(ITVBlockEntities.REFINERY.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
