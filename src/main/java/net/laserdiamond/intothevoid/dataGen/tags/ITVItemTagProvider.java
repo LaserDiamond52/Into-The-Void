@@ -4,7 +4,7 @@ import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.*;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ItemTaggable;
-import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
+import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.ITVSmithingTemplateItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -19,12 +19,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The item tag provider of this mod
+ */
 public class ITVItemTagProvider extends ItemTagsProvider {
 
     public ITVItemTagProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> providerCompletableFuture, CompletableFuture<TagLookup<Block>> blockTagGenerator, @Nullable ExistingFileHelper existingFileHelper) {
         super(packOutput, providerCompletableFuture, blockTagGenerator, IntoTheVoid.MODID, existingFileHelper);
     }
 
+    /**
+     * Adds all relevant tags to items
+     * @param provider The Lookup Provider
+     */
     @Override
     protected void addTags(HolderLookup.Provider provider) {
 

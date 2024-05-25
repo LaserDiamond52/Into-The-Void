@@ -5,6 +5,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * A Hanging Sign Block Entity of this mod
+ */
 public class ITVHangingSignBlockEntity extends SignBlockEntity {
 
     public ITVHangingSignBlockEntity(BlockPos pBlockPos, BlockState pBlockState) {

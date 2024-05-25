@@ -1,16 +1,30 @@
 package net.laserdiamond.intothevoid.item.ingredients.smithingTemplates;
 
 import net.laserdiamond.intothevoid.item.CustomToolTips;
-import net.laserdiamond.intothevoid.item.ingredients.ITVSmithingTemplateItem;
+import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.util.TextColor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DragonborneSmithingTemplate extends ITVSmithingTemplateItem implements CustomToolTips{
+/**
+ * Class representing a Dragonborne Smithing Template item
+ */
+public final class DragonborneSmithingTemplate extends ITVSmithingTemplateItem implements CustomToolTips {
     public DragonborneSmithingTemplate(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    public ItemLike materialItem() {
+        return ITVItems.DRAGON_HIDE.get();
+    }
+
+    @Override
+    public ItemLike mineralItem() {
+        return ITVItems.ENDERITE.get();
     }
 
     @Override

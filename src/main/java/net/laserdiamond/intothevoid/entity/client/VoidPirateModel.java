@@ -1,4 +1,5 @@
-package net.laserdiamond.intothevoid.entity.client;// Made with Blockbench 4.10.1
+package net.laserdiamond.intothevoid.entity.client;
+// Made with Blockbench 4.10.1
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
@@ -20,6 +21,10 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Contains the Void Pirate Model and functionality of its animations. Most of this is auto-generated from exporting the model from BlockBench as a .java file
+ * @param <T>
+ */
 public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> implements RotatingHead {
 
 	private final ModelPart void_pirate, body, head, leftLeg, rightLeg, leftArm, rightArm, torso;
@@ -37,8 +42,10 @@ public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> impl
 		this.torso = body.getChild("torso");
 	}
 
-
-
+	/**
+	 * Creates the body layers of the model
+	 * @return A LayerDefinition of the model
+	 */
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
@@ -68,6 +75,15 @@ public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> impl
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
+	/**
+	 * Responsible for setting up the animations for the model
+	 * @param entity The entity
+	 * @param limbSwing The limb swing (float)
+	 * @param limbSwingAmount The limb swing amount (float)
+	 * @param ageInTicks The age in ticks of the entity
+	 * @param netHeadYaw The head yaw
+	 * @param headPitch The head pitch
+	 */
 	@Override
 	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
@@ -93,6 +109,10 @@ public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> impl
 		void_pirate.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
+	/**
+	 * The root of the model
+	 * @return A ModelPart representing the root of the model
+	 */
 	@Override
 	public ModelPart root() {
 		return void_pirate;

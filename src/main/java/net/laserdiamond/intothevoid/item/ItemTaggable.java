@@ -5,6 +5,9 @@ import net.minecraft.world.item.Item;
 
 import java.util.List;
 
+/**
+ * Interface used to help add items tags to items
+ */
 public interface ItemTaggable {
 
     /**

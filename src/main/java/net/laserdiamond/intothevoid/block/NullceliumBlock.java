@@ -15,6 +15,9 @@ import net.minecraftforge.common.IPlantable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The nullcelium block
+ */
 public class NullceliumBlock extends Block implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;
@@ -38,6 +41,13 @@ public class NullceliumBlock extends Block implements BlockTaggable {
         return true;
     }
 
+    /**
+     * Determines if the block can be Nullcelium
+     * @param pState The BlockState of the block
+     * @param pReader The LevelReader
+     * @param pPos the Position of the block
+     * @return True if Nullcelium, false if not
+     */
     private static boolean canBeNullcelium(BlockState pState, LevelReader pReader, BlockPos pPos)
     {
         BlockPos abovePos = pPos.above();
@@ -46,6 +56,13 @@ public class NullceliumBlock extends Block implements BlockTaggable {
         return lightIntoBlock < pReader.getMaxLightLevel();
     }
 
+    /**
+     * Changes Nullcelium to Null Sand if a block is present on top of Nullcelium for a duration
+     * @param pState The BlockState of the block
+     * @param pLevel The ServerLevel of the world
+     * @param pPos the position of the block
+     * @param pRandom RandomSource
+     */
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (!canBeNullcelium(pState, pLevel, pPos))
@@ -54,6 +71,10 @@ public class NullceliumBlock extends Block implements BlockTaggable {
         }
     }
 
+    /**
+     * Determines if all sides of the block should have the same texture (NO FUNCTIONALITY AT THE MOMENT)
+     * @return True if all sides should be the same, false if not
+     */
     public boolean getAllSides()
     {
         return allSides;

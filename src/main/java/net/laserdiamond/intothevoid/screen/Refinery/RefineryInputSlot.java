@@ -7,6 +7,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that represents the Refinery input slot. Can only input items that have the Refinery Ingredient tag
+ */
 public class RefineryInputSlot extends SlotItemHandler {
     public RefineryInputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);

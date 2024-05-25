@@ -15,36 +15,61 @@ import software.bernie.geckolib.util.RenderUtils;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class RefinedEndCrystal extends Item implements GeoItem, ItemTaggable {
+/**
+ * Class representing the Refined End Crystal Item
+ */
+public class RefinedEndCrystalItem extends Item implements GeoItem, ItemTaggable {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final List<TagKey<Item>> itemTags;
-    public RefinedEndCrystal(Properties pProperties, List<TagKey<Item>> itemTags) {
+    public RefinedEndCrystalItem(Properties pProperties, List<TagKey<Item>> itemTags) {
         super(pProperties);
         this.itemTags = itemTags;
     }
 
+    /**
+     * Plays the animation for the item
+     * @param animationState The animation state
+     * @return A PlayState of the animation
+     */
     private PlayState predicate(AnimationState animationState)
     {
         animationState.getController().setAnimation(RawAnimation.begin().then("refinedEndCrystalAnimation", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
+    /**
+     * Registers the controllers for the animations of this item
+     * @param controllerRegistrar The controller register from the AnimatableManager
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController(this, "controller",0, this::predicate));
     }
 
+    /**
+     * Cache of the AnimatableInstance
+     * @return The cache of the animatable instance
+     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
 
+    /**
+     * Runs every tick the item is active
+     * @param itemStack An Object representing the itemStack
+     * @return
+     */
     @Override
     public double getTick(Object itemStack) {
         return RenderUtils.getCurrentTick();
     }
 
+    /**
+     * Responsible for rendering the Refined End Crystal on the client
+     * @param consumer A Consumer of type "IClientItemExtensions"
+     */
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {

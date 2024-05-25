@@ -8,6 +8,9 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
+/**
+ * A sapling block item of this mod
+ */
 public class ITVSaplingBlockItem extends ITVSimpleBlockItem implements ItemTaggable {
 
     public ITVSaplingBlockItem(Block pBlock, Properties pProperties) {

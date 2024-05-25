@@ -6,6 +6,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
+/**
+ * The Attack Goal of the Void Pirate
+ */
 public class VoidPirateAttackGoal extends MeleeAttackGoal {
 
     private final VoidPirateEntity pirateEntity;
@@ -17,6 +20,9 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
         pirateEntity = (VoidPirateEntity) pMob;
     }
 
+    /**
+     * Runs when the entity is spawned or loaded
+     */
     @Override
     public void start() {
         super.start();
@@ -24,6 +30,9 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
         ticksUntilNextAttack = 8;
     }
 
+    /**
+     * Runs for every tick the entity is alive/loaded. Calls the parent method for most functionality
+     */
     @Override
     public void tick() {
         super.tick();
@@ -33,12 +42,20 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
         }
     }
 
+    /**
+     * Runs when the entity dies or is unloaded
+     */
     @Override
     public void stop() {
         pirateEntity.setAttacking(false);
         super.stop();
     }
 
+    /**
+     * Checks if the enemy is in range and that the entity is able to attack them
+     * @param pEnemy The enemy of the entity
+     * @param pDistToEnemySqr The distance to the entity squared
+     */
     @Override
     protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
 
@@ -65,31 +82,56 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
         }
     }
 
+    /**
+     * Checks if the enemy is in range of the entity
+     * @param target
+     * @param distToTargetSqr
+     * @return
+     */
     private boolean isEnemyInRange(LivingEntity target, double distToTargetSqr)
     {
         return distToTargetSqr <= this.getAttackReachSqr(target);
     }
 
+    /**
+     * Resets the attack cooldown for the entity
+     */
     @Override
     protected void resetAttackCooldown() {
         this.ticksUntilNextAttack = this.adjustedTickDelay(attackDelay * 2);
     }
 
+    /**
+     * Checks if it is time for the entity to attack
+     * @return True if ticksUntilNextAttack is less than or equal to 0, false otherwise
+     */
     @Override
     protected boolean isTimeToAttack() {
         return this.ticksUntilNextAttack <= 0;
     }
 
+    /**
+     * Checks if it is time to start the attack animation
+     * @return True if ticksUntilNextAttack is less than or qual to attackDelay, false otherwise
+     */
     protected boolean isTimeToStartAttackAnimation()
     {
         return this.ticksUntilNextAttack <= attackDelay;
     }
 
+    /**
+     * Gets the ticks until the next attack
+     * @return the ticks until the next attack as an int
+     */
     @Override
     public int getTicksUntilNextAttack() {
         return this.ticksUntilNextAttack;
     }
 
+    /**
+     * Attacks the target
+     * @param target The living entity to attack
+     */
     protected void attackTarget(LivingEntity target)
     {
         this.resetAttackCooldown();

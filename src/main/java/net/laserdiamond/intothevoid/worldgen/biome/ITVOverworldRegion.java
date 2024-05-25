@@ -14,12 +14,20 @@ import terrablender.api.VanillaParameterOverlayBuilder;
 
 import java.util.function.Consumer;
 
+/**
+ * Class responsible for adding biomes to the Overworld
+ */
 public class ITVOverworldRegion extends Region {
 
     public ITVOverworldRegion(ResourceLocation name, int weight) {
         super(name, RegionType.OVERWORLD, weight);
     }
 
+    /**
+     * Region method that adds Purpur Forest to the world generation. This is done by randomly replacing the "Forest" biome with the Purpur Forest biome
+     * @param registry The Biome Registry (Registry of type "Biome")
+     * @param mapper A Consumer of type "Pair" that contains Climate ParameterPoints and A ResourceKey of type "Biome"
+     */
     @Override
     public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
         this.addModifiedVanillaOverworldBiomes(mapper, modifiedVanillaOverworldBuilder ->

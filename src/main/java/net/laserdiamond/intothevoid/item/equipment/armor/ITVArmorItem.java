@@ -213,6 +213,13 @@ public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
         EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.FEET, 3);
     }
 
+    /**
+     * Appends tooltips for the armor item
+     * @param pStack The ItemStack representing the item
+     * @param pLevel The Level
+     * @param pTooltipComponents The tooltips to add
+     * @param pIsAdvanced Whether "Advanced Tooltips" is enabled
+     */
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
 

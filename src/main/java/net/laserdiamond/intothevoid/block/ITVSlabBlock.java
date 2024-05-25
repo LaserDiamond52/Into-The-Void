@@ -7,6 +7,9 @@ import net.minecraft.world.level.block.SlabBlock;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A slab block of this mod
+ */
 public class ITVSlabBlock extends SlabBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

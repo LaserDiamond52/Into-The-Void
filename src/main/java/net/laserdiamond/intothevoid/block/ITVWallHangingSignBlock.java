@@ -12,6 +12,9 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A wall hanging sign block of this mod
+ */
 public class ITVWallHangingSignBlock extends WallHangingSignBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

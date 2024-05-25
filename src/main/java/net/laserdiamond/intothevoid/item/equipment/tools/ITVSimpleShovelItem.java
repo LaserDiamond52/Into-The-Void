@@ -9,6 +9,9 @@ import net.minecraft.world.item.Tier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A simple shovel item of this mod. Model is auto generated as a handheld item, and only a texture must be supplied
+ */
 public class ITVSimpleShovelItem extends ShovelItem implements ItemTaggable {
 
     private final List<TagKey<Item>> itemTags;

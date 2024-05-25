@@ -42,6 +42,9 @@ public class VoidPirateEntity extends Monster implements SetupAnimationState, At
     public final AnimationState attackAnimationState = new AnimationState();
     public int attackAnimationTimeout = 0;
 
+    /**
+     * Runs every tick the entity is loaded
+     */
     @Override
     public void tick() {
         super.tick();
@@ -52,6 +55,11 @@ public class VoidPirateEntity extends Monster implements SetupAnimationState, At
         }
     }
 
+    /**
+     * Populates the equipment slots of the mob when initially spawned. Current does not work for this entity
+     * @param pRandom RandomSource
+     * @param pDifficulty The difficulty of the world
+     */
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
         super.populateDefaultEquipmentSlots(pRandom, pDifficulty);
@@ -85,7 +93,10 @@ public class VoidPirateEntity extends Monster implements SetupAnimationState, At
         }
     }
 
-
+    /**
+     * Updates the walking animation for this entity
+     * @param pPartialTick
+     */
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
@@ -111,12 +122,18 @@ public class VoidPirateEntity extends Monster implements SetupAnimationState, At
         return this.entityData.get(ATTACKING);
     }
 
+    /**
+     * Defines the synched data when the entity is initially loaded
+     */
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
     }
 
+    /**
+     * Registers the goals and pathfinders for this entity to follow
+     */
     @Override
     protected void registerGoals() {
 
@@ -136,22 +153,39 @@ public class VoidPirateEntity extends Monster implements SetupAnimationState, At
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(VoidPirateEntity.class));
     }
 
+    /**
+     * The ambient sound of the entity. Randomly plays while the entity is loaded
+     * @return A SoundEvent representing the ambient sound
+     */
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.VINDICATOR_AMBIENT;
     }
 
+    /**
+     * The hurt sound of the entity. Plays when the entity takes damage
+     * @param pDamageSource The source of damage the entity receives
+     * @return A SoundEvent representing the hurt sound
+     */
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return SoundEvents.VINDICATOR_HURT;
     }
 
+    /**
+     * The death sound of the entity. Plays when the entity is slain
+     * @return A SoundEvent representing the death sound
+     */
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.VINDICATOR_DEATH;
     }
 
+    /**
+     * Creates all attributes the entity needs
+     * @return An AttributeSupplier.Builder containing all the attributes for the entity
+     */
     public static AttributeSupplier.Builder createAttributes()
     {
         return Mob.createLivingAttributes()

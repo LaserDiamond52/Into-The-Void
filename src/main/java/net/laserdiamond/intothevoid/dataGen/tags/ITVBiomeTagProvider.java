@@ -11,6 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The biome tag provider of this mod. Doesn't work on biomes of this mod at the moment
+ */
 public class ITVBiomeTagProvider extends BiomeTagsProvider {
 
     public ITVBiomeTagProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> providerCompletableFuture, @Nullable ExistingFileHelper existingFileHelper) {

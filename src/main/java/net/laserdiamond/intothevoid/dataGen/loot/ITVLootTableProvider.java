@@ -7,6 +7,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Class responsible for creating all the loot table providers for this mod
+ */
 public class ITVLootTableProvider {
 
     public static LootTableProvider create(PackOutput output)

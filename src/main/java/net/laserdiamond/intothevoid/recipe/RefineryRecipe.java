@@ -15,6 +15,9 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Class that represents the Refinery Recipe
+ */
 public class RefineryRecipe implements Recipe<SimpleContainer> {
 
     private final NonNullList<Ingredient> inputItems;
@@ -27,6 +30,12 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
         this.id = id;
     }
 
+    /**
+     * Checks if the contents in the inventory/container matches a recipe
+     * @param simpleContainer The inventory/container to check
+     * @param level The level of the world
+     * @return True if a matching recipe is found, false if not. False is also returned if the level is client side
+     */
     @Override
     public boolean matches(SimpleContainer simpleContainer, Level level) {
         if (level.isClientSide)
@@ -36,11 +45,23 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
         return inputItems.get(RefineryBlockEntity.ITEM_INPUT_SLOT).test(simpleContainer.getItem(RefineryBlockEntity.ITEM_INPUT_SLOT));
     }
 
+    /**
+     * Assembles the recipe and returns the output item
+     * @param simpleContainer The inventory/container containing the recipe
+     * @param registryAccess RegistryAccess
+     * @return An ItemStack representing the output item
+     */
     @Override
     public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
         return output.copy();
     }
 
+    /**
+     *
+     * @param i width
+     * @param i1 height
+     * @return
+     */
     @Override
     public boolean canCraftInDimensions(int i, int i1) {
         return true;
@@ -51,16 +72,28 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
         return output.copy();
     }
 
+    /**
+     * The ID of the recipe
+     * @return A resource location to the recipe
+     */
     @Override
     public ResourceLocation getId() {
         return id;
     }
 
+    /**
+     * Returns the instance of the Recipe Serializer of an unknown type
+     * @return The recipe serializer instance for this recipe
+     */
     @Override
     public RecipeSerializer<?> getSerializer() {
         return Serializer.INSTANCE;
     }
 
+    /**
+     * Returns the instance of the Recipe Type of unknown type
+     * @return The recipe type instance for this recipe
+     */
     @Override
     public RecipeType<?> getType() {
         return Type.INSTANCE;
@@ -68,15 +101,35 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
 
     public static class Type implements RecipeType<RefineryRecipe>
     {
+        /**
+         * RecipeType instance
+         */
         public static final Type INSTANCE = new Type();
+
+        /**
+         * Recipe ID as a String
+         */
         public static final String ID = "refinery";
     }
 
     public static class Serializer implements RecipeSerializer<RefineryRecipe>
     {
+        /**
+         * RecipeSerializer instance
+         */
         public static final Serializer INSTANCE = new Serializer();
+
+        /**
+         * Recipe ID as a ResourceLocation
+         */
         public static final ResourceLocation ID = new ResourceLocation(IntoTheVoid.MODID, "refinery");
 
+        /**
+         * Gets the Refinery Recipe from the json file
+         * @param resourceLocation The resource location of the recipe
+         * @param jsonObject The json object representing the recipe
+         * @return An object instance of the recipe (this class)
+         */
         @Override
         public RefineryRecipe fromJson(ResourceLocation resourceLocation, JsonObject jsonObject) {
 
@@ -93,6 +146,12 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
             return new RefineryRecipe(inputs, output, resourceLocation);
         }
 
+        /**
+         * Synchronizes the recipe from the server to the client
+         * @param resourceLocation The resource location of the recipe
+         * @param friendlyByteBuf FriendlyByteBuf
+         * @return An object instance of the recipe (this class)
+         */
         @Override
         public @Nullable RefineryRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf friendlyByteBuf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(friendlyByteBuf.readInt(), Ingredient.EMPTY);
@@ -105,6 +164,11 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
             return new RefineryRecipe(inputs, output, resourceLocation);
         }
 
+        /**
+         * Synchronizes the recipe from the client to the server
+         * @param friendlyByteBuf FriendlyByteBuf
+         * @param refineryRecipe An object instance of the recipe (this class)
+         */
         @Override
         public void toNetwork(FriendlyByteBuf friendlyByteBuf, RefineryRecipe refineryRecipe) {
             friendlyByteBuf.writeInt(refineryRecipe.inputItems.size());

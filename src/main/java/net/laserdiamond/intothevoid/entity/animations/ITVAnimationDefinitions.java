@@ -6,7 +6,7 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
 /**
- * Class that contains Animation Definitions for entities of this mod. These are all generated from BlockBench
+ * Class that contains Animation Definitions for entities of this mod. These are all auto-generated from BlockBench where the animations were created.
  */
 public class ITVAnimationDefinitions {
 

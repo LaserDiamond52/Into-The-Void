@@ -19,7 +19,11 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.List;
 
+/**
+ * Class that represents the Dragonborne Sword item
+ */
 public final class DragonborneSwordItem extends ITVComplexSwordItem implements GKeyAbility, ToolSmithing {
+
     public DragonborneSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.DRAGONBORNE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
         IntoTheVoid.G_KEY_ABILITIES.add(this);

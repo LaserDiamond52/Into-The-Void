@@ -28,6 +28,7 @@ public class RefineryMenu extends AbstractContainerMenu {
     }
 
     private SlotItemHandler water, input, output;
+
     public RefineryMenu(int containerId, Inventory inv, BlockEntity blockEntity, ContainerData data)
     {
         super(ITVMenuTypes.REFINERY_MENU.get(), containerId);
@@ -39,6 +40,7 @@ public class RefineryMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
+        // Add the input slots to the menu
         this.be.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler ->
         {
             input = new RefineryInputSlot(iItemHandler, 0, 56, 53);
@@ -98,6 +100,12 @@ public class RefineryMenu extends AbstractContainerMenu {
 
     private static final int REFINERY_INVENTORY_SLOT_COUNT = 3;
 
+    /**
+     * Responsible for the quick move action the player can use to move items in the inventory
+     * @param player The player interacting with the inventory
+     * @param i The index of the inventory slot
+     * @return The ItemStack to place in the slot that is result of the movement
+     */
     @Override
     public ItemStack quickMoveStack(Player player, int i) {
         Slot sourceSlot = slots.get(i);
@@ -141,12 +149,21 @@ public class RefineryMenu extends AbstractContainerMenu {
         return copySourceStack;
     }
 
+    /**
+     * Checks if the player still has valid access to the container
+     * @param player The player accessing the container
+     * @return True if player access is still valid, false otherwise
+     */
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, be.getBlockPos()),
                 player, ITVBlocks.REFINERY.get());
     }
 
+    /**
+     * Adds the player inventory to the Refinery menu
+     * @param pInv The player inventory
+     */
     private void addPlayerInventory(Inventory pInv)
     {
         for (int i = 0; i < 3; i++)
@@ -158,6 +175,10 @@ public class RefineryMenu extends AbstractContainerMenu {
         }
     }
 
+    /**
+     * Adds the player hotbar to the Refinery menu
+     * @param pInv the player inventory
+     */
     private void addPlayerHotbar(Inventory pInv)
     {
         for (int i = 0; i < 9; i++)

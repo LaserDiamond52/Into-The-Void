@@ -10,6 +10,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents an Enderite Shovel item
+ */
 public final class EnderiteShovelItem extends ITVSimpleShovelItem implements ToolSmithing {
     public EnderiteShovelItem(float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

@@ -24,10 +24,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * All blocks of this mod
+ */
 public class ITVBlocks {
 
     /**
@@ -96,38 +100,111 @@ public class ITVBlocks {
      */
     public static final RegistryObject<Block> PURPUR_PLANKS = registerSimpleBlock("purpur_planks", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(3F), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.LOGS_THAT_BURN, BlockTags.PLANKS)), List.of(ItemTags.PLANKS));
 
+    /**
+     * A RegistryObject of type "Block" that represents Purpur Wood Slabs
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_SLAB = registerSimpleBlock("purpur_wood_slab", () -> new ITVSlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_SLABS)), List.of(ItemTags.WOODEN_SLABS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Purpur Wood Stairs
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_STAIRS = registerSimpleBlock("purpur_wood_stairs", () -> new ITVStairBlock(() -> PURPUR_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_STAIRS)), List.of(ItemTags.WOODEN_STAIRS));
+
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Pressure Plate
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_PRESSURE_PLATE = registerSimpleBlock("purpur_wood_pressure_plate", () -> new ITVPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.OAK_PRESSURE_PLATE), BlockSetType.OAK, List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_PRESSURE_PLATES)), List.of(ItemTags.WOODEN_PRESSURE_PLATES));
+
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Door
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_DOOR = registerSimpleBlock("purpur_wood_door", () -> new ITVDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_DOOR), BlockSetType.OAK, List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.DOORS)), List.of(ItemTags.DOORS));
+
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Trapdoor
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_TRAPDOOR = registerSimpleBlock("purpur_wood_trapdoor", () -> new ITVTrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR), BlockSetType.OAK, List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_TRAPDOORS)), List.of(ItemTags.WOODEN_TRAPDOORS));
+
+    /**
+     * A RegistryObject of type "Block" that represnts a Purpur Wood Fence
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_FENCE = registerSimpleBlock("purpur_wood_fence", () -> new ITVFenceBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_FENCES)), List.of(ItemTags.WOODEN_FENCES));
+
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Fence Gate
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_FENCE_GATE = registerSimpleBlock("purpur_wood_fence_gate", () -> new ITVFenceGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.CHERRY_WOOD_FENCE_GATE_OPEN, SoundEvents.CHERRY_WOOD_FENCE_GATE_CLOSE, List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_AXE, BlockTags.FENCE_GATES)), List.of(ItemTags.FENCE_GATES));
+
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Button
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_BUTTON = registerSimpleBlock("purpur_wood_button", () -> new ITVButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
 
+    /**
+     * A RegistryObject of type "Block" that represents A Purpur Wood Sign
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_SIGN = BLOCKS.register("purpur_wood_sign",
             () -> new ITVStandingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SIGN), ITVWoodTypes.PURPUR));
 
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Hanging Sign
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_HANGING_SIGN = BLOCKS.register("purpur_wood_hanging_sign",
             () -> new ITVHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_HANGING_SIGN), ITVWoodTypes.PURPUR));
 
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Wall Sign
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_WALL_SIGN = BLOCKS.register("purpur_wood_wall_sign",
             () -> new ITVWallSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_SIGN), ITVWoodTypes.PURPUR));
 
+    /**
+     * A RegistryObject of type "Block" that represents a Purpur Wood Wall Hanging Sign
+     */
     public static final RegistryObject<Block> PURPUR_WOOD_WALL_HANGING_SIGN = BLOCKS.register("purpur_wood_wall_hanging_sign",
             () -> new ITVWallHangingSignBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WALL_HANGING_SIGN), ITVWoodTypes.PURPUR));
 
+    /**
+     * A RegistryObject of type "Block" that represents Purpur Leaves
+     */
     public static final RegistryObject<Block> PURPUR_LEAVES = registerSimpleBlock("purpur_leaves", () -> new ITVLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion(), List.of(BlockTags.LEAVES)));
 
+    /**
+     * A ReigstryObject of type "Block" that represents Purpur Saplings
+     */
     public static final RegistryObject<Block> PURPUR_SAPLING = registerSaplingBlock("purpur_sapling", () -> new ITVSaplingBlock(new PurpurTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING), List.of(BlockTags.SAPLINGS)), List.of(ItemTags.SAPLINGS));
 
+    /**
+     * A RegistryObject of type "Block" that represents a Refinery
+     */
     public static final RegistryObject<Block> REFINERY = registerSimpleBlock("refinery",
             () -> new RefineryBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion(), List.of(BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.NEEDS_WOOD_TOOL)));
 
+    /**
+     * A RegistryObject of type "Block" that represents Nullceluim
+     */
     public static final RegistryObject<Block> NULLCELIUM = registerSimpleBlock("nullcelium", () -> new NullceliumBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK), true, List.of(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.MUSHROOM_GROW_BLOCK)));
 
+    /**
+     * A RegistryObject of type "Block" that represents Null Sand
+     */
     public static final RegistryObject<Block> NULL_SAND = registerSimpleBlock("null_sand", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.DIRT), List.of(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.SAND, BlockTags.DIRT)), List.of(ItemTags.DIRT, ItemTags.SAND));
 
+    /**
+     * An enum consisting of wood categories with all their respective blocks/items. Must include:
+     * <li>Logs (Normal and Stripped)</li>
+     * <li>Wood (Normal and Stripped)</li>
+     * <li>Planks</li>
+     * <li>Slabs</li>
+     * <li>Stairs</li>
+     * <li>Pressure Plate</li>
+     * <li>Door + Trapdoor</li>
+     * <li>Fence + Fence Gate</li>
+     * <li>Signs (Normal and Hanging + Wall variants)</li>
+     * <li>Boat items (both normal and chest)</li>
+     * <li>Block Tag for the logs</li>
+     * <li>Item Tag for the logs</li>
+     */
     public enum WoodBlocks {
         PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD,
                 PURPUR_PLANKS, PURPUR_WOOD_SLAB, PURPUR_WOOD_STAIRS, PURPUR_WOOD_PRESSURE_PLATE,
@@ -135,6 +212,7 @@ public class ITVBlocks {
                 PURPUR_WOOD_BUTTON, PURPUR_WOOD_SIGN, PURPUR_WOOD_HANGING_SIGN, PURPUR_WOOD_WALL_SIGN,
                 PURPUR_WOOD_WALL_HANGING_SIGN, ITVItems.PURPUR_WOOD_BOAT, ITVItems.PURPUR_WOOD_CHEST_BOAT, ITVTags.Blocks.PURPUR_LOG, ITVTags.Items.PURPUR_LOG);
 
+        @NotNull
         private final RegistryObject<Block> logBlock, woodBlock, strippedLogBlock, strippedWoodBlock,
                 planks, slab, stairs, pressurePlate, door, trapDoor, fence, fenceGate, button, sign,
                 hangingSign, wallSign, wallHangingSign;
@@ -257,6 +335,13 @@ public class ITVBlocks {
 
     }
 
+    // Methods used to Register all blocks and different variants of blocks
+
+    // A name for the block is required (all lowercase, underscores for spaces)
+    // A Supplier of the subclass object of the RegistryObject type is required
+    // Returns a subclass object instance of the Block object
+    // A list of item tags can be specified for the block item
+
     private static <T extends Block>RegistryObject<T> registerBlock(String name, Supplier<T> block)
     {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
@@ -305,6 +390,10 @@ public class ITVBlocks {
         return ITVItems.ITEMS.register(name, () -> new ITVSaplingBlockItem(block.get(), new Item.Properties(), itemTags));
     }
 
+    /**
+     * Registers all Blocks in the DeferredRegister
+     * @param eventBus The EventBus of this mod
+     */
     public static void register(IEventBus eventBus)
     {
         BLOCKS.register(eventBus);

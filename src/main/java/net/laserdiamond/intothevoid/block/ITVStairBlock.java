@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * A stair block of this mod
+ */
 public class ITVStairBlock extends StairBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

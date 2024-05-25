@@ -45,6 +45,11 @@ public class CreativeTabs {
     public static final RegistryObject<CreativeModeTab> GEAR_TAB = CREATIVE_TABS.register("into_the_void_gear", () -> CreativeModeTab.builder().icon(() -> new ItemStack(ITVItems.ENDERITE_CHESTPLATE.get())).title(Component.translatable(CREATIVE_TAB_ID + "into_the_void_gear")).build());
 
     /**
+     * A RegistryObject of type "CreativeModeTab" that represents a creative mode tab that contains spawn eggs for all mobs in this mod
+     */
+    public static final RegistryObject<CreativeModeTab> MOBS = CREATIVE_TABS.register("into_the_void_mobs", () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.ENDER_DRAGON_SPAWN_EGG)).title(Component.translatable(CREATIVE_TAB_ID + "into_the_void_mobs")).build());
+
+    /**
      * Adds an item to a creative mode tab
      * @param item The RegistryObject of type "Item" to add
      * @param creativeTab The creative mode tab that will receive the item

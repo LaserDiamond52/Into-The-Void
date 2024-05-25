@@ -25,15 +25,40 @@ import net.minecraftforge.common.Tags;
 
 import java.util.List;
 
+/**
+ * Class that contains all Configured Features of this mod
+ */
 public class ITVConfiguredFeatures {
 
+    /**
+     * A ResourceKey of type "ConfiguredFeature" containing unknown types that represents the key for adding Lonsdaleite Ore to the overworld
+     */
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_LONSDALEITE_ORE_KEY = registerKey("overworld_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "ConfiguredFeature" containing unknown types that represents the key for adding Meteorite Lonsdaleite Ore to the overworld
+     */
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_METEORITE_LONSDALEITE_ORE_KEY = registerKey("overworld_meteorite_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "ConfiguredFeature" containing unknown types that represents the key for adding Lonsdaleite Ore to The End
+     */
     public static final ResourceKey<ConfiguredFeature<?, ?>> END_LONSDALEITE_ORE_KEY = registerKey("end_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "ConfiguredFeature" containing unknown types that represents the key for adding Enderite Ore to The End
+     */
     public static final ResourceKey<ConfiguredFeature<?, ?>> END_ENDERITE_ORE_KEY = registerKey("end_enderite_ore");
 
+    /**
+     * A ResourceKey of type "ConfiguredFeature" containing unknown types that represents the key for adding Purpur Tree generation
+     */
     public static final ResourceKey<ConfiguredFeature<?, ?>> PURPUR_TREE_KEY = registerKey("purpur_tree");
 
+    /**
+     * Registers all Configured Features of this mod
+     * @param context BootstapContext of type "ConfiguredFeature" containing unknown types
+     */
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context)
     {
         RuleTest stoneReplaceTest = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -64,11 +89,25 @@ public class ITVConfiguredFeatures {
 
     }
 
+    /**
+     * Helper method used to help register the Resource Keys for the Configured Features
+     * @param name Name of the key (lowercase and underscores)
+     * @return A ResourceKey of type "ConfiguredFeature" containing unknown types
+     */
     public static ResourceKey<ConfiguredFeature<?,?>> registerKey(String name)
     {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(IntoTheVoid.MODID, name));
     }
 
+    /**
+     * Helper method used to registers the ConfiguredFeature
+     * @param context The bootstap context
+     * @param key The ResourceKey of type "ConfiguredFeature" containing unknown types
+     * @param feature The feature type that the ConfiguredFeature adds
+     * @param config The Feature Configuration
+     * @param <FC> Subclass of the FeatureConfiguration
+     * @param <F> Subclass of the Feature of FC
+     */
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC config)
     {
         context.register(key, new ConfiguredFeature<>(feature, config));

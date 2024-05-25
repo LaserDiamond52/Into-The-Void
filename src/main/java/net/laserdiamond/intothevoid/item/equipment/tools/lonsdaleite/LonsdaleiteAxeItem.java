@@ -11,6 +11,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents a Lonsdaleite Axe item
+ */
 public final class LonsdaleiteAxeItem extends ITVSimpleAxeItem implements ToolCrafting {
     public LonsdaleiteAxeItem(float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.LONSDALEITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

@@ -7,6 +7,7 @@ import net.laserdiamond.intothevoid.item.equipment.armor.ArmorCrafting;
 import net.laserdiamond.intothevoid.item.equipment.armor.ArmorSmithing;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolCrafting;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
+import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.ITVSmithingTemplateItem;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -25,35 +26,95 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * The RecipeProvider for this mod. Responsible for creating all the recipes and related advancements for recipes of this mod
+ */
 public class ITVRecipeProvider extends RecipeProvider implements IConditionBuilder {
+
     public ITVRecipeProvider(PackOutput pOutput) {
         super(pOutput);
     }
 
+    /**
+     * Builds out all the recipes to .json files
+     * @param consumer The FinishedRecipe Consumer
+     */
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
         smeltingRecipe(consumer);
-        oreBlockCrafting(consumer);
+        oreMaterialBlockCrafting(consumer);
         armorCrafting(consumer);
         toolCrafting(consumer);
+        smithingTemplateRecipes(consumer);
 
         stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get());
         woodSetCrafting(consumer);
         endCoreRecipe(consumer);
-
+        refineryRecipe(consumer);
     }
 
+    /**
+     * Creates all smithing template recipes for this mod
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void smithingTemplateRecipes(Consumer<FinishedRecipe> consumer)
+    {
+        for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
+        {
+            if (itemRegistryObject.get() instanceof ITVSmithingTemplateItem smithingTemplateItem)
+            {
+                ItemLike materialItem = smithingTemplateItem.materialItem();
+                ItemLike mineralItem = smithingTemplateItem.mineralItem();
+
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, smithingTemplateItem,2)
+                        .pattern("XMX")
+                        .pattern("XTX")
+                        .pattern("XXX")
+                        .define('X', materialItem)
+                        .define('M', mineralItem)
+                        .define('T', smithingTemplateItem)
+                        .unlockedBy(getHasName(smithingTemplateItem), has(smithingTemplateItem))
+                        .save(consumer);
+            }
+        }
+    }
+
+    /**
+     * Adds all smelting recipes of this mod
+     * @param consumer The FinishedRecipe Consumer
+     */
     protected static void smeltingRecipe(Consumer<FinishedRecipe> consumer)
     {
 
     }
 
-    protected static void oreBlockCrafting(Consumer<FinishedRecipe> consumer)
+    /**
+     * Adds all recipes for ore material block crafting, and vice versa
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void oreMaterialBlockCrafting(Consumer<FinishedRecipe> consumer)
     {
+        for (RegistryObject<Item> oreMaterialItem : ITVItems.ORE_MATERIAL_TO_BLOCK.keySet())
+        {
+            RegistryObject<Block> oreMaterialBlock = ITVItems.ORE_MATERIAL_TO_BLOCK.get(oreMaterialItem);
 
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, oreMaterialBlock.get())
+                    .requires(oreMaterialItem.get(), 9)
+                    .unlockedBy(getHasName(oreMaterialItem.get()), has(oreMaterialItem.get()))
+                    .save(consumer);
+
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, oreMaterialItem.get(), 9)
+                    .requires(oreMaterialBlock.get(), 1)
+                    .unlockedBy(getHasName(oreMaterialItem.get()), has(oreMaterialItem.get()))
+                    .save(consumer);
+        }
     }
 
+    /**
+     * Adds the End Core recipe
+     * @param consumer The FinishedRecipe Consumer
+     */
     protected static void endCoreRecipe(Consumer<FinishedRecipe> consumer)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ITVItems.END_CORE.get())
@@ -66,6 +127,32 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
+    /**
+     * Adds the Refinery block recipe
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void refineryRecipe(Consumer<FinishedRecipe> consumer)
+    {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ITVBlocks.REFINERY.get())
+                .pattern("GGG")
+                .pattern("RIR")
+                .pattern("XBX")
+                .define('G', Items.GOLD_INGOT)
+                .define('R', Items.REPEATER)
+                .define('I', Items.IRON_INGOT)
+                .define('X', Items.IRON_BLOCK)
+                .define('B', Items.BUCKET)
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(consumer);
+
+    }
+
+    /**
+     * A template for crafting items in the manner of crafting a stick
+     * @param consumer The FinishedRecipe consumer
+     * @param ingredient The ingredient item
+     * @param result The result item
+     */
     protected static void stickRecipe(Consumer<FinishedRecipe> consumer, Item ingredient, Item result)
     {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result)
@@ -76,6 +163,12 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(consumer);
     }
 
+    /**
+     * Adds all recipes for armor items that inherit either the ArmorCrafting interface or ArmorSmithing interface
+     * <p>Armor items of the ArmorCrafting interface will have recipe formats similar to that of typical vanilla armor sets (ex: Gold, Iron, or Diamond armor)</p>
+     * <p>Armor items of the ArmorSmithing interface will have recipe formats similar to that of Netherite Armor (requiring a base armor piece, material item, and template item</p>
+     * @param consumer The FinishedRecipe Consumer
+     */
     protected static void armorCrafting(Consumer<FinishedRecipe> consumer)
     {
         for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
@@ -156,6 +249,12 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         }
     }
 
+    /**
+     * Adds all recipes for tool items that inherit either the ToolCrafting interface or ToolSmithing interface
+     * <p>Tool items of the ToolCrafting interface will have recipe formats similar to that of typical vanilla toolsets (ex: Gold, Iron, Diamond)</p>
+     * <p>Tool items of the ToolSmithing interface will have recipe formats similar to that of Netherite tools (requiring a base tool item, material item, and template item</p>
+     * @param consumer The FinishedRecipe Consumer
+     */
     protected static void toolCrafting(Consumer<FinishedRecipe> consumer)
     {
         for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
@@ -241,6 +340,20 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         }
     }
 
+    /**
+     * Adds all recipes for new wood types. New wood types must have recipes for all the following items. This includes recipes for the following:
+     * <p>Planks</p>
+     * <p>Wood</p>
+     * <p>Slabs</p>
+     * <p>Stairs</p>
+     * <p>Pressure Plates</p>
+     * <p>Doors + Trapdoors</p>
+     * <p>Fences + Fence Gates</p>
+     * <p>Buttons</p>
+     * <p>Signs (Both standing and hanging)</p>
+     * <p>Boats (Both normal and chest)</p>
+     * @param consumer The FinishedRecipe Consumer
+     */
     protected static void woodSetCrafting(Consumer<FinishedRecipe> consumer)
     {
         for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
@@ -312,26 +425,78 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         }
     }
 
+    /**
+     * Method used to create recipes for campfires
+     * @param consumer The FinishedRecipe Consumer
+     * @param pIngredients A list of ingredients that can be used to obtain the result item
+     * @param pCategory The category the recipe falls under
+     * @param pResult The result item
+     * @param pExperience The experience gained from completing the recipe
+     * @param pCookingTime The duration for how long the recipe takes to cook
+     * @param pGroup The name of the result item (use lowercase and underscores)
+     */
     protected static void foodCampFire(Consumer<FinishedRecipe> consumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup)
     {
         oreCooking(consumer, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_campfire");
     }
 
+    /**
+     * Method used to create recipes for smokers
+     * @param consumer The FinishedRecipe Consumer
+     * @param pIngredients A list of ingredients that can be used to obtain the result item
+     * @param pCategory The category the recipe falls under
+     * @param pResult The result item
+     * @param pExperience The experience gained from completing the recipe
+     * @param pCookingTime The duration for how long the recipe takes to cook
+     * @param pGroup The name of the result item (use lowercase and underscores)
+     */
     protected static void foodSmoking(Consumer<FinishedRecipe> consumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup)
     {
         oreCooking(consumer, RecipeSerializer.SMOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smoking");
     }
 
+    /**
+     * Method used to create recipes for furnaces
+     * @param consumer The FinishedRecipe Consumer
+     * @param pIngredients A list of ingredients that can be used to obtain the result item
+     * @param pCategory The category the recipe falls under
+     * @param pResult The result item
+     * @param pExperience The experience gained from completing the recipe
+     * @param pCookingTime The duration for how long the recipe takes to cook
+     * @param pGroup The name of the result item (use lowercase and underscores)
+     */
     protected static void smelting(Consumer<FinishedRecipe> consumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup)
     {
         oreCooking(consumer, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smelting");
     }
 
+    /**
+     * Method used to create recipes for a blast furnace
+     * @param consumer The FinishedRecipe Consumer
+     * @param pIngredients A list of ingredients that can be used to obtain the result item
+     * @param pCategory The category the recipe falls under
+     * @param pResult The result item
+     * @param pExperience The experience gained from completing the recipe
+     * @param pCookingTime The duration for how long the recipe takes to cook
+     * @param pGroup The name of the result item (use lowercase and underscores)
+     */
     protected static void oreBlasting(@NotNull Consumer<FinishedRecipe> consumer, List<ItemLike> pIngredients, @NotNull RecipeCategory pCategory, @NotNull ItemLike pResult, float pExperience, int pCookingTime, @NotNull String pGroup)
     {
         oreCooking(consumer, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting");
     }
 
+    /**
+     * Base method used to create smelting/cooking recipes for the Furnace, Blast Furnace, Smoker, and Campfire
+     * @param consumer The FinishedRecipe Consumer
+     * @param cookingSerializer The Recipe Serializer. Should use BLASTING_RECIPE, SMELTING_RECIPE, SMOKING_RECIPE, or CAMPFIRE_COOKING_RECIPE
+     * @param ingredient A list of ingredients that can be used to obtain the result item
+     * @param recipeCategory The category the recipe falls under
+     * @param result The result item
+     * @param experience The experience gained from completing the recipe
+     * @param cookingTime The duration for how long the recipe takes to cook
+     * @param group The name of the result item (use lowercase and underscores)
+     * @param recipeName The recipe type as a string (ex: "_from_blasting")
+     */
     protected static void oreCooking(@NotNull Consumer<FinishedRecipe> consumer, @NotNull RecipeSerializer<? extends AbstractCookingRecipe> cookingSerializer, List<ItemLike> ingredient, @NotNull RecipeCategory recipeCategory, @NotNull ItemLike result, float experience, int cookingTime, @NotNull String group, String recipeName)
     {
         for (ItemLike itemLike : ingredient)

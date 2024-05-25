@@ -5,6 +5,9 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Cooldown for Dragonborne Sword ability
+ */
 public class DragonborneCooldown {
 
     private static HashMap<UUID, Double> cooldown;

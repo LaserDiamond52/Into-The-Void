@@ -5,6 +5,9 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
+/**
+ * An interface used by block objects of this mod to give them tags
+ */
 public interface BlockTaggable {
 
     /**

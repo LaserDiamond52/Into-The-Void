@@ -8,9 +8,18 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * The Event Handler for events that should be registered under the mod bus of this mod
+ */
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = IntoTheVoid.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEventBusEvents {
 
+    /**
+     * Registers all the entity attributes needed for entities of this mod
+     * @param event The EntityAttributeCreatingEvent
+     */
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event)
     {

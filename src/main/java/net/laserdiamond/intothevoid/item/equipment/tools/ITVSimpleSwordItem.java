@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class that represents a sword item of this mod. Simple items will have their models data generated
+ * A simple sword item of this mod. Model is auto generated as a handheld item, and only a texture must be supplied
  */
 public class ITVSimpleSwordItem extends SwordItem implements ItemTaggable {
 

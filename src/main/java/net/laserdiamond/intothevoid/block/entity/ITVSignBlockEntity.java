@@ -5,6 +5,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * A Sign Block Entity of this mod
+ */
 public class ITVSignBlockEntity extends SignBlockEntity {
 
     public ITVSignBlockEntity(BlockPos pPos, BlockState pBlockState) {

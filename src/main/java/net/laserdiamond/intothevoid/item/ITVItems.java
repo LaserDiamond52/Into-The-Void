@@ -2,6 +2,7 @@ package net.laserdiamond.intothevoid.item;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.ITVBlocks;
+import net.laserdiamond.intothevoid.entity.ITVEntities;
 import net.laserdiamond.intothevoid.entity.boat.ITVBoatEntity;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.DragonborneArmorItem;
 import net.laserdiamond.intothevoid.item.equipment.armor.armorItems.EnderiteArmorItem;
@@ -10,18 +11,21 @@ import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.Dragonborne
 import net.laserdiamond.intothevoid.item.equipment.tools.enderite.*;
 import net.laserdiamond.intothevoid.item.equipment.tools.lonsdaleite.*;
 import net.laserdiamond.intothevoid.item.ingredients.ITVSimpleMineralItem;
-import net.laserdiamond.intothevoid.item.ingredients.refinedEndCrystal.RefinedEndCrystal;
+import net.laserdiamond.intothevoid.item.ingredients.refinedEndCrystal.RefinedEndCrystalItem;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.DragonborneSmithingTemplate;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.EnderiteSmithingTemplate;
 import net.laserdiamond.intothevoid.item.misc.ITVBoatItem;
 import net.laserdiamond.intothevoid.util.ITVTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -86,7 +90,7 @@ public class ITVItems {
     /**
      * RegistryObject of type "Item" that represents a Refined End Crystal
      */
-    public static final RegistryObject<Item> REFINED_END_CRYSTAL = ITEMS.register("refined_end_crystal", () -> new RefinedEndCrystal(new Item.Properties(), List.of(ItemTags.TRIM_MATERIALS)));
+    public static final RegistryObject<Item> REFINED_END_CRYSTAL = ITEMS.register("refined_end_crystal", () -> new RefinedEndCrystalItem(new Item.Properties(), List.of(ItemTags.TRIM_MATERIALS)));
 
     public static final RegistryObject<Item> END_CORE = ITEMS.register("end_core", () -> new ITVSimpleItem(new Item.Properties(), List.of(ITVTags.Items.REFINERY_INGREDIENT)));
 
@@ -259,11 +263,33 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> DRAGONBORNE_SWORD = ITEMS.register("dragonborne_sword", () -> new DragonborneSwordItem(7, SWORD_SPEED_MODIFIER, new Item.Properties()));
 
+    // Spawn Eggs
+    /**
+     * RegistryObject of type "Item" that represents a Void Pirate Spawn Egg
+     */
+    public static final RegistryObject<Item> VOID_PIRATE_SPAWN_EGG = ITEMS.register("void_pirate_spawn_egg", () -> new ForgeSpawnEggItem(ITVEntities.VOID_PIRATE, 7217035, 3608900, new Item.Properties()));
+
+    /**
+     * RegistryObject of type "Item" that represents an Ender Dragon Hatchling Spawn Egg
+     */
+    public static final RegistryObject<Item> ENDER_DRAGON_HATCHLING_SPAWN_EGG = ITEMS.register("ender_dragon_hatchling_spawn_egg", () -> new ForgeSpawnEggItem(ITVEntities.ENDER_DRAGON_HATCHLING, 197379, 9715891, new Item.Properties()));
 
     /**
      * Registers all the items under the ITEMS DeferredRegister
      * @param eventBus The mod's event bus
      */
+
+    /**
+     * A HashMap mapping ore mineral items to their block variants. Used for recipes
+     */
+    public static final HashMap<RegistryObject<Item>, RegistryObject<Block>> ORE_MATERIAL_TO_BLOCK = new HashMap<>();
+    static
+    {
+        ORE_MATERIAL_TO_BLOCK.put(LONSDALEITE, ITVBlocks.LONSDALEITE_BLOCK);
+        ORE_MATERIAL_TO_BLOCK.put(REFINED_LONSDALEITE, ITVBlocks.REFINED_LONSDALEITE_BLOCK);
+        ORE_MATERIAL_TO_BLOCK.put(ENDERITE, ITVBlocks.ENDERITE_BLOCK);
+    }
+
     public static void register(IEventBus eventBus)
     {
         ITEMS.register(eventBus);

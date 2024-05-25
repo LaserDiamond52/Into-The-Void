@@ -12,7 +12,10 @@ import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 
-public class ITVChestBoatEntity extends ChestBoat {
+/**
+ * Class that represents a chest boat entity of this mod
+ */
+public class ITVChestBoatEntity extends ChestBoat implements BoatVariants {
 
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE = SynchedEntityData.defineId(ITVChestBoatEntity.class, EntityDataSerializers.INT);
 
@@ -28,6 +31,10 @@ public class ITVChestBoatEntity extends ChestBoat {
         this.zo = pZ;
     }
 
+    /**
+     * The item to drop when the boat is destroyed
+     * @return The item to drop as an Item object
+     */
     @Override
     public Item getDropItem() {
         return switch (getITVVariant())
@@ -36,22 +43,39 @@ public class ITVChestBoatEntity extends ChestBoat {
         };
     }
 
-
+    @Override
     public void setVariant(ITVBoatEntity.Type pVariant) {
         this.entityData.set(DATA_ID_TYPE, pVariant.ordinal());
     }
 
+    @Override
+    public ITVBoatEntity.Type getITVVariant()
+    {
+        return ITVBoatEntity.Type.byId(this.entityData.get(DATA_ID_TYPE));
+    }
+
+    /**
+     * Defines the Synched Data for the Boat Entity
+     */
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ID_TYPE, ITVBoatEntity.Type.PURPUR.ordinal());
     }
 
+    /**
+     * Adds additional save data to the Boat Entity
+     * @param pCompound The CompoundTag
+     */
     @Override
     protected void addAdditionalSaveData(CompoundTag pCompound) {
         pCompound.putString("Type", this.getITVVariant().getSerializedName());
     }
 
+    /**
+     * Reads any additional saved data from the Boat Entity
+     * @param pCompound The CompoundTag
+     */
     @Override
     protected void readAdditionalSaveData(CompoundTag pCompound) {
         if (pCompound.contains("Type", 8))
@@ -60,8 +84,4 @@ public class ITVChestBoatEntity extends ChestBoat {
         }
     }
 
-    public ITVBoatEntity.Type getITVVariant()
-    {
-        return ITVBoatEntity.Type.byId(this.entityData.get(DATA_ID_TYPE));
-    }
 }

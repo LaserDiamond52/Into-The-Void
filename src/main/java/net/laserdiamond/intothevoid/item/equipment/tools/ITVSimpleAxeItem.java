@@ -9,6 +9,9 @@ import net.minecraft.world.item.Tier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A simple axe item of this mod. Model is auto generated as a handheld item, and only a texture must be supplied
+ */
 public class ITVSimpleAxeItem extends AxeItem implements ItemTaggable {
 
     private final List<TagKey<Item>> itemTags;

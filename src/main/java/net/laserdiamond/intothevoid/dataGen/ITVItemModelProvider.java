@@ -15,20 +15,26 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Class that data generates item models
+ */
 public class ITVItemModelProvider extends ItemModelProvider {
     public ITVItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, IntoTheVoid.MODID, existingFileHelper);
     }
 
+    /**
+     * HashMap that maps Armor Trims to their float value. This is used for helping with generation of the armor model files
+     */
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> TRIM_MATERIALS = new LinkedHashMap<>();
     static
     {
@@ -44,6 +50,9 @@ public class ITVItemModelProvider extends ItemModelProvider {
         TRIM_MATERIALS.put(TrimMaterials.AMETHYST, 1.0F);
     }
 
+    /**
+     * Creates all the item models for the appropriate items based on inheritance (similar to the BlockStateProvider for this mod)
+     */
     @Override
     protected void registerModels()
     {
@@ -86,6 +95,9 @@ public class ITVItemModelProvider extends ItemModelProvider {
             } else if (item.get() instanceof HangingSignItem)
             {
                 simpleItem(item);
+            } else if (item.get() instanceof ForgeSpawnEggItem)
+            {
+                spawnEggItem(item);
             }
         }
         for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
@@ -117,82 +129,146 @@ public class ITVItemModelProvider extends ItemModelProvider {
         }
     }
 
-    private ItemModelBuilder simpleItem(RegistryObject<Item> itemRegistryObject)
+    /**
+     * Creates a simple model for the item
+     * @param itemRegistryObject The item to make the model for
+     */
+    private void simpleItem(RegistryObject<Item> itemRegistryObject)
     {
-        return withExistingParent(itemRegistryObject.getId().getPath(),
+        withExistingParent(itemRegistryObject.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(IntoTheVoid.MODID, "item/" + itemRegistryObject.getId().getPath()));
     }
 
-    private ItemModelBuilder handheldItem(RegistryObject<Item> itemRegistryObject)
+    /**
+     * Creates a handheld model for the item. Typically used for tools/weapons
+     * @param itemRegistryObject The item to make the model for
+     */
+    private void handheldItem(RegistryObject<Item> itemRegistryObject)
     {
-        return withExistingParent(itemRegistryObject.getId().getPath(),
+        withExistingParent(itemRegistryObject.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(IntoTheVoid.MODID, "item/" + itemRegistryObject.getId().getPath()));
     }
 
-    private ItemModelBuilder saplingItem(RegistryObject<Block> block)
+    /**
+     * Creates a spawn egg model for the item. Typically used only for spawn eggs
+     * @param itemRegistryObject The item to make the model for
+     */
+    private void spawnEggItem(RegistryObject<Item> itemRegistryObject)
     {
-        return withExistingParent(block.getId().getPath(),
+        withExistingParent(itemRegistryObject.getId().getPath(),
+                new ResourceLocation("item/template_spawn_egg"));
+    }
+
+    /**
+     * Creates a sapling model for the item. Typically used for saplings
+     * @param block The block to make the item model for
+     */
+    private void saplingItem(RegistryObject<Block> block)
+    {
+        withExistingParent(block.getId().getPath(),
                 new ResourceLocation("item/generated"))
                 .texture("layer0", new ResourceLocation(IntoTheVoid.MODID, "block/" + block.getId().getPath()));
     }
 
-    private ItemModelBuilder fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a fence model for the item. Typically used for Fences
+     * @param block The fence block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type)
+     */
+    private void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
-    private ItemModelBuilder buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a button model for the item. Typically used for buttons
+     * @param block The button block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type if a wood button)
+     */
+    private void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
-    private ItemModelBuilder slabItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a slab model for the item. Typically used for slabs
+     * @param block The slab block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type if a wood slab)
+     */
+    private void slabItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
         String path = "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath();
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/slab"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/slab"))
                 .texture("bottom", new ResourceLocation(IntoTheVoid.MODID, path))
                 .texture("side", new ResourceLocation(IntoTheVoid.MODID, path))
                 .texture("top", new ResourceLocation(IntoTheVoid.MODID, path));
     }
 
-    private ItemModelBuilder stairItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a stair model for the item. Typically used for stairs
+     * @param block The stair block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type if a wood stair)
+     */
+    private void stairItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
         String path = "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath();
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/stairs"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/stairs"))
                 .texture("bottom", new ResourceLocation(IntoTheVoid.MODID, path))
                 .texture("side", new ResourceLocation(IntoTheVoid.MODID, path))
                 .texture("top", new ResourceLocation(IntoTheVoid.MODID, path));
     }
 
-    private ItemModelBuilder pressurePlateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a pressure plate model for the item. Typically used for stairs
+     * @param block The pressure plate block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type if a wood pressure plate)
+     */
+    private void pressurePlateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/pressure_plate_up"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/pressure_plate_up"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
-    private ItemModelBuilder trapDoorItem(RegistryObject<Block> block)
+    /**
+     * Creates a trapdoor model for the item. Typically used for trapdoors
+     * @param block The trapdoor block
+     */
+    private void trapDoorItem(RegistryObject<Block> block)
     {
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_orientable_trapdoor_bottom"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_orientable_trapdoor_bottom"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
     }
 
-    private ItemModelBuilder fenceGateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    /**
+     * Creates a fence gate model for the item. Typically used for fence gates
+     * @param block The fence gate block
+     * @param baseBlock The block to use the texture of (typically uses the plank block of the wood type if a wood fence gate)
+     */
+    private void fenceGateItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
     {
-        return this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_fence_gate"))
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/template_fence_gate"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
-    private ItemModelBuilder simpleBlockItem(RegistryObject<Block> block)
+    /**
+     * Creates a simple block item model for the item. Used for the door block
+     * @param block The door block
+     */
+    private void simpleBlockItem(RegistryObject<Block> block)
     {
-        return this.withExistingParent(block.getId().getPath(),
+        this.withExistingParent(block.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(IntoTheVoid.MODID, "item/" + block.getId().getPath()));
     }
 
+    /**
+     * Creates item models for armor items. Generates a model for each trim material that can be applied to an armor piece
+     * @param itemRegistryObject The armor item. If any other item type is used in this method, nothing will happen
+     */
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject)
     {
         final String MOD_ID = IntoTheVoid.MODID;
@@ -220,6 +296,8 @@ public class ITVItemModelProvider extends ItemModelProvider {
                 ResourceLocation trimResLoc = new ResourceLocation(trimPath); // Minecraft namespace
                 ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
 
+                // Used to help the ExistingFileHelper acknowledge that this texture exists
+                // Helps to avoid an IllegalArgumentException
                 existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
                 getBuilder(currentTrimName)

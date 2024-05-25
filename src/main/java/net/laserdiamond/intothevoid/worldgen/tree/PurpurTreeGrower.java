@@ -7,6 +7,9 @@ import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * The Purpur Tree grower. Allows tree growth of the Purpur tree
+ */
 public class PurpurTreeGrower extends AbstractTreeGrower {
 
     @Nullable

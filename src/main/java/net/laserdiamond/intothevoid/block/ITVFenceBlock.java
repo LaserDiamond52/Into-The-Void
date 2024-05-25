@@ -7,6 +7,9 @@ import net.minecraft.world.level.block.FenceBlock;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A fence block of this mod
+ */
 public class ITVFenceBlock extends FenceBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

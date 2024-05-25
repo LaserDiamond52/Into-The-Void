@@ -9,6 +9,9 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A fence gate block of this mod
+ */
 public class ITVFenceGateBlock extends FenceGateBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

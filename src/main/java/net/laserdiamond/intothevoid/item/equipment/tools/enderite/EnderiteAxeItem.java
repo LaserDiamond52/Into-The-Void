@@ -10,6 +10,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents an Enderite Axe item
+ */
 public final class EnderiteAxeItem extends ITVSimpleAxeItem implements ToolSmithing {
     public EnderiteAxeItem(float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

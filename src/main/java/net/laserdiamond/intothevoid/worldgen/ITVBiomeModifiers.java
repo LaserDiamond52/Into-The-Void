@@ -2,30 +2,51 @@ package net.laserdiamond.intothevoid.worldgen;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.util.ITVTags;
-import net.laserdiamond.intothevoid.worldgen.biome.ITVBiomes;
-import net.laserdiamond.intothevoid.worldgen.biome.ITVTerrablender;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * Class that contains all Resource Keys for Biome Modifiers
+ */
 public class ITVBiomeModifiers {
 
+    /**
+     * A ResourceKey of type "BiomeModifier" that adds Lonsdaleite Ore to the overworld
+     */
     public static final ResourceKey<BiomeModifier> ADD_OVERWORLD_LONSDALEITE_ORE = registerKey("add_overworld_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "BiomeModifier" that adds Meteorite Lonsdaleite Ore
+     */
     public static final ResourceKey<BiomeModifier> ADD_METEROITE_LONSDALEITE_ORE = registerKey("add_overworld_meteorite_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "BiomeModifier" that adds Lonsdaleite Ore to the End dimension
+     */
     public static final ResourceKey<BiomeModifier> ADD_END_LONSDALEITE_ORE = registerKey("add_end_lonsdaleite_ore");
+
+    /**
+     * A ResourceKey of type "BiomeModifier" that adds Enderite Ore to the End dimension
+     */
     public static final ResourceKey<BiomeModifier> ADD_END_ENDERITE_ORE = registerKey("add_end_enderite_ore");
+
+    /**
+     * A ResourceKey of type "BiomeModifier" that adds Purpur Trees
+     */
     public static final ResourceKey<BiomeModifier> ADD_PURPUR_TREES = registerKey("add_purpur_trees");
 
+    /**
+     * Registers all the Biome Modifier Resource Keys of this mod
+     * @param context BootstapContext of type "BiomeModifier"
+     */
     public static void boostrap(BootstapContext<BiomeModifier> context)
     {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -62,6 +83,11 @@ public class ITVBiomeModifiers {
         );
     }
 
+    /**
+     * Helper method used to help register Biome Modifier Resource Keys
+     * @param name The name of the Resource Key (lowercase and underscores)
+     * @return a ResourceKey of type "BiomeModifier"
+     */
     private static ResourceKey<BiomeModifier> registerKey(String name)
     {
         return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(IntoTheVoid.MODID, name));

@@ -7,6 +7,9 @@ import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 
 import java.util.List;
 
+/**
+ * A sapling block of this mod
+ */
 public class ITVSaplingBlock extends SaplingBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

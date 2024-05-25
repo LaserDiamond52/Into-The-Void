@@ -28,6 +28,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+/**
+ * A Refinery Block Entity
+ */
 public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(3);
@@ -110,17 +113,32 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inv);
     }
 
+    /**
+     * The display name of the block entity inside the inventory
+     * @return A Component representing the display name
+     */
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.into_the_void.refinery");
     }
 
+    /**
+     * Creates the Menu GUI for the block entity when interacted with
+     * @param i The id of the inventory
+     * @param inventory The inventory
+     * @param player The player opening the menu
+     * @return An AbstractContainerMenu of the menu to open
+     */
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new RefineryMenu(i, inventory, this, this.data);
     }
 
+    /**
+     * Saves all data of the menu/inventory when interaction ends with it. This could be closing the menu, closing the world, etc.
+     * @param pTag The CompoundTag
+     */
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
@@ -129,6 +147,10 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
         super.saveAdditional(pTag);
     }
 
+    /**
+     * Loads the data of the menu when opened/interacted with
+     * @param pTag The CompoundTag
+     */
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);

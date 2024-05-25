@@ -12,9 +12,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 
-
+/**
+ * Class that contains all tags of this mod
+ */
 public class ITVTags {
 
+    /**
+     * Block tags
+     */
     public static class Blocks
     {
         public static final TagKey<Block> NEEDS_LONSDALEITE_TOOL = tag("needs_lonsdaleite_tool");
@@ -28,6 +33,9 @@ public class ITVTags {
         }
     }
 
+    /**
+     * Item tags
+     */
     public static class Items
     {
         public static final TagKey<Item> PURPUR_LOG = tag("purpur_logs");
@@ -39,6 +47,9 @@ public class ITVTags {
         }
     }
 
+    /**
+     * Biome tags
+     */
     public static class Biomes
     {
         public static final TagKey<Biome> PURPUR_FOREST = tag("is_purpur_forest");
@@ -49,6 +60,9 @@ public class ITVTags {
         }
     }
 
+    /**
+     * Entity tags
+     */
     public static class Entities
     {
         public static final TagKey<EntityType<?>> VOID_PIRATES = tag("void_pirate");

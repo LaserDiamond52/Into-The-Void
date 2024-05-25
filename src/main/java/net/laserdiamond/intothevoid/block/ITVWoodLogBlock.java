@@ -14,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * A wood log block of this mod
+ */
 public class ITVWoodLogBlock extends RotatedPillarBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

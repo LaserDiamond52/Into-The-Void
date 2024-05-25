@@ -17,17 +17,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Class responsible for creating all the loot tables for blocks of this mod
+ */
 public class ITVBlockLootTables extends BlockLootSubProvider {
+
     public ITVBlockLootTables() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
     }
 
+    /**
+     * A HashMap that maps all leaves to their sapling blocks
+     */
     private static final HashMap<Block, Block> LEAVES_SAPLING_MAP = new HashMap<>();
     static
     {
         LEAVES_SAPLING_MAP.put(ITVBlocks.PURPUR_LEAVES.get(), ITVBlocks.PURPUR_SAPLING.get());
     }
 
+    /**
+     * Generates all loot tables for blocks
+     */
     @Override
     protected void generate() {
 

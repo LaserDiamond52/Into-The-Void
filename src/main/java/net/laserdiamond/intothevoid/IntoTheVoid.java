@@ -31,6 +31,7 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -87,7 +88,7 @@ public class IntoTheVoid
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, IntoTheVoid.MODID, ITVSurfaceRules.makeRules());
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, IntoTheVoid.MODID, ITVSurfaceRules.makePurpurForestRules());
 
     }
 
@@ -122,9 +123,13 @@ public class IntoTheVoid
             } else if (item.get() instanceof ITVSimpleItem)
             {
                 CreativeTabs.addItemToTab(item, CreativeTabs.MATERIALS_TAB, event);
+            } else if (item.get() instanceof ForgeSpawnEggItem)
+            {
+                CreativeTabs.addItemToTab(item, CreativeTabs.MOBS, event);
             }
 
         }
+        CreativeTabs.addItemToTab(ITVItems.REFINED_END_CRYSTAL, CreativeTabs.MATERIALS_TAB, event);
         CreativeTabs.addBlockItemsToTab(ITVBlocks.BLOCKS.getEntries(), CreativeTabs.BLOCKS_TAB, event);
     }
 
@@ -137,6 +142,7 @@ public class IntoTheVoid
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @SuppressWarnings("unused")
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {

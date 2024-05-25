@@ -10,6 +10,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents an Enderite Sword item
+ */
 public final class EnderiteSwordItem extends ITVSimpleSwordItem implements ToolSmithing {
     public EnderiteSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

@@ -11,11 +11,18 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * Responsible for generating models and states for most blocks of this mod
+ */
 public class ITVBlocksStateProvider extends BlockStateProvider {
+
     public ITVBlocksStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, IntoTheVoid.MODID, exFileHelper);
     }
 
+    /**
+     * Registers blocks and state for applicable blocks
+     */
     @Override
     protected void registerStatesAndModels() {
 
@@ -103,6 +110,10 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
         }
     }
 
+    /**
+     * Generates a block state/model of a sapling for the block
+     * @param blockRegistryObject The blockRegistryObject
+     */
     private void saplingBlock(RegistryObject<Block> blockRegistryObject)
     {
         simpleBlock(blockRegistryObject.get(),
@@ -110,33 +121,63 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
+    /**
+     * Generates a block state/model for blocks with all the same sides and an item model of it for the inventory
+     * @param blockRegistryObject The blockRegistryObject
+     */
     private void blockWithItem(RegistryObject<Block> blockRegistryObject)
     {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
+    /**
+     * Generates a block state/model for block
+     * @param blockRegistryObject The blockRegistryObject
+     */
     private void blockItem(RegistryObject<Block> blockRegistryObject)
     {
         simpleBlockItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(IntoTheVoid.MODID + ":block/" + ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath()));
     }
 
+    /**
+     * Generates a block state/model of a hanging sign block for the block
+     * @param signBlock The sign block
+     * @param wallSignBlock The wall sign block
+     * @param texture The resource location for the texture
+     */
     private void hangingSignBlock(Block signBlock, Block wallSignBlock, ResourceLocation texture)
     {
         ModelFile sign = models().sign(name(signBlock), texture);
         hangingSignBlock(signBlock, wallSignBlock, sign);
     }
 
+    /**
+     * Helper method for creating the block state/model for the hanging sign blocks
+     * @param signBlock The sign block
+     * @param wallSignBlock The wall sign block
+     * @param sign The model file of the sign
+     */
     private void hangingSignBlock(Block signBlock, Block wallSignBlock, ModelFile sign)
     {
         simpleBlock(signBlock, sign);
         simpleBlock(wallSignBlock, sign);
     }
 
+    /**
+     * Helper method for the name of the block
+     * @param block The block to get the name of
+     * @return A string representing the block's name
+     */
     private String name(Block block)
     {
         return key(block).getPath();
     }
 
+    /**
+     * Helper method for the resource location of the block
+     * @param block The block to get the resource location of
+     * @return The resource location of the block
+     */
     private ResourceLocation key(Block block)
     {
         return ForgeRegistries.BLOCKS.getKey(block);

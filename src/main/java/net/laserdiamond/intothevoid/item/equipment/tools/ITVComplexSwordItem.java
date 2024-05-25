@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a complex sword item of this mod. Complex items don't have their models data generated, and a model must be supplied for the item
+ * Represents a complex sword item of this mod. Complex items don't have their models data generated. As such, a model must be supplied for the item
  */
 public class ITVComplexSwordItem extends SwordItem implements ItemTaggable {
 

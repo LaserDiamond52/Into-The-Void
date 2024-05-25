@@ -10,6 +10,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents an Enderite Pickaxe item
+ */
 public final class EnderitePickaxeItem extends ITVSimplePickaxeItem implements ToolSmithing {
     public EnderitePickaxeItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.ENDERITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

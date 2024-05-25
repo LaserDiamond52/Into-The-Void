@@ -19,6 +19,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents a Lonsdaleite Sword item
+ */
 public final class LonsdaleiteSwordItem extends ITVSimpleSwordItem implements ToolCrafting {
     public LonsdaleiteSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.LONSDALEITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * A boat item of this mod
+ */
 public class ITVBoatItem extends ITVSimpleItem {
 
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);;
@@ -56,11 +59,9 @@ public class ITVBoatItem extends ITVSimpleItem {
             List<Entity> entities = pLevel.getEntities(pPlayer, pPlayer.getBoundingBox().expandTowards(playerViewVector.scale(5.0)).inflate(1.0), ENTITY_PREDICATE);
             if (!entities.isEmpty()) {
                 Vec3 playerEyePosition = pPlayer.getEyePosition();
-                Iterator entityIterator = entities.iterator();
 
-                while(entityIterator.hasNext()) {
-                    Entity entity = (Entity)entityIterator.next();
-                    AABB inflate = entity.getBoundingBox().inflate((double)entity.getPickRadius());
+                for (Entity entity : entities) {
+                    AABB inflate = entity.getBoundingBox().inflate(entity.getPickRadius());
                     if (inflate.contains(playerEyePosition)) {
                         return InteractionResultHolder.pass(itemInHand);
                     }
@@ -103,7 +104,7 @@ public class ITVBoatItem extends ITVSimpleItem {
     }
 
     private Boat getBoat(Level pLevel, HitResult pHitResult) {
-        return (Boat)(this.hasChest ? new ITVChestBoatEntity(pLevel, pHitResult.getLocation().x, pHitResult.getLocation().y, pHitResult.getLocation().z) : new ITVBoatEntity(pLevel, pHitResult.getLocation().x, pHitResult.getLocation().y, pHitResult.getLocation().z));
+        return this.hasChest ? new ITVChestBoatEntity(pLevel, pHitResult.getLocation().x, pHitResult.getLocation().y, pHitResult.getLocation().z) : new ITVBoatEntity(pLevel, pHitResult.getLocation().x, pHitResult.getLocation().y, pHitResult.getLocation().z);
     }
 
 }

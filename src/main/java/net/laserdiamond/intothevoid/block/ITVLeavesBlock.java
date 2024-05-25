@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A leaves block of this mod
+ */
 public class ITVLeavesBlock extends LeavesBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

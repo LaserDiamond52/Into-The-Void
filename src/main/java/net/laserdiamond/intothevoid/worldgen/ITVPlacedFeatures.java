@@ -18,15 +18,40 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
+/**
+ * Class that contains the placed features of this mod
+ */
 public class ITVPlacedFeatures {
 
+    /**
+     * A ResourceKey of type "PlacedFeature" that represents the placement of Lonsdaleite Ore in the Overworld
+     */
     public static final ResourceKey<PlacedFeature> OVERWORLD_LONSDALEITE_ORE_PLACED_KEY = registerKey("overworld_lonsdaleite_ore_placed");
+
+    /**
+     * A ResourceKey of type "PlaceFeature" that represents the placement of Meteorite Lonsdaleite Ore in the Overworld
+     */
     public static final ResourceKey<PlacedFeature> OVERWORLD_METEORITE_LONSDALEITE_ORE_PLACED_KEY = registerKey("overworld_meteorite_lonsdaleite_ore_placed");
+
+    /**
+     * A ResourceKey of type "PlacedFeature" that represents the placement of Lonsdaleite Ore in the End
+     */
     public static final ResourceKey<PlacedFeature> END_LONSDALEITE_ORE_PLACED_KEY = registerKey("end_lonsdaleite_ore_placed");
+
+    /**
+     * A ResourceKey of type "PlaceFeature" that represents the placement of Enderite Ore in the End
+     */
     public static final ResourceKey<PlacedFeature> END_ENDERITE_ORE_PLACED_KEY = registerKey("end_enderite_ore_placed");
 
+    /**
+     * A ResourceKey of type "PlacedFeature" that represents the placement of Purpur Trees
+     */
     public static final ResourceKey<PlacedFeature> PURPUR_TREE_PLACED_KEY = registerKey("purpur_tree_placed_key");
 
+    /**
+     * Registers all the Placed Features of this mod
+     * @param context The BootstapContext of type "PlaceFeature"
+     */
     public static void bootstrap(BootstapContext<PlacedFeature> context)
     {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatureHolderGetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -47,11 +72,23 @@ public class ITVPlacedFeatures {
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(6, 0.1F, 3), ITVBlocks.PURPUR_SAPLING.get()));
     }
 
+    /**
+     * Helper method used to help create the Resource Key for the Placed Feature
+     * @param name The name of the PlacedFeature (lowercase and underscores)
+     * @return A ResourceKey of type "PlacedFeature" representing the Placed Feature
+     */
     private static ResourceKey<PlacedFeature> registerKey(String name)
     {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(IntoTheVoid.MODID, name));
     }
 
+    /**
+     * Helper method used to help register the Placed Feature
+     * @param context The BootstapContext of type "PlacedFeature"
+     * @param key The ResourceKey of the Placed Feature
+     * @param config The Configured Features Hold (Holder of type "ConfiguredFeature" containing unknown types
+     * @param modifiers The placement modifiers (List of PlacementModifiers)
+     */
     private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> config, List<PlacementModifier> modifiers)
     {
         context.register(key, new PlacedFeature(config, List.copyOf(modifiers)));

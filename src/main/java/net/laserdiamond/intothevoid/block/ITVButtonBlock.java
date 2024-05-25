@@ -8,6 +8,9 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A button block of this mod
+ */
 public class ITVButtonBlock extends ButtonBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

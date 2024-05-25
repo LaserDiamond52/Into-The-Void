@@ -11,6 +11,9 @@ import net.minecraft.world.level.ItemLike;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that represents a Lonsdaleite Pickaxe item
+ */
 public final class LonsdaleitePickaxeItem extends ITVSimplePickaxeItem implements ToolCrafting {
     public LonsdaleitePickaxeItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.LONSDALEITE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);

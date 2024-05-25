@@ -15,6 +15,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The world gen provider of this mod. Responsible for creating the configured features, placed features, biome modifiers, and most biomes
+ */
 public class ITVWorldGenProvider extends DatapackBuiltinEntriesProvider {
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()

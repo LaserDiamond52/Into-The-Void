@@ -6,7 +6,11 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that represents the Refinery Water Slot. Can only input Water Buckets
+ */
 public class RefineryWaterSlot extends SlotItemHandler {
+
     public RefineryWaterSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
     }

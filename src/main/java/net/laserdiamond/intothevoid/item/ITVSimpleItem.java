@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that represents a simple item of this mod
+ * Class that represents a simple item of this mod. Model is auto-generated for this item
  */
 public class ITVSimpleItem extends Item implements ItemTaggable {
 

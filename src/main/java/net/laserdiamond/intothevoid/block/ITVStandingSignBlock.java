@@ -12,6 +12,9 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A standing sign block of this mod
+ */
 public class ITVStandingSignBlock extends StandingSignBlock implements BlockTaggable {
 
     private final List<TagKey<Block>> blockTags;

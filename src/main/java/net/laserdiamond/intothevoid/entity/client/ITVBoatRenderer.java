@@ -18,6 +18,9 @@ import net.minecraft.world.entity.vehicle.Boat;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * Boat renderer for all boat of this mod
+ */
 public class ITVBoatRenderer extends BoatRenderer {
 
     private final Map<ITVBoatEntity.Type, Pair<ResourceLocation, ListModel<Boat>>> boatResources;

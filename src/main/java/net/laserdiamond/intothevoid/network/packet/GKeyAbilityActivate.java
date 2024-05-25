@@ -17,13 +17,15 @@ import java.util.function.Supplier;
 public class GKeyAbilityActivate {
 
     public GKeyAbilityActivate(){}
-    public GKeyAbilityActivate(FriendlyByteBuf buf){}
+    public GKeyAbilityActivate(FriendlyByteBuf buf) {}
 
-    public void toBytes(FriendlyByteBuf buf)
-    {
+    public void toBytes(FriendlyByteBuf buf) {}
 
-    }
-
+    /**
+     * Handles the functionality of packets sent from the client to the server. Anything that runs inside this method is running server side in-game
+     * @param supplier A supplier of the Network Event Context
+     * @return True (no instance where it returns false right now)
+     */
     public boolean handle(Supplier<NetworkEvent.Context> supplier)
     {
         NetworkEvent.Context context = supplier.get();
