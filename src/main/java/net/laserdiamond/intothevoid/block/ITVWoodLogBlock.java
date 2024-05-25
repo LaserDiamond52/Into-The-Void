@@ -34,16 +34,40 @@ public class ITVWoodLogBlock extends RotatedPillarBlock implements BlockTaggable
         this.fireSpreadSpeed = fireSpreadSpeed;
     }
 
+    /**
+     * Determines if the block is flammable
+     * @param state The BlockState of the block
+     * @param level BlockGetter
+     * @param pos The Block position
+     * @param direction The direction of the block
+     * @return true if flammable, false otherwise
+     */
     @Override
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return isFlammable;
     }
 
+    /**
+     * Gets the flammability of the block
+     * @param state The BlockState of the block
+     * @param level BlockGetter
+     * @param pos The Block Position
+     * @param direction The direction of the block
+     * @return An int denoting the flammability (higher = more flammable)
+     */
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return flammability;
     }
 
+    /**
+     * Gets the fire spread speed (how fast fire spreads on the block)
+     * @param state The BlockState of the block
+     * @param level BlockGetter
+     * @param pos The BlockPosition
+     * @param direction The direction of the block
+     * @return An int denoting how fast fire spreads on the block (higher = faster fire spread speed)
+     */
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return fireSpreadSpeed;
@@ -51,11 +75,11 @@ public class ITVWoodLogBlock extends RotatedPillarBlock implements BlockTaggable
 
     /**
      * Allows player to strip log blocks of this mod, turning them into their stripped variants
-     * @param state
-     * @param context
-     * @param toolAction
+     * @param state The BlockState of the block
+     * @param context UseOnContext
+     * @param toolAction The Tool Action being done to the block
      * @param simulate
-     * @return BlockState
+     * @return The new block state of the block
      */
     @Override
     public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {

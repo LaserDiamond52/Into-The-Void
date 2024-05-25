@@ -36,6 +36,15 @@ public class NullceliumBlock extends Block implements BlockTaggable {
         this.blockTags = blockTags;
     }
 
+    /**
+     * Determines if the block is able to sustain plants (flowers, mushrooms, trees, and other types of foliage)
+     * @param state The BlockState of the block
+     * @param world BlockGetter
+     * @param pos The Block Position of the block
+     * @param facing The direction the block is facing
+     * @param plantable The plantable block being placed
+     * @return True if can sustain plants, false otherwise
+     */
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
         return true;

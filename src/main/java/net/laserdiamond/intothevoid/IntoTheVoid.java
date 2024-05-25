@@ -53,27 +53,26 @@ import java.util.List;
 public class IntoTheVoid
 {
     // Define mod id in a common place for everything to reference
+    /**
+     * The "Into The Void" Mod ID. This is used as a common place for everything to reference
+     */
     public static final String MODID = "into_the_void";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    /**
+     * A list of classes that inherit the GKeyAbility interface are added into this list for functionality of the ability key
+     */
     public static final List<GKeyAbility> G_KEY_ABILITIES = new ArrayList<>();
 
+    /**
+     * This is the main method of this mod. Listeners and Events that were not registered automatically are registers and added here
+     */
     public IntoTheVoid()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ITVItems.register(modEventBus); // Register items in DeferredRegistry for items
-        ITVBlocks.register(modEventBus); // Register blocks in DeferredRegistry for blocks
-        ITVBlockEntities.register(modEventBus); // Register block entities in DeferredRegistry for block entities
-        ITVEffects.register(modEventBus); // Register mob effects in DeferredRegistry for effects
-        CreativeTabs.register(modEventBus); // Register Creative Mode Tabs
-        ITVMenuTypes.register(modEventBus); // Register Menus and GUIs
-        ITVRecipes.register(modEventBus); // Registers Custom Recipe Serializers
-        ITVEntities.register(modEventBus); // Registers Entities of this mod
-        ITVTerrablender.registerBiomes();
         registerListeners(modEventBus);
-
         DragonborneCooldown.setupCooldown();
 
         // Register the commonSetup method for modloading
@@ -86,10 +85,14 @@ public class IntoTheVoid
         modEventBus.addListener(this::addCreative);
     }
 
+    /**
+     * Registers any Common Setup needed for the Forge Mod Loader
+     * <p>Currently registers the surface rules for the Purpur Forest biome</p>
+     * @param event FMLCommonSetupEvent
+     */
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, IntoTheVoid.MODID, ITVSurfaceRules.makePurpurForestRules());
-
     }
 
     /**
@@ -134,6 +137,12 @@ public class IntoTheVoid
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
+
+    /**
+     * Runs when the server is starting
+     * @param event ServerStaringEvent
+     */
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
@@ -142,10 +151,18 @@ public class IntoTheVoid
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+
+    /**
+     * Registers all client-side events on the Mod bus
+     */
     @SuppressWarnings("unused")
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
+        /**
+         * Runs on client set up. Registers entity renderers for the client
+         * @param event FMLClientSetupEvent
+         */
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
@@ -164,12 +181,20 @@ public class IntoTheVoid
 
         }
 
+        /**
+         * Registers key mappings/bindings of this mod
+         * @param event RegisterKeyMappingsEvent
+         */
         @SubscribeEvent
         public static void registerKeys(RegisterKeyMappingsEvent event)
         {
             event.register(ITVKeyBindings.INSTANCE.abilityActivate);
         }
 
+        /**
+         * Registers block entity renderers for the client
+         * @param event EntityRenderersEvent.RegisterRenderers
+         */
         @SubscribeEvent
         public static void registerBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers event)
         {
@@ -177,6 +202,10 @@ public class IntoTheVoid
             event.registerBlockEntityRenderer(ITVBlockEntities.ITV_HANGING_SIGN.get(), HangingSignRenderer::new);
         }
 
+        /**
+         * Registers the layer definitions of the entities of this mod for the client
+         * @param event EntityRenderersEvent.RegisterLayerDefinitions
+         */
         @SubscribeEvent
         public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event)
         {
@@ -186,6 +215,10 @@ public class IntoTheVoid
             event.registerLayerDefinition(ITVModelLayers.ENDER_DRAGON_HATCHLING, EnderDragonHatchlingModel::createBodyLayer);
         }
 
+        /**
+         * Registers the PacketHandler on the client side for this mod
+         * @param event FMLCommonSetupEvent
+         */
         @SubscribeEvent
         public static void commonSetup(final FMLCommonSetupEvent event)
         {
@@ -193,7 +226,20 @@ public class IntoTheVoid
         }
     }
 
+    /**
+     * Registers all listeners for use in this mod.
+     * @param eventBus The Event Bus of this mod
+     */
     private void registerListeners(IEventBus eventBus)
     {
+        ITVItems.register(eventBus); // Register items in DeferredRegistry for items
+        ITVBlocks.register(eventBus); // Register blocks in DeferredRegistry for blocks
+        ITVBlockEntities.register(eventBus); // Register block entities in DeferredRegistry for block entities
+        ITVEffects.register(eventBus); // Register mob effects in DeferredRegistry for effects
+        CreativeTabs.register(eventBus); // Register Creative Mode Tabs
+        ITVMenuTypes.register(eventBus); // Register Menus and GUIs
+        ITVRecipes.register(eventBus); // Registers Custom Recipe Serializers
+        ITVEntities.register(eventBus); // Registers Entities of this mod
+        ITVTerrablender.registerBiomes(); // Registers biomes for use with Terrablender
     }
 }
