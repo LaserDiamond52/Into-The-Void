@@ -25,6 +25,7 @@ public class DragonDamageEffect extends InstantenousMobEffect {
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         if (this == ITVEffects.DRAGON_DAMAGE_EFFECT.get())
         {
+            // Check if the living entity gaining this effect is either an Ender Dragon or the Hatchling. If so, return the method.
             if (pLivingEntity instanceof EnderDragon)
             {
                 return;
@@ -32,6 +33,7 @@ public class DragonDamageEffect extends InstantenousMobEffect {
             {
                 return;
             }
+            // Otherwise, damage the living entity based on the duration
             pLivingEntity.hurt(pLivingEntity.damageSources().dragonBreath(), (float) (6 << pAmplifier));
 
         }

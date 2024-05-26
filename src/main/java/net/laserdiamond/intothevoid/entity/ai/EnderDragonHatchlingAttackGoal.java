@@ -24,13 +24,18 @@ public class EnderDragonHatchlingAttackGoal extends Goal {
         this.maxDistFromTarget = maxDistFromTarget;
     }
 
-    protected void launchDragonFireball(LivingEntity target)
+    /**
+     * Launches an Ender Dragon Hatchling fireball from the Ender Dragon Hatchling's position
+     */
+    protected void launchDragonFireball()
     {
-        Level level = this.dragonHatchlingEntity.level();
-        Vec3 dragonView = dragonHatchlingEntity.getLookAngle();
+        Level level = this.dragonHatchlingEntity.level(); // Get the level
+        Vec3 dragonView = dragonHatchlingEntity.getLookAngle(); // Get the look angle/vector of the entity
+        // X, Y, and Z coordinates
         double x = dragonHatchlingEntity.getX();
         double y = dragonHatchlingEntity.getEyeY();
         double z = dragonHatchlingEntity.getZ();
+        // Create, set, and spawn the dragon fireball
         DragonHatchlingFireball dragonFireball = new DragonHatchlingFireball(level, dragonHatchlingEntity, dragonView.x, dragonView.y, dragonView.z);
         dragonFireball.setPos(x, y, z);
         level.addFreshEntity(dragonFireball);
@@ -72,40 +77,43 @@ public class EnderDragonHatchlingAttackGoal extends Goal {
     @Override
     public void tick() {
         LivingEntity target = this.dragonHatchlingEntity.getTarget();
-        if (target == null)
+        if (target == null) // If target is null, reset entity's attack charge time
         {
             this.attackChargeTime = 0;
             this.dragonHatchlingEntity.setAttacking(false);
             return;
         }
         double distToTarget = this.dragonHatchlingEntity.distanceToSqr(target);
+        // Keep Ender Dragon Hatchling at a distance from the target
         if (distToTarget >= this.maxDistFromTarget)
         {
-            this.dragonHatchlingEntity.getNavigation().moveTo(target, 1.2);
+            this.dragonHatchlingEntity.getNavigation().moveTo(target, 1.2); // Move entity if it is too close to its target
         } else
         {
-            this.dragonHatchlingEntity.getNavigation().stop();
+            this.dragonHatchlingEntity.getNavigation().stop(); // Stop navigation if entity is far enough away from its target
         }
 
-        if (isEnemyInRange(target))
+        if (isEnemyInRange(target)) // Check if target is in range
         {
+            // Entity is ready to attack
             this.dragonHatchlingEntity.getLookControl().setLookAt(target.getX(), target.getEyeY(), target.getZ(), 30.0F, 30.0F);
             this.dragonHatchlingEntity.setAttacking(true);
-            this.attackChargeTime++;
+            this.attackChargeTime++; // Charge up
+
             if (this.attackChargeTime >= attackDelay)
             {
                 if (attackChargeTime == attackDelay)
                 {
-                    launchDragonFireball(target);
+                    launchDragonFireball(); // launch fireball
                 } else if (this.attackChargeTime >= maxAttackChargeTime)
                 {
-                    this.attackChargeTime = 0;
+                    this.attackChargeTime = 0; // Reset timer
                 }
             }
-        } else if (this.attackChargeTime > 0)
+        } else if (this.attackChargeTime > 0) // Target is not in range
         {
-            this.attackChargeTime = 0;
-            this.dragonHatchlingEntity.setAttacking(false);
+            this.attackChargeTime = 0; // Reset time
+            this.dragonHatchlingEntity.setAttacking(false); // Entity is no longer attacking
         }
     }
 

@@ -35,7 +35,7 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
      */
     @Override
     public void tick() {
-        super.tick();
+        super.tick(); // Call parent method
         if (shouldCountTillNextAttack)
         {
             this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
@@ -59,22 +59,23 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
     @Override
     protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
 
-        if (isEnemyInRange(pEnemy, pDistToEnemySqr))
+        if (isEnemyInRange(pEnemy, pDistToEnemySqr)) // Check if target is in range
         {
             shouldCountTillNextAttack = true;
 
-            if (isTimeToStartAttackAnimation())
+            if (isTimeToStartAttackAnimation()) // If time to start the animation, entity is ready to attack
             {
                 pirateEntity.setAttacking(true);
             }
 
             if (isTimeToAttack())
             {
-                this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ());
-                attackTarget(pEnemy);
+                this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ()); // Look at target
+                attackTarget(pEnemy); // Attack!
             }
-        } else
+        } else // Enemy is no longer in range
         {
+            // Reset attack
             resetAttackCooldown();
             shouldCountTillNextAttack = false;
             pirateEntity.setAttacking(false);
@@ -84,9 +85,9 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
 
     /**
      * Checks if the enemy is in range of the entity
-     * @param target
-     * @param distToTargetSqr
-     * @return
+     * @param target The target of the entity
+     * @param distToTargetSqr Distance from the target to the entity
+     * @return true if target is in range, false otherwise
      */
     private boolean isEnemyInRange(LivingEntity target, double distToTargetSqr)
     {

@@ -37,18 +37,18 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookUpProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeClient(), ITVLootTableProvider.create(packOutput));
-        generator.addProvider(event.includeServer(), new ITVRecipeProvider(packOutput));
+        generator.addProvider(event.includeClient(), ITVLootTableProvider.create(packOutput)); // Loot Table Provider
+        generator.addProvider(event.includeServer(), new ITVRecipeProvider(packOutput)); // Recipe Provider
 
-        generator.addProvider(event.includeClient(), new ITVItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ITVItemModelProvider(packOutput, existingFileHelper)); // Item Model Provider
 
-        generator.addProvider(event.includeClient(), new ITVBlocksStateProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ITVBlocksStateProvider(packOutput, existingFileHelper)); // Blocks State Provider
 
-        ITVBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(), new ITVBlockTagGenerator(packOutput, lookUpProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ITVItemTagProvider(packOutput, lookUpProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new ITVBiomeTagProvider(packOutput, lookUpProvider, existingFileHelper));
+        ITVBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(), new ITVBlockTagGenerator(packOutput, lookUpProvider, existingFileHelper)); // Block Tag Generator
+        generator.addProvider(event.includeServer(), new ITVItemTagProvider(packOutput, lookUpProvider, blockTagGenerator.contentsGetter(), existingFileHelper)); // Item Tag Generator
+        generator.addProvider(event.includeServer(), new ITVBiomeTagProvider(packOutput, lookUpProvider, existingFileHelper)); // Biome Tag Generator (doesn't work for biomes of this mod at the moment)
 
-        generator.addProvider(event.includeServer(), new ITVEntityTagProvider(packOutput, lookUpProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ITVWorldGenProvider(packOutput, lookUpProvider));
+        generator.addProvider(event.includeServer(), new ITVEntityTagProvider(packOutput, lookUpProvider, existingFileHelper)); // Entity Tag Provider
+        generator.addProvider(event.includeServer(), new ITVWorldGenProvider(packOutput, lookUpProvider)); // World Gen Provider
     }
 }

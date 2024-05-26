@@ -56,16 +56,16 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 
-        smeltingRecipes(consumer);
-        oreMaterialBlockCrafting(consumer);
-        armorCrafting(consumer);
-        toolCrafting(consumer);
-        smithingTemplateRecipes(consumer);
+        smeltingRecipes(consumer); // Smelting Recipes
+        oreMaterialBlockCrafting(consumer); // Ore Material Blocks
+        armorCrafting(consumer); // Armor
+        toolCrafting(consumer); // Tools/weapons
+        smithingTemplateRecipes(consumer); // Smithing Templates
 
-        stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get());
-        woodSetCrafting(consumer);
-        endCoreRecipe(consumer);
-        refineryRecipe(consumer);
+        stickRecipe(consumer, Items.IRON_INGOT, ITVItems.IRON_HANDLE.get()); // Iron Handle
+        woodSetCrafting(consumer); // Crafting recipes for wood types
+        endCoreRecipe(consumer); // End Core recipe
+        refineryRecipe(consumer); // Refinery block recipe
     }
 
     /**
@@ -74,10 +74,11 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
      */
     protected static void smithingTemplateRecipes(Consumer<FinishedRecipe> consumer)
     {
-        for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries())
+        for (RegistryObject<Item> itemRegistryObject : ITVItems.ITEMS.getEntries()) // Loop through all entries in the Items DeferredRegister
         {
-            if (itemRegistryObject.get() instanceof ITVSmithingTemplateItem smithingTemplateItem)
+            if (itemRegistryObject.get() instanceof ITVSmithingTemplateItem smithingTemplateItem) // Item must be an instance of this class
             {
+                // Build the recipe
                 ItemLike materialItem = smithingTemplateItem.materialItem();
                 ItemLike mineralItem = smithingTemplateItem.mineralItem();
 
@@ -119,12 +120,12 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         {
             RegistryObject<Block> oreMaterialBlock = ITVItems.ORE_MATERIAL_TO_BLOCK.get(oreMaterialItem);
 
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, oreMaterialBlock.get())
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, oreMaterialBlock.get()) // Recipe for ore material block from ore material
                     .requires(oreMaterialItem.get(), 9)
                     .unlockedBy(getHasName(oreMaterialItem.get()), has(oreMaterialItem.get()))
                     .save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, oreMaterialItem.get(), 9)
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, oreMaterialItem.get(), 9) // Recipe for ore material from ore material block
                     .requires(oreMaterialBlock.get(), 1)
                     .unlockedBy(getHasName(oreMaterialItem.get()), has(oreMaterialItem.get()))
                     .save(consumer);

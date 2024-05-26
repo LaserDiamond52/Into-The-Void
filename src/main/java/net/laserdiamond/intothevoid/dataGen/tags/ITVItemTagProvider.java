@@ -35,15 +35,15 @@ public class ITVItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
 
-        for (RegistryObject<Item> item : ITVItems.ITEMS.getEntries())
+        for (RegistryObject<Item> item : ITVItems.ITEMS.getEntries()) // Loop through all items
         {
-            if (item.get() instanceof ArmorItem armorItem)
+            if (item.get() instanceof ArmorItem armorItem) // Add armor tag for armor items
             {
                 this.tag(ItemTags.TRIMMABLE_ARMOR).add(armorItem);
-            } else if (item.get() instanceof ITVSmithingTemplateItem smithingTemplateItem)
+            } else if (item.get() instanceof ITVSmithingTemplateItem smithingTemplateItem) // Add template tag for smithing templates
             {
                 this.tag(ItemTags.TRIM_TEMPLATES).add(smithingTemplateItem);
-            } else if (item.get() instanceof ITVSimpleBlockItem itvSimpleBlockItem)
+            } else if (item.get() instanceof ITVSimpleBlockItem itvSimpleBlockItem) // Add item tags for block items
             {
                 if (!itvSimpleBlockItem.getItemTags().isEmpty())
                 {
@@ -54,7 +54,7 @@ public class ITVItemTagProvider extends ItemTagsProvider {
                 }
             }
 
-            if (item.get() instanceof ItemTaggable itemTaggable)
+            if (item.get() instanceof ItemTaggable itemTaggable) // Add any other tags for items
             {
                 if (!itemTaggable.getItemTags().isEmpty())
                 {

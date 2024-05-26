@@ -33,7 +33,7 @@ public class ITVItemModelProvider extends ItemModelProvider {
     }
 
     /**
-     * HashMap that maps Armor Trims to their float value. This is used for helping with generation of the armor model files
+     * HashMap that maps Armor Trim Materials to their float value. This is used for helping with generation of the armor model files
      */
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> TRIM_MATERIALS = new LinkedHashMap<>();
     static
@@ -56,7 +56,7 @@ public class ITVItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels()
     {
-        for (RegistryObject<Item> item : ITVItems.ITEMS.getEntries())
+        for (RegistryObject<Item> item : ITVItems.ITEMS.getEntries()) // Loop through all items
         {
             if (item.get() instanceof ITVSimpleItem)
             {
@@ -104,11 +104,11 @@ public class ITVItemModelProvider extends ItemModelProvider {
         {
             if (blockRegistryObject.get() instanceof ITVSaplingBlock)
             {
-                saplingItem(blockRegistryObject);
+                saplingItem(blockRegistryObject); // Item model for sapling blocks
             }
         }
 
-        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values()) // Loop through wood types
         {
             RegistryObject<Block> planks = woodBlocks.getPlanks();
             RegistryObject<Block> door = woodBlocks.getDoor();
@@ -116,16 +116,16 @@ public class ITVItemModelProvider extends ItemModelProvider {
             RegistryObject<Block> fence = woodBlocks.getFence();
             RegistryObject<Block> button = woodBlocks.getButton();
 
-            simpleBlockItem(door);
-            fenceItem(fence, planks);
-            buttonItem(button, planks);
+            simpleBlockItem(door); // Door
+            fenceItem(fence, planks); // Fence
+            buttonItem(button, planks); // Fence Gate
 
 
-            slabItem(woodBlocks.getSlab(), planks);
-            stairItem(woodBlocks.getStairs(), planks);
-            pressurePlateItem(woodBlocks.getPressurePlate(), planks);
-            trapDoorItem(trapDoor);
-            fenceGateItem(woodBlocks.getFenceGate(), planks);
+            slabItem(woodBlocks.getSlab(), planks); // Slab
+            stairItem(woodBlocks.getStairs(), planks); // Stairs
+            pressurePlateItem(woodBlocks.getPressurePlate(), planks); // Pressure Plate
+            trapDoorItem(trapDoor); // Trapdoor
+            fenceGateItem(woodBlocks.getFenceGate(), planks); // Fence Gate
         }
     }
 
@@ -275,9 +275,9 @@ public class ITVItemModelProvider extends ItemModelProvider {
 
         if (itemRegistryObject.get() instanceof ArmorItem armorItem)
         {
-            TRIM_MATERIALS.entrySet().forEach(entry ->
+            TRIM_MATERIALS.entrySet().forEach(entry -> // For each entry in the TRIM_MATERIALS HashMap, we do this:
             {
-                ResourceKey<TrimMaterial> trimMaterial = entry.getKey();
+                ResourceKey<TrimMaterial> trimMaterial = entry.getKey(); // Trim Material resource key
                 float trimValue = entry.getValue();
 
                 String armorType = switch (armorItem.getEquipmentSlot())
@@ -300,12 +300,12 @@ public class ITVItemModelProvider extends ItemModelProvider {
                 // Helps to avoid an IllegalArgumentException
                 existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
-                getBuilder(currentTrimName)
+                getBuilder(currentTrimName) // Armor model file for trimmed armor piece
                         .parent(new ModelFile.UncheckedModelFile("item/generated"))
                         .texture("layer0", armorItemResLoc)
                         .texture("layer1", trimResLoc);
 
-                this.withExistingParent(itemRegistryObject.getId().getPath(),
+                this.withExistingParent(itemRegistryObject.getId().getPath(), // Armor model file for armor without trim
                         mcLoc("item/generated"))
                         .override()
                         .model(new ModelFile.UncheckedModelFile(trimNameResLoc))

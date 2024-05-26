@@ -41,6 +41,7 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
 
+        // Most blocks under the block registry
         for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
         {
             Block blockItem = blockRegistryObject.get();
@@ -68,8 +69,8 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
                 this.dropSelf(grassBlock);
             }
         }
-        this.dropSelf(ITVBlocks.REFINERY.get());
-        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        this.dropSelf(ITVBlocks.REFINERY.get()); // individually call this one (no need to make a separate if-statement branch for this
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values()) // Loop through all the wood-type blocks
         {
             RegistryObject<Block> slab = woodBlocks.getSlab();
             RegistryObject<Block> stairs = woodBlocks.getStairs();

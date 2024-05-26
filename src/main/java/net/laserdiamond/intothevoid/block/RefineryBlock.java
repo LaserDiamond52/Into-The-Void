@@ -109,7 +109,7 @@ public class RefineryBlock extends BaseEntityBlock implements BlockTaggable {
                 NetworkHooks.openScreen((ServerPlayer) pPlayer, refineryBlockEntity, pPos);
             } else
             {
-                throw new IllegalStateException("!!EXCEPTION: MISSING CONTAINER PROVIDER!!");
+                throw new IllegalStateException("!!EXCEPTION: MISSING CONTAINER PROVIDER!!"); // Missing the container provider, or something wasn't mapped right
             }
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);

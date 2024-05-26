@@ -28,8 +28,8 @@ public class ITVEntityTagProvider extends EntityTypeTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         super.addTags(pProvider);
 
-        this.tag(ITVTags.Entities.VOID_PIRATES).add(ITVEntities.VOID_PIRATE.get());
+        this.tag(ITVTags.Entities.VOID_PIRATES).add(ITVEntities.VOID_PIRATE.get()); // Add Void Pirates tag to Void Pirate
 
-        this.tag(ITVTags.Entities.ENDER_DRAGONS).add(ITVEntities.ENDER_DRAGON_HATCHLING.get()).add(EntityType.ENDER_DRAGON);
+        this.tag(ITVTags.Entities.ENDER_DRAGONS).add(ITVEntities.ENDER_DRAGON_HATCHLING.get()).add(EntityType.ENDER_DRAGON); // Add Ender Dragons tag to Ender Dragon Hatchling and The Ender Dragon
     }
 }

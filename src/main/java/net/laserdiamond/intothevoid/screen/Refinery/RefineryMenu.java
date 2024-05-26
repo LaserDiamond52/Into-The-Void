@@ -24,7 +24,7 @@ public class RefineryMenu extends AbstractContainerMenu {
 
     public RefineryMenu(int containerId, Inventory inv, FriendlyByteBuf extraData)
     {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4)); // Call constructor of this class
     }
 
     private SlotItemHandler water, input, output;
@@ -32,11 +32,12 @@ public class RefineryMenu extends AbstractContainerMenu {
     public RefineryMenu(int containerId, Inventory inv, BlockEntity blockEntity, ContainerData data)
     {
         super(ITVMenuTypes.REFINERY_MENU.get(), containerId);
-        checkContainerSize(inv, 3);
+        checkContainerSize(inv, 3); // Create container with a size of 3
         be = ((RefineryBlockEntity) blockEntity);
         this.level = inv.player.level();
         this.data = data;
 
+        // Add player inventory slots to the menu
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 

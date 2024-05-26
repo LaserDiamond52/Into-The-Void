@@ -28,10 +28,10 @@ public class ITVBlockTagGenerator extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
 
-        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
+        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries()) // Loop through all block entries
         {
             Block block = blockRegistryObject.get();
-            if (block instanceof BlockTaggable blockTaggable)
+            if (block instanceof BlockTaggable blockTaggable) // Add block tags
             {
                 for (TagKey<Block> tagKey : blockTaggable.getBlockTags())
                 {

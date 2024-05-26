@@ -55,10 +55,10 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
             public int get(int i) {
                 return switch (i)
                 {
-                    case 0 -> RefineryBlockEntity.this.progress;
-                    case 1 -> RefineryBlockEntity.this.maxProgress;
-                    case 2 -> RefineryBlockEntity.this.waterLevel;
-                    case 3 -> RefineryBlockEntity.this.maxWaterLevel;
+                    case 0 -> RefineryBlockEntity.this.progress; // Progress of the refinery
+                    case 1 -> RefineryBlockEntity.this.maxProgress; // Max progress of the refinery
+                    case 2 -> RefineryBlockEntity.this.waterLevel; // The water level in the refinery
+                    case 3 -> RefineryBlockEntity.this.maxWaterLevel; // The max water level for the refinery
                     default -> 0;
                 };
             }
@@ -67,10 +67,10 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
             public void set(int i, int i1) {
                 switch (i)
                 {
-                    case 0 -> RefineryBlockEntity.this.progress = i1;
-                    case 1 -> RefineryBlockEntity.this.maxProgress = i1;
-                    case 2 -> RefineryBlockEntity.this.waterLevel = i1;
-                    case 3 -> RefineryBlockEntity.this.maxWaterLevel = i1;
+                    case 0 -> RefineryBlockEntity.this.progress = i1; // Progress of the refinery
+                    case 1 -> RefineryBlockEntity.this.maxProgress = i1; // Max progress of the refinery
+                    case 2 -> RefineryBlockEntity.this.waterLevel = i1; // The water level in the refinery
+                    case 3 -> RefineryBlockEntity.this.maxWaterLevel = i1; // The max water level for the refinery
                 }
             }
 
@@ -103,7 +103,7 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     /**
-     * Determines the drops of the Refinery when it is broken
+     * Determines the drops of the Refinery when it is broken. When the Refinery is mined, it will drop all items that were in its container
      */
     public void drops()
     {
@@ -170,13 +170,14 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
      */
     public void tick(Level level, BlockPos blockPos, BlockState blockState)
     {
-        if (itemHandler.getStackInSlot(WATER_INPUT_SLOT).getItem() == Items.WATER_BUCKET)
+        if (itemHandler.getStackInSlot(WATER_INPUT_SLOT).getItem() == Items.WATER_BUCKET) // Check when a water bucket is placed in the water input slot
         {
-            waterLevel = Math.min(maxWaterLevel, waterLevel + 50);
+            waterLevel = Math.min(maxWaterLevel, waterLevel + 50); // Add 50 to the water level. If it goes over the max, set the water level to the max
             itemHandler.setStackInSlot(WATER_INPUT_SLOT, new ItemStack(Items.BUCKET));
         }
-        if (hasRecipeJson())
+        if (hasRecipeJson()) // Check if a valid recipe is inside the container
         {
+            // Run the refinery process to complete the recipe
             increaseRefineryProgress();
             setChanged(level, blockPos, blockState);
 
@@ -185,7 +186,7 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
                 refineItem();
                 resetRefineryProgress();
             }
-        } else
+        } else // Reset Refinery progress if at any point there is not a matching recipe inside the container
         {
             resetRefineryProgress();
         }
@@ -223,10 +224,10 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
      * Increases the Refinery progress. When progress becomes equal to or greater than the max progress, 1 water level is removed
      */
     private void increaseRefineryProgress() {
-        progress++;
-        if (progress == maxProgress && waterLevel > 0)
+        progress++; // Update progress
+        if (progress >= maxProgress && waterLevel > 0)
         {
-            waterLevel--;
+            waterLevel--; // Remove 1 from the water level if progress is complete and we have water
         }
     }
 
@@ -236,14 +237,16 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
      */
     private boolean hasRecipeJson()
     {
-        Optional<RefineryRecipe> recipe = getCurrentRecipe();
+        Optional<RefineryRecipe> recipe = getCurrentRecipe(); // Use optional to get the recipe inside the container.
+
+        // Optional can either return a value, or be empty
 
         if (recipe.isEmpty())
         {
-            return false;
+            return false; // No valid recipe, end method
         }
-        ItemStack result = recipe.get().getResultItem(null);
-        boolean hasEnoughWater = waterLevel > 0;
+        ItemStack result = recipe.get().getResultItem(null); // Get the result item
+        boolean hasEnoughWater = waterLevel > 0; // Check if enough water is in the refinery
 
         return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem()) && hasEnoughWater;
     }
@@ -253,6 +256,7 @@ public class RefineryBlockEntity extends BlockEntity implements MenuProvider {
      * @return an Optional of type "RefineryRecipe"
      */
     private Optional<RefineryRecipe> getCurrentRecipe() {
+
         SimpleContainer inv = new SimpleContainer(this.itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++)
         {

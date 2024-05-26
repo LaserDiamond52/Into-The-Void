@@ -21,7 +21,7 @@ public class AbsoluteDamageEffect extends InstantenousMobEffect {
      */
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (this == ITVEffects.ABSOLUTE_DAMAGE.get())
+        if (this == ITVEffects.ABSOLUTE_DAMAGE.get()) // Hurt any living entity that gains this effect (damage received is based on the amplifier)
         {
             pLivingEntity.hurt(pLivingEntity.damageSources().magic(), (float) (6 << pAmplifier));
         }

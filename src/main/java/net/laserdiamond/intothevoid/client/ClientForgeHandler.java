@@ -31,7 +31,7 @@ public class ClientForgeHandler {
         Minecraft minecraft = Minecraft.getInstance();
         if (ITVKeyBindings.INSTANCE.abilityActivate.consumeClick())
         {
-            PacketHandler.sendToServer(new GKeyAbilityActivate());
+            PacketHandler.sendToServer(new GKeyAbilityActivate()); // Send packet from client to server when ability keybinding is pressed
         }
     }
 }

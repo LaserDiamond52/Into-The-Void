@@ -26,7 +26,7 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries())
+        for (RegistryObject<Block> blockRegistryObject : ITVBlocks.BLOCKS.getEntries()) // Loop through all blocks
         {
             Block block = blockRegistryObject.get();
             if (block instanceof ITVSimpleBlock)
@@ -52,8 +52,8 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
                 }
             }
         }
-        simpleBlockWithItem(ITVBlocks.REFINERY.get(), new ModelFile.UncheckedModelFile(modLoc("block/refinery")));
-        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values())
+        simpleBlockWithItem(ITVBlocks.REFINERY.get(), new ModelFile.UncheckedModelFile(modLoc("block/refinery"))); // Refinery block
+        for (ITVBlocks.WoodBlocks woodBlocks : ITVBlocks.WoodBlocks.values()) // Loop through all wood block types
         {
             RegistryObject<Block> logBlock = woodBlocks.getLogBlock();
             RegistryObject<Block> woodBlock = woodBlocks.getWoodBlock();
@@ -85,25 +85,25 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
             axisBlock(((RotatedPillarBlock) strippedWoodBlock.get()), blockTexture(strippedLogBlock.get()),
                     blockTexture(strippedLogBlock.get()));
 
-            blockItem(logBlock);
-            blockItem(woodBlock);
-            blockItem(strippedLogBlock);
-            blockItem(strippedWoodBlock);
+            blockItem(logBlock); // Log block
+            blockItem(woodBlock); // Wood block
+            blockItem(strippedLogBlock); // Stripped Log block
+            blockItem(strippedWoodBlock); // Stripped Wood block
 
-            slabBlock(((SlabBlock) slab.get()), blockTexture(planks.get()), blockTexture(planks.get()));
-            stairsBlock(((StairBlock) stairs.get()), blockTexture(planks.get()));
-            pressurePlateBlock(((PressurePlateBlock) pressurePlate.get()), blockTexture(planks.get()));
+            slabBlock(((SlabBlock) slab.get()), blockTexture(planks.get()), blockTexture(planks.get())); // Slab block
+            stairsBlock(((StairBlock) stairs.get()), blockTexture(planks.get())); // Stairs block
+            pressurePlateBlock(((PressurePlateBlock) pressurePlate.get()), blockTexture(planks.get())); // Pressure Plate block
 
-            doorBlockWithRenderType(((DoorBlock) door.get()), modLoc("block/" + doorName + "_bottom"), modLoc("block/" + doorName + "_top"), "cutout");
-            trapdoorBlockWithRenderType(((TrapDoorBlock) trapDoor.get()), modLoc("block/" + trapDoorName), true, "cutout");
+            doorBlockWithRenderType(((DoorBlock) door.get()), modLoc("block/" + doorName + "_bottom"), modLoc("block/" + doorName + "_top"), "cutout"); // Door block
+            trapdoorBlockWithRenderType(((TrapDoorBlock) trapDoor.get()), modLoc("block/" + trapDoorName), true, "cutout"); // Trapdoor block
 
-            fenceBlock(((FenceBlock) fence.get()), blockTexture(planks.get()));
-            fenceGateBlock(((FenceGateBlock) fenceGate.get()), blockTexture(planks.get()));
-            buttonBlock(((ButtonBlock) button.get()), blockTexture(planks.get()));
+            fenceBlock(((FenceBlock) fence.get()), blockTexture(planks.get())); // Fence block
+            fenceGateBlock(((FenceGateBlock) fenceGate.get()), blockTexture(planks.get())); // Fence Gate block
+            buttonBlock(((ButtonBlock) button.get()), blockTexture(planks.get())); // Button block
 
-            signBlock(((StandingSignBlock) sign.get()), ((WallSignBlock) wallSign.get()),
+            signBlock(((StandingSignBlock) sign.get()), ((WallSignBlock) wallSign.get()), // Sign block
                     blockTexture(planks.get()));
-            hangingSignBlock(hangingSign.get(), wallHangingSign.get(),
+            hangingSignBlock(hangingSign.get(), wallHangingSign.get(), // Hanging Sign block
                     blockTexture(planks.get()));
 
 
