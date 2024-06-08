@@ -4,6 +4,7 @@ import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.entity.boat.ITVBoatEntity;
 import net.laserdiamond.intothevoid.entity.boat.ITVChestBoatEntity;
 import net.laserdiamond.intothevoid.entity.itv.EnderDragonHatchlingEntity;
+import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
 import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -44,6 +45,14 @@ public class ITVEntities {
     public static final RegistryObject<EntityType<EnderDragonHatchlingEntity>> ENDER_DRAGON_HATCHLING = ENTITY_TYPES.register("ender_dragon_hatchling",
             () -> EntityType.Builder.of(EnderDragonHatchlingEntity::new, MobCategory.MONSTER)
                     .sized(1.5F, 1.5F).build("ender_dragon_hatchling"));
+
+
+    /**
+     * A RegistryObject of type "EntityType" of type "EvolvedEndermiteEntity" that represents an Evolved Endermite
+     */
+    public static final RegistryObject<EntityType<EvolvedEndermiteEntity>> EVOLVED_ENDERMITE_ENTITY = ENTITY_TYPES.register("evolved_endermite",
+            () -> EntityType.Builder.of(EvolvedEndermiteEntity::new, MobCategory.MONSTER)
+                    .sized(1.75F, 1.75F).build("evolved_endermite"));
 
     /**
      * Registers all entities under the DeferredRegister for entities of this mod

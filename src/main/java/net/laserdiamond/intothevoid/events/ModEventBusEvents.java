@@ -3,6 +3,7 @@ package net.laserdiamond.intothevoid.events;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.entity.ITVEntities;
 import net.laserdiamond.intothevoid.entity.itv.EnderDragonHatchlingEntity;
+import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
 import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,5 +26,6 @@ public class ModEventBusEvents {
     {
         event.put(ITVEntities.VOID_PIRATE.get(), VoidPirateEntity.createAttributes().build());
         event.put(ITVEntities.ENDER_DRAGON_HATCHLING.get(), EnderDragonHatchlingEntity.createAttributes().build());
+        event.put(ITVEntities.EVOLVED_ENDERMITE_ENTITY.get(), EvolvedEndermiteEntity.createAttributes().build());
     }
 }

@@ -1,23 +1,20 @@
 package net.laserdiamond.intothevoid.entity.ai;
 
-import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
+import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
-/**
- * The Attack Goal of the Void Pirate
- */
-public class VoidPirateAttackGoal extends MeleeAttackGoal {
+public class EvolvedEndermiteAttackGoal extends MeleeAttackGoal {
 
-    private final VoidPirateEntity pirateEntity;
-    private int attackDelay = 8;
-    private int ticksUntilNextAttack = 8;
-    private boolean shouldCountTillNextAttack = false;
-    public VoidPirateAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
+    private final EvolvedEndermiteEntity endermiteEntity;
+    private int attackDelay = 25;
+    private int ticksUntilNextAttack = 25;
+    private boolean shouldCountUntilNextAttack = false;
+    public EvolvedEndermiteAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        pirateEntity = (VoidPirateEntity) pMob;
+        endermiteEntity = (EvolvedEndermiteEntity) pMob;
     }
 
     /**
@@ -26,17 +23,17 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        attackDelay = 8;
-        ticksUntilNextAttack = 8;
+        attackDelay = 25;
+        ticksUntilNextAttack = 25;
     }
 
     /**
-     * Runs for every tick the entity is alive/loaded. Calls the parent method for most functionality
+     * Runs when the entity is alive/loaded. Calls the parent method for most functionality
      */
     @Override
     public void tick() {
-        super.tick(); // Call parent method
-        if (shouldCountTillNextAttack)
+        super.tick();
+        if (shouldCountUntilNextAttack)
         {
             this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
         }
@@ -47,47 +44,46 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
      */
     @Override
     public void stop() {
-        pirateEntity.setAttacking(false);
+        endermiteEntity.setAttacking(false);
         super.stop();
     }
 
     /**
-     * Checks if the enemy is in range and that the entity is able to attack them
+     * checks if the enemy is in range and that the entity is able to attack them
      * @param pEnemy The enemy of the entity
      * @param pDistToEnemySqr The distance to the entity squared
      */
     @Override
     protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
 
-        if (isEnemyInRange(pEnemy, pDistToEnemySqr)) // Check if target is in range
+        if (isEnemyInRange(pEnemy, pDistToEnemySqr))
         {
-            shouldCountTillNextAttack = true;
+            shouldCountUntilNextAttack = true;
 
-            if (isTimeToStartAttackAnimation()) // If time to start the animation, entity is ready to attack
+            if (isTimeToStartAttackAnimation())
             {
-                pirateEntity.setAttacking(true);
+                endermiteEntity.setAttacking(true);
             }
 
             if (isTimeToAttack())
             {
-                this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ()); // Look at target
-                attackTarget(pEnemy); // Attack!
+                this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ());
+                attackTarget(pEnemy);
             }
-        } else // Enemy is no longer in range
+        } else
         {
-            // Reset attack
             resetAttackCooldown();
-            shouldCountTillNextAttack = false;
-            pirateEntity.setAttacking(false);
-            pirateEntity.attackAnimationTimeout = 0;
+            endermiteEntity.setAttacking(false);
+            shouldCountUntilNextAttack = false;
+            endermiteEntity.attackAnimationTimeout = 0;
         }
     }
 
     /**
      * Checks if the enemy is in range of the entity
      * @param target The target of the entity
-     * @param distToTargetSqr Distance from the target to the entity
-     * @return true if target is in range, false otherwise
+     * @param distToTargetSqr Distance from the target to teh entity
+     * @return true if the target is in range, false otherwise
      */
     private boolean isEnemyInRange(LivingEntity target, double distToTargetSqr)
     {
@@ -99,7 +95,7 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
      */
     @Override
     protected void resetAttackCooldown() {
-        this.ticksUntilNextAttack = this.adjustedTickDelay(attackDelay * 2);
+        this.ticksUntilNextAttack = this.adjustedTickDelay(attackDelay + 17);
     }
 
     /**
@@ -122,7 +118,7 @@ public class VoidPirateAttackGoal extends MeleeAttackGoal {
 
     /**
      * Gets the ticks until the next attack
-     * @return the ticks until the next attack as an int
+     * @return The ticks until the next attack as an int
      */
     @Override
     public int getTicksUntilNextAttack() {
