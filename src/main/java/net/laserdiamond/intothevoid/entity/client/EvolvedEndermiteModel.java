@@ -8,11 +8,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.laserdiamond.intothevoid.entity.animations.ITVAnimationDefinitions;
 import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
 import net.minecraft.client.model.HierarchicalModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
@@ -211,6 +209,7 @@ public class EvolvedEndermiteModel<T extends Entity> extends HierarchicalModel<T
 		this.animateWalk(ITVAnimationDefinitions.EVOLVED_ENDERMITE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
 		this.animate(((EvolvedEndermiteEntity) entity).idleAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_IDLE, ageInTicks, 1F);
 		this.animate(((EvolvedEndermiteEntity) entity).attackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_ATTACK, ageInTicks);
+		this.animate(((EvolvedEndermiteEntity) entity).jumpAttackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_JUMP_ATTACK, ageInTicks);
 	}
 
 	@Override

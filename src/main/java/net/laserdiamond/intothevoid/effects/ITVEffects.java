@@ -3,6 +3,7 @@ package net.laserdiamond.intothevoid.effects;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.effects.harmfulEffects.AbsoluteDamageEffect;
 import net.laserdiamond.intothevoid.effects.harmfulEffects.DragonDamageEffect;
+import net.laserdiamond.intothevoid.effects.harmfulEffects.NecrosisEffect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -29,6 +30,17 @@ public class ITVEffects {
      * <p>Operates similarly to Absolute Damage. Any entity with the "ender_dragons" tag is immune to this effect</p>
      */
     public static final RegistryObject<MobEffect> DRAGON_DAMAGE_EFFECT = EFFECTS.register("dragon_damage", () -> new DragonDamageEffect(11101546));
+
+    /**
+     * RegistryObject of type "MobEffect" that represents the Necrosis effect
+     * <p>Necrosis does small damage overtime and prevents the victim from healing from most sources. Damage inflicted by Necrosis does not scale with the amplifier of the effect. Damage received will scale with the amplifier</p>
+     * <p>The victim cannot receive healing from the following sources:</p>
+     * <li>Natural Regeneration</li>
+     * <li>Regeneration Effect</li>
+     * <li>Instant Healing Effect</li>
+     *
+     */
+    public static final RegistryObject<MobEffect> NECROSIS_EFFECT = EFFECTS.register("necrosis", () -> new NecrosisEffect(8889187));
 
     /**
      * Registers all MobEffects under the DeferredRegister

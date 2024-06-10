@@ -3,6 +3,7 @@ package net.laserdiamond.intothevoid.entity.itv;
 import net.laserdiamond.intothevoid.entity.ai.AttackingEntity;
 import net.laserdiamond.intothevoid.entity.ai.EvolvedEndermiteAttackGoal;
 import net.laserdiamond.intothevoid.entity.animations.SetupAnimationState;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -28,13 +29,14 @@ import org.jetbrains.annotations.Nullable;
 public class EvolvedEndermiteEntity extends Monster implements SetupAnimationState, AttackingEntity {
 
     private static final EntityDataAccessor<Boolean> IS_ATTACKING = SynchedEntityData.defineId(EvolvedEndermiteEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_JUMP_ATTACKING = SynchedEntityData.defineId(EvolvedEndermiteEntity.class, EntityDataSerializers.BOOLEAN);
 
     public EvolvedEndermiteEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public final AnimationState idleAnimationState = new AnimationState(), attackAnimationState = new AnimationState();
-    public int idleAnimationTimeout = 0, attackAnimationTimeout = 0;
+    public final AnimationState idleAnimationState = new AnimationState(), attackAnimationState = new AnimationState(), jumpAttackAnimationState = new AnimationState();
+    public int idleAnimationTimeout = 0, attackAnimationTimeout = 0, jumpAttackAnimationTimeout = 0;
 
     /**
      * Runs every tick the entity is loaded
@@ -78,12 +80,31 @@ public class EvolvedEndermiteEntity extends Monster implements SetupAnimationSta
     }
 
     /**
+     * Sets the entity into a jump attacking state
+     * @param jumpAttacking True if the entity should be in a jump attacking state, false otherwise
+     */
+    public void setJumpAttacking(boolean jumpAttacking)
+    {
+        this.entityData.set(IS_JUMP_ATTACKING, jumpAttacking);
+    }
+
+    /**
+     * Returns if the entity is in a jump attacking state
+     * @return True if in a jump attacking state, false otherwise
+     */
+    public boolean isJumpAttacking()
+    {
+        return this.entityData.get(IS_JUMP_ATTACKING);
+    }
+
+    /**
      * Defines the synched data when the entity is initially loaded
      */
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_ATTACKING, false);
+        this.entityData.define(IS_JUMP_ATTACKING, false);
     }
 
     @Override
@@ -111,6 +132,20 @@ public class EvolvedEndermiteEntity extends Monster implements SetupAnimationSta
         {
             attackAnimationState.stop();
         }
+
+        if (this.isJumpAttacking() && jumpAttackAnimationTimeout <= 0)
+        {
+            jumpAttackAnimationTimeout = 40;
+            jumpAttackAnimationState.start(this.tickCount);
+        } else
+        {
+            this.jumpAttackAnimationTimeout--;
+        }
+
+        if (!this.isJumpAttacking())
+        {
+            jumpAttackAnimationState.stop();
+        }
     }
 
     /**
@@ -132,6 +167,21 @@ public class EvolvedEndermiteEntity extends Monster implements SetupAnimationSta
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Silverfish.class, true));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 
+    }
+
+    /**
+     * Runs every tick the entity is alive
+     */
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.level().isClientSide)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                this.level().addParticle(ParticleTypes.PORTAL, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
+            }
+        }
     }
 
     /**
