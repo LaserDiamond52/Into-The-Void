@@ -174,6 +174,8 @@ public class IntoTheVoid
             EntityRenderers.register(ITVEntities.VOID_PIRATE.get(), VoidPirateRenderer::new);
             EntityRenderers.register(ITVEntities.ENDER_DRAGON_HATCHLING.get(), EnderDragonHatchlingRenderer::new);
             EntityRenderers.register(ITVEntities.EVOLVED_ENDERMITE_ENTITY.get(), EvolvedEndermiteRenderer::new);
+            EntityRenderers.register(ITVEntities.WATCHER_BOSS.get(), WatcherBossRenderer::new);
+            EntityRenderers.register(ITVEntities.WATCHER_MINION.get(), WatcherMinionRenderer::new);
 
 
             // Some client setup code
@@ -215,6 +217,8 @@ public class IntoTheVoid
             event.registerLayerDefinition(ITVModelLayers.VOID_PIRATE, VoidPirateModel::createBodyLayer);
             event.registerLayerDefinition(ITVModelLayers.ENDER_DRAGON_HATCHLING, EnderDragonHatchlingModel::createBodyLayer);
             event.registerLayerDefinition(ITVModelLayers.EVOLVED_ENDERMITE, EvolvedEndermiteModel::createBodyLayer);
+            event.registerLayerDefinition(ITVModelLayers.WATCHER_BOSS, WatcherModel::createBodyLayer);
+            event.registerLayerDefinition(ITVModelLayers.WATCHER_MINION, WatcherModel::createBodyLayer);
         }
 
         /**

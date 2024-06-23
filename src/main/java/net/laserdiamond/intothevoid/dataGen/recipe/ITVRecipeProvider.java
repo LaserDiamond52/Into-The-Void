@@ -66,6 +66,39 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         woodSetCrafting(consumer); // Crafting recipes for wood types
         endCoreRecipe(consumer); // End Core recipe
         refineryRecipe(consumer); // Refinery block recipe
+        stonecutterRecipes(consumer);
+    }
+
+    /**
+     * Creates all stonecutter recipes for this mod. Also makes the stone brick recipes for new stone types of this mod.
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void stonecutterRecipes(Consumer<FinishedRecipe> consumer)
+    {
+        for (ITVBlocks.StoneBlocks stoneBlocks : ITVBlocks.StoneBlocks.values())
+        {
+            RegistryObject<Block> baseBlock = stoneBlocks.getBaseBlock();
+            RegistryObject<Block> brickBlock = stoneBlocks.getBrickBlock();
+
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, brickBlock.get(), 4) // Stone Brick Recipe
+                    .pattern("XX")
+                    .pattern("XX")
+                    .define('X', baseBlock.get())
+                    .unlockedBy(getHasName(baseBlock.get()), has(baseBlock.get()))
+                    .save(consumer);
+
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBaseSlabBlock().get(), baseBlock.get(), 2); // Base Slab block
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBaseStairBlock().get(), baseBlock.get()); // Base Stair block
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBrickSlabBlock().get(), baseBlock.get(), 2); // Brick Slab block
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBrickStairBlock().get(), baseBlock.get()); // Brick Stair block
+            stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, stoneBlocks.getBaseWallBlock().get(), baseBlock.get()); // Base Wall block
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, brickBlock.get(), baseBlock.get()); // Brick block
+            stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, stoneBlocks.getBrickWallBlock().get(), baseBlock.get()); // Brick Wall block
+
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBrickSlabBlock().get(), brickBlock.get(), 2); // Brick Slab block
+            stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, stoneBlocks.getBrickStairBlock().get(), brickBlock.get()); // Brick Stair block
+            stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, stoneBlocks.getBrickWallBlock().get(), brickBlock.get()); // Brick Wall block
+        }
     }
 
     /**

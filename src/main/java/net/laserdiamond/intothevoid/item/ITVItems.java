@@ -274,6 +274,10 @@ public class ITVItems {
      */
     public static final RegistryObject<Item> ENDER_DRAGON_HATCHLING_SPAWN_EGG = ITEMS.register("ender_dragon_hatchling_spawn_egg", () -> new ForgeSpawnEggItem(ITVEntities.ENDER_DRAGON_HATCHLING, 197379, 9715891, new Item.Properties()));
 
+    /**
+     * RegistryObject of type "Item" that represents an Evolved Endermite Spawn Egg
+     */
+    public static final RegistryObject<Item> EVOLVED_ENDERMITE_SPAWN_EGG = ITEMS.register("evolved_endermite_spawn_egg", () -> new ForgeSpawnEggItem(ITVEntities.EVOLVED_ENDERMITE_ENTITY, 9830655, 16711860, new Item.Properties()));
 
     /**
      * A HashMap mapping ore mineral items to their block variants. Used for recipes

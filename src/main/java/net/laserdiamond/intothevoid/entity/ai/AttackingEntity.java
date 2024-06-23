@@ -1,5 +1,6 @@
 package net.laserdiamond.intothevoid.entity.ai;
 
+
 /**
  * An interface used to set and check if the entity is attacking
  */

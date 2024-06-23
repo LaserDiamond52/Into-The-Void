@@ -108,6 +108,32 @@ public class ITVBlocksStateProvider extends BlockStateProvider {
 
 
         }
+
+        for (ITVBlocks.StoneBlocks stoneBlocks : ITVBlocks.StoneBlocks.values())
+        {
+            RegistryObject<Block> baseBlock = stoneBlocks.getBaseBlock();
+            RegistryObject<Block> baseSlab = stoneBlocks.getBaseSlabBlock();
+            RegistryObject<Block> baseStairs = stoneBlocks.getBaseStairBlock();
+            RegistryObject<Block> baseButton = stoneBlocks.getBaseButton();
+            RegistryObject<Block> pressurePlate = stoneBlocks.getBasePressurePlate();
+            RegistryObject<Block> baseWall = stoneBlocks.getBaseWallBlock();
+
+            slabBlock(((SlabBlock) baseSlab.get()), blockTexture(baseBlock.get()), blockTexture(baseBlock.get())); // Slab block
+            stairsBlock(((StairBlock) baseStairs.get()), blockTexture(baseBlock.get())); // Stairs block
+            buttonBlock(((ButtonBlock) baseButton.get()), blockTexture(baseBlock.get())); // Button block
+            pressurePlateBlock(((PressurePlateBlock) pressurePlate.get()), blockTexture(baseBlock.get())); // Pressure Plate block
+            wallBlock(((WallBlock) baseWall.get()), blockTexture(baseBlock.get())); // Wall block
+
+            RegistryObject<Block> brickBlock = stoneBlocks.getBrickBlock();
+            RegistryObject<Block> brickSlab = stoneBlocks.getBrickSlabBlock();
+            RegistryObject<Block> brickStairs = stoneBlocks.getBrickStairBlock();
+            RegistryObject<Block> brickWall = stoneBlocks.getBrickWallBlock();
+
+            slabBlock(((SlabBlock) brickSlab.get()), blockTexture(brickBlock.get()), blockTexture(brickBlock.get())); // Brick Slab block
+            stairsBlock(((StairBlock) brickStairs.get()), blockTexture(brickBlock.get())); // Stair block
+            wallBlock(((WallBlock) brickWall.get()), blockTexture(brickBlock.get())); // Brick Wall block
+
+        }
     }
 
     /**

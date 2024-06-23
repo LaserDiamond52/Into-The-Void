@@ -33,4 +33,24 @@ public class ITVModelLayers {
      * ModelLayerLocation for the Evolved Endermite
      */
     public static final ModelLayerLocation EVOLVED_ENDERMITE = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "evolved_endermite_layer"), "main");
+
+    /**
+     * ModelLayerLocation for Watcher Boss
+     */
+    public static final ModelLayerLocation WATCHER_BOSS = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "watcher_layer"), "main");
+
+    /**
+     * ModelLayerLocation for Watcher Minion
+     */
+    public static final ModelLayerLocation WATCHER_MINION = new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, "watcher_minion"), "main");
+
+    /**
+     * Helper method for Model Layer Locations for basic entity models
+     * @param path Name for the texture
+     * @return The Model Layer Location for the model
+     */
+    private static ModelLayerLocation basicModelLayer(String path)
+    {
+        return new ModelLayerLocation(new ResourceLocation(IntoTheVoid.MODID, path), "main");
+    }
 }

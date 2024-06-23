@@ -138,7 +138,7 @@ public class ITVBlocks {
     /**
      * A RegistryObject of type "Block" that represents a Purpur Wood Button
      */
-    public static final RegistryObject<Block> PURPUR_WOOD_BUTTON = registerSimpleBlock("purpur_wood_button", () -> new ITVButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true));
+    public static final RegistryObject<Block> PURPUR_WOOD_BUTTON = registerSimpleBlock("purpur_wood_button", () -> new ITVButtonBlock(BlockBehaviour.Properties.copy(Blocks.OAK_BUTTON), BlockSetType.OAK, 10, true, List.of(BlockTags.WOODEN_BUTTONS)), List.of(ItemTags.WOODEN_BUTTONS));
 
     /**
      * A RegistryObject of type "Block" that represents A Purpur Wood Sign
@@ -191,7 +191,57 @@ public class ITVBlocks {
     public static final RegistryObject<Block> NULL_SAND = registerSimpleBlock("null_sand", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.DIRT), List.of(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.SAND, BlockTags.DIRT)), List.of(ItemTags.DIRT, ItemTags.SAND));
 
     /**
-     * An enum consisting of wood categories with all their respective blocks/items. Must include:
+     * A RegistryObject of type "Block" that represents Void Stone
+     */
+    public static final RegistryObject<Block> VOID_STONE = registerSimpleBlock("void_stone", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STONE)), List.of(Tags.Items.STONE, ItemTags.STONE_TOOL_MATERIALS, ItemTags.STONE_CRAFTING_MATERIALS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Slabs
+     */
+    public static final RegistryObject<Block> VOID_STONE_SLAB = registerSimpleBlock("void_stone_slab", () -> new ITVSlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_SLAB), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STONE, BlockTags.SLABS)), List.of(ItemTags.SLABS, Tags.Items.STONE));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Stairs
+     */
+    public static final RegistryObject<Block> VOID_STONE_STAIRS = registerSimpleBlock("void_stone_stairs", () -> new ITVStairBlock(() -> VOID_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.STONE_STAIRS), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, Tags.Blocks.STONE, BlockTags.STAIRS)), List.of(ItemTags.STAIRS, Tags.Items.STONE));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Walls
+     */
+    public static final RegistryObject<Block> VOID_STONE_WALL = registerSimpleBlock("void_stone_wall", () -> new ITVWallBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICK_WALL), List.of(BlockTags.WALLS, Tags.Blocks.STONE, BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE)), List.of(ItemTags.WALLS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Buttons
+     */
+    public static final RegistryObject<Block> VOID_STONE_BUTTON = registerSimpleBlock("void_stone_button", () -> new ITVButtonBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BUTTON), BlockSetType.STONE, 10, false, List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.STONE_BUTTONS)), List.of(ItemTags.STONE_BUTTONS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Pressure Plates
+     */
+    public static final RegistryObject<Block> VOID_STONE_PRESSURE_PLATE = registerSimpleBlock("void_stone_pressure_plate", () -> new ITVPressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, BlockBehaviour.Properties.copy(Blocks.STONE_PRESSURE_PLATE), BlockSetType.STONE, List.of(BlockTags.STONE_PRESSURE_PLATES, BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE)));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Bricks
+     */
+    public static final RegistryObject<Block> VOID_STONE_BRICKS = registerSimpleBlock("void_stone_bricks", () -> new ITVSelfDropBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE,Tags.Blocks.STONE)), List.of(Tags.Items.STONE));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Bricks
+     */
+    public static final RegistryObject<Block> VOID_STONE_BRICK_SLAB = registerSimpleBlock("void_stone_brick_slab", () -> new ITVSlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_SLAB), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.STONE_BRICKS, BlockTags.SLABS)), List.of(ItemTags.SLABS, ItemTags.STONE_BRICKS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Brick Stairs
+     */
+    public static final RegistryObject<Block> VOID_STONE_BRICK_STAIRS = registerSimpleBlock("void_stone_brick_stairs", () -> new ITVStairBlock(() -> VOID_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.STONE_STAIRS), List.of(BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.STONE_BRICKS, BlockTags.STAIRS)), List.of(ItemTags.STAIRS, ItemTags.STONE_BRICKS));
+
+    /**
+     * A RegistryObject of type "Block" that represents Void Stone Brick Walls
+     */
+    public static final RegistryObject<Block> VOID_STONE_BRICK_WALL = registerSimpleBlock("void_stone_brick_wall", () -> new ITVWallBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICK_WALL), List.of(BlockTags.WALLS, Tags.Blocks.STONE, BlockTags.NEEDS_IRON_TOOL, BlockTags.MINEABLE_WITH_PICKAXE)), List.of(ItemTags.WALLS));
+
+    /**
+     * An enum consisting of wood categories with all their respective blocks/items. Each entry must include:
      * <li>Logs (Normal and Stripped)</li>
      * <li>Wood (Normal and Stripped)</li>
      * <li>Planks</li>
@@ -205,7 +255,8 @@ public class ITVBlocks {
      * <li>Block Tag for the logs</li>
      * <li>Item Tag for the logs</li>
      */
-    public enum WoodBlocks {
+    public enum WoodBlocks
+    {
         PURPUR (PURPUR_LOG, PURPUR_WOOD, STRIPPED_PURPUR_LOG, STRIPPED_PURPUR_WOOD,
                 PURPUR_PLANKS, PURPUR_WOOD_SLAB, PURPUR_WOOD_STAIRS, PURPUR_WOOD_PRESSURE_PLATE,
                 PURPUR_WOOD_DOOR, PURPUR_WOOD_TRAPDOOR, PURPUR_WOOD_FENCE, PURPUR_WOOD_FENCE_GATE,
@@ -333,6 +384,77 @@ public class ITVBlocks {
             return itemTagKey;
         }
 
+    }
+
+    /**
+     * An enum consisting of stone categories with all their respective variants. Each entry must include:
+     * <li>The base stone block</li>
+     * <li>Bricks</li>
+     * <li>Slabs (base and brick)</li>
+     * <li>Stairs (base and brick)</li>
+     * <li>Wall (base and brick)</li>
+     */
+    public enum StoneBlocks
+    {
+        VOID(VOID_STONE, VOID_STONE_SLAB, VOID_STONE_STAIRS, VOID_STONE_WALL, VOID_STONE_BUTTON, VOID_STONE_PRESSURE_PLATE
+                , VOID_STONE_BRICKS, VOID_STONE_BRICK_SLAB, VOID_STONE_BRICK_STAIRS, VOID_STONE_BRICK_WALL);
+
+        private final RegistryObject<Block> baseBlock, baseSlabBlock, baseStairBlock, baseWallBlock, baseButton, basePressurePlate,
+                brickBlock, brickSlabBlock, brickStairBlock, brickWallBlock;
+
+
+        StoneBlocks(RegistryObject<Block> baseBlock, RegistryObject<Block> baseSlabBlock, RegistryObject<Block> baseStairBlock, RegistryObject<Block> baseWallBlock, RegistryObject<Block> baseButton, RegistryObject<Block> basePressurePlate, RegistryObject<Block> brickBlock, RegistryObject<Block> brickSlabBlock, RegistryObject<Block> brickStairBlock, RegistryObject<Block> brickWallBlock) {
+            this.baseBlock = baseBlock;
+            this.baseSlabBlock = baseSlabBlock;
+            this.baseStairBlock = baseStairBlock;
+            this.baseWallBlock = baseWallBlock;
+            this.baseButton = baseButton;
+            this.basePressurePlate = basePressurePlate;
+            this.brickBlock = brickBlock;
+            this.brickSlabBlock = brickSlabBlock;
+            this.brickStairBlock = brickStairBlock;
+            this.brickWallBlock = brickWallBlock;
+        }
+
+        public RegistryObject<Block> getBaseBlock() {
+            return baseBlock;
+        }
+
+        public RegistryObject<Block> getBaseSlabBlock() {
+            return baseSlabBlock;
+        }
+
+        public RegistryObject<Block> getBaseStairBlock() {
+            return baseStairBlock;
+        }
+
+        public RegistryObject<Block> getBaseWallBlock() {
+            return baseWallBlock;
+        }
+
+        public RegistryObject<Block> getBrickBlock() {
+            return brickBlock;
+        }
+
+        public RegistryObject<Block> getBrickSlabBlock() {
+            return brickSlabBlock;
+        }
+
+        public RegistryObject<Block> getBrickStairBlock() {
+            return brickStairBlock;
+        }
+
+        public RegistryObject<Block> getBrickWallBlock() {
+            return brickWallBlock;
+        }
+
+        public RegistryObject<Block> getBaseButton() {
+            return baseButton;
+        }
+
+        public RegistryObject<Block> getBasePressurePlate() {
+            return basePressurePlate;
+        }
     }
 
     // Methods used to Register all blocks and different variants of blocks

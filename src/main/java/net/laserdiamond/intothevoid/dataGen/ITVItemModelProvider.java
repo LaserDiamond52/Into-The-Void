@@ -127,6 +127,23 @@ public class ITVItemModelProvider extends ItemModelProvider {
             trapDoorItem(trapDoor); // Trapdoor
             fenceGateItem(woodBlocks.getFenceGate(), planks); // Fence Gate
         }
+
+        for (ITVBlocks.StoneBlocks stoneBlocks : ITVBlocks.StoneBlocks.values())
+        {
+            RegistryObject<Block> baseBlock = stoneBlocks.getBaseBlock();
+
+            slabItem(stoneBlocks.getBaseSlabBlock(), baseBlock);
+            stairItem(stoneBlocks.getBaseStairBlock(), baseBlock);
+            buttonItem(stoneBlocks.getBaseButton(), baseBlock);
+            pressurePlateItem(stoneBlocks.getBasePressurePlate(), baseBlock);
+            wallItem(stoneBlocks.getBaseWallBlock(), baseBlock);
+
+            RegistryObject<Block> brickBlock = stoneBlocks.getBrickBlock();
+
+            slabItem(stoneBlocks.getBrickSlabBlock(), brickBlock);
+            stairItem(stoneBlocks.getBrickStairBlock(), brickBlock);
+            wallItem(stoneBlocks.getBrickWallBlock(), brickBlock);
+        }
     }
 
     /**
@@ -181,6 +198,17 @@ public class ITVItemModelProvider extends ItemModelProvider {
     {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
                 .texture("texture", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    /**
+     * Creates a wall model for the item. Typically used for Walls
+     * @param block The wall block
+     * @param baseBlock The block to use the texture of (typically uses the stone block/brick variant of the stone type)
+     */
+    private void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock)
+    {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall", new ResourceLocation(IntoTheVoid.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
     /**

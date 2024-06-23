@@ -3,9 +3,7 @@ package net.laserdiamond.intothevoid.entity;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.entity.boat.ITVBoatEntity;
 import net.laserdiamond.intothevoid.entity.boat.ITVChestBoatEntity;
-import net.laserdiamond.intothevoid.entity.itv.EnderDragonHatchlingEntity;
-import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
-import net.laserdiamond.intothevoid.entity.itv.VoidPirateEntity;
+import net.laserdiamond.intothevoid.entity.itv.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -53,6 +51,16 @@ public class ITVEntities {
     public static final RegistryObject<EntityType<EvolvedEndermiteEntity>> EVOLVED_ENDERMITE_ENTITY = ENTITY_TYPES.register("evolved_endermite",
             () -> EntityType.Builder.of(EvolvedEndermiteEntity::new, MobCategory.MONSTER)
                     .sized(1.75F, 1.75F).build("evolved_endermite"));
+
+
+    public static final RegistryObject<EntityType<WatcherBossEntity>> WATCHER_BOSS = ENTITY_TYPES.register("watcher_boss",
+            () -> EntityType.Builder.of(WatcherBossEntity::new, MobCategory.MONSTER)
+                    .sized(1.25F, 2F).build("watcher_boss"));
+
+    public static final RegistryObject<EntityType<WatcherMinionEntity>> WATCHER_MINION = ENTITY_TYPES.register("watcher_minion",
+            () -> EntityType.Builder.of(WatcherMinionEntity::new, MobCategory.MONSTER)
+                    .sized(1.75F, 1.75F).build("watcher_minion"));
+
 
     /**
      * Registers all entities under the DeferredRegister for entities of this mod

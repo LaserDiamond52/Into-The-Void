@@ -95,6 +95,29 @@ public class ITVBlockLootTables extends BlockLootSubProvider {
             this.add(woodBlocks.getWallSign().get(), block -> createSingleItemTable(woodBlocks.getWallSign().get()));
             this.add(woodBlocks.getWallHangingSign().get(), block -> createSingleItemTable(woodBlocks.getWallSign().get()));
         }
+
+        for (ITVBlocks.StoneBlocks stoneBlocks : ITVBlocks.StoneBlocks.values())
+        {
+            RegistryObject<Block> baseSlab = stoneBlocks.getBaseSlabBlock();
+            RegistryObject<Block> baseStairs = stoneBlocks.getBaseStairBlock();
+            RegistryObject<Block> baseButton = stoneBlocks.getBaseButton();
+            RegistryObject<Block> pressurePlate = stoneBlocks.getBasePressurePlate();
+            RegistryObject<Block> baseWall = stoneBlocks.getBaseWallBlock();
+
+            this.add(baseSlab.get(), block -> createSlabItemTable(baseSlab.get()));
+            this.dropSelf(baseStairs.get());
+            this.dropSelf(baseButton.get());
+            this.dropSelf(pressurePlate.get());
+            this.dropSelf(baseWall.get());
+
+            RegistryObject<Block> brickSlab = stoneBlocks.getBrickSlabBlock();
+            RegistryObject<Block> brickStairs = stoneBlocks.getBrickStairBlock();
+            RegistryObject<Block> brickWall = stoneBlocks.getBrickWallBlock();
+
+            this.add(brickSlab.get(), block -> createSlabItemTable(brickSlab.get()));
+            this.dropSelf(brickStairs.get());
+            this.dropSelf(brickWall.get());
+        }
     }
 
     /**

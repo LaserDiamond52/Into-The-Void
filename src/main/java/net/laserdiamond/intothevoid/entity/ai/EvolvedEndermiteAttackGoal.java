@@ -1,5 +1,6 @@
 package net.laserdiamond.intothevoid.entity.ai;
 
+import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.entity.itv.EvolvedEndermiteEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -8,9 +9,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class EvolvedEndermiteAttackGoal extends MeleeAttackGoal {
@@ -46,6 +51,7 @@ public class EvolvedEndermiteAttackGoal extends MeleeAttackGoal {
     @Override
     public void tick() {
         super.tick();
+        Level level = endermiteEntity.level();
         if (shouldCountUntilNextAttack)
         {
             this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
@@ -54,6 +60,20 @@ public class EvolvedEndermiteAttackGoal extends MeleeAttackGoal {
         if (shouldCountUntilNextJumpAttack)
         {
             this.ticksUntilNextJumpAttack = Math.max(this.ticksUntilNextJumpAttack - 1, 0);
+        }
+
+        if (endermiteEntity.isJumpAttacking())
+        {
+            for (Entity entity : level.getEntities(endermiteEntity, endermiteEntity.getBoundingBox().expandTowards(5.0D, 5.0D, 5.0D)))
+            {
+                if (entity instanceof LivingEntity livingEntity)
+                {
+                    if (!(livingEntity instanceof EvolvedEndermiteEntity))
+                    {
+                        livingEntity.addEffect(new MobEffectInstance(ITVEffects.NECROSIS_EFFECT.get(), 200, 0), endermiteEntity);
+                    }
+                }
+            }
         }
     }
 
