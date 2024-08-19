@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-public class EvolvedEndermiteModel<T extends Entity> extends HierarchicalModel<T> implements RotatingHead {
+public class EvolvedEndermiteModel extends HierarchicalModel<EvolvedEndermiteEntity> implements RotatingHead {
 
 	private final ModelPart evolved_endermite;
 	private final ModelPart body;
@@ -202,14 +202,14 @@ public class EvolvedEndermiteModel<T extends Entity> extends HierarchicalModel<T
 	 * @param headPitch The head pitch
 	 */
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(EvolvedEndermiteEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.headRotation(netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.EVOLVED_ENDERMITE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
-		this.animate(((EvolvedEndermiteEntity) entity).idleAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_IDLE, ageInTicks, 1F);
-		this.animate(((EvolvedEndermiteEntity) entity).attackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_ATTACK, ageInTicks);
-		this.animate(((EvolvedEndermiteEntity) entity).jumpAttackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_JUMP_ATTACK, ageInTicks);
+		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_IDLE, ageInTicks, 1F);
+		this.animate(entity.attackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_ATTACK, ageInTicks);
+		this.animate(entity.jumpAttackAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_JUMP_ATTACK, ageInTicks);
 	}
 
 	@Override

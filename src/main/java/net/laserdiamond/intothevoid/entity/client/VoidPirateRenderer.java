@@ -11,10 +11,10 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * Class responsible for rendering the Void Pirate
  */
-public class VoidPirateRenderer extends MobRenderer<VoidPirateEntity, VoidPirateModel<VoidPirateEntity>> {
+public class VoidPirateRenderer extends MobRenderer<VoidPirateEntity, VoidPirateModel> {
 
     public VoidPirateRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new VoidPirateModel<>(pContext.bakeLayer(ITVModelLayers.VOID_PIRATE)), 0.25F);
+        super(pContext, new VoidPirateModel(pContext.bakeLayer(ITVModelLayers.VOID_PIRATE)), 0.25F);
     }
 
     /**

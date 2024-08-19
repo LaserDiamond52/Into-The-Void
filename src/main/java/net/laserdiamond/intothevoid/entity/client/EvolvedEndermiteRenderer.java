@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class EvolvedEndermiteRenderer extends MobRenderer<EvolvedEndermiteEntity, EvolvedEndermiteModel<EvolvedEndermiteEntity>> {
+public class EvolvedEndermiteRenderer extends MobRenderer<EvolvedEndermiteEntity, EvolvedEndermiteModel> {
 
     public EvolvedEndermiteRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new EvolvedEndermiteModel<>(pContext.bakeLayer(ITVModelLayers.EVOLVED_ENDERMITE)), 0.75F);
+        super(pContext, new EvolvedEndermiteModel(pContext.bakeLayer(ITVModelLayers.EVOLVED_ENDERMITE)), 0.75F);
     }
 
     @Override

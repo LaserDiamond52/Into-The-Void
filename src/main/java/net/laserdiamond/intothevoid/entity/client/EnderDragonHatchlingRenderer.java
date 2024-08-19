@@ -11,9 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * Class responsible for rendering the Ender Dragon Hatchling
  */
-public class EnderDragonHatchlingRenderer extends MobRenderer<EnderDragonHatchlingEntity, EnderDragonHatchlingModel<EnderDragonHatchlingEntity>> {
+public class EnderDragonHatchlingRenderer extends MobRenderer<EnderDragonHatchlingEntity, EnderDragonHatchlingModel> {
     public EnderDragonHatchlingRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new EnderDragonHatchlingModel<>(pContext.bakeLayer(ITVModelLayers.ENDER_DRAGON_HATCHLING)), 0.5F);
+        super(pContext, new EnderDragonHatchlingModel(pContext.bakeLayer(ITVModelLayers.ENDER_DRAGON_HATCHLING)), 0.5F);
     }
 
     /**

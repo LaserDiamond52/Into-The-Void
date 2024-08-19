@@ -62,6 +62,12 @@ public class WatcherMinionEntity extends Monster {
 
     @Override
     public void aiStep() {
+        attack();
+        super.aiStep();
+    }
+
+    public void attack()
+    {
         if (this.isAlive())
         {
             if (this.hasActiveAttackTarget())
@@ -119,7 +125,6 @@ public class WatcherMinionEntity extends Monster {
             }
 
         }
-        super.aiStep();
     }
 
     public LivingEntity getActiveAttackTarget()

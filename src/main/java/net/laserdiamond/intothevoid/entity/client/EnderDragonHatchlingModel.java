@@ -17,9 +17,8 @@ import net.minecraft.world.entity.Entity;
 
 /**
  * Contains the Ender Dragon Hatchling Model and functionality of its animations. Most of this is auto-generated from exporting the model from BlockBench as a .java file
- * @param <T>
  */
-public class EnderDragonHatchlingModel<T extends Entity> extends HierarchicalModel<T> implements RotatingHead {
+public class EnderDragonHatchlingModel extends HierarchicalModel<EnderDragonHatchlingEntity> implements RotatingHead {
 
 	private final ModelPart ender_dragon_hatchling;
 	private final ModelPart body;
@@ -150,13 +149,13 @@ public class EnderDragonHatchlingModel<T extends Entity> extends HierarchicalMod
 	 * @param headPitch The head pitch
 	 */
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(EnderDragonHatchlingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.headRotation(netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_IDLE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
-		this.animate(((EnderDragonHatchlingEntity) entity).idleAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_IDLE_WALK, ageInTicks, 1F);
-		this.animate(((EnderDragonHatchlingEntity) entity).attackAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_ATTACK, ageInTicks);
+		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_IDLE_WALK, ageInTicks, 1F);
+		this.animate(entity.attackAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_ATTACK, ageInTicks);
 	}
 
 

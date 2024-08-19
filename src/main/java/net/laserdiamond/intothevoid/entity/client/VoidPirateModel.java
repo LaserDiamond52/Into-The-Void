@@ -23,9 +23,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Contains the Void Pirate Model and functionality of its animations. Most of this is auto-generated from exporting the model from BlockBench as a .java file
- * @param <T>
  */
-public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> implements RotatingHead {
+public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> implements RotatingHead {
 
 	private final ModelPart void_pirate, body, head, leftLeg, rightLeg, leftArm, rightArm, torso;
 
@@ -85,13 +84,13 @@ public class VoidPirateModel<T extends Entity> extends HierarchicalModel<T> impl
 	 * @param headPitch The head pitch
 	 */
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(VoidPirateEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.headRotation(netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.VOID_PIRATE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
-		this.animate(((VoidPirateEntity) entity).idleAnimationState, ITVAnimationDefinitions.VOID_PIRATE_IDLE, ageInTicks, 1F);
-		this.animate(((VoidPirateEntity) entity).attackAnimationState, ITVAnimationDefinitions.VOID_PIRATE_ATTACK, ageInTicks);
+		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.VOID_PIRATE_IDLE, ageInTicks, 1F);
+		this.animate(entity.attackAnimationState, ITVAnimationDefinitions.VOID_PIRATE_ATTACK, ageInTicks);
 	}
 
 	@Override
