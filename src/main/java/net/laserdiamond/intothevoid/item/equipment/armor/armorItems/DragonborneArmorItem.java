@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class DragonborneArmorItem extends ITVArmorItem implements ArmorSmithing {
@@ -29,9 +30,10 @@ public final class DragonborneArmorItem extends ITVArmorItem implements ArmorSmi
 
     @Override
     public List<MobEffectInstance> armorEffects() {
-        effects.add(new MobEffectInstance(MobEffects.JUMP, 100, 0, false, false, true));
-        effects.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
-        return super.armorEffects();
+        List<MobEffectInstance> effectInstances = new ArrayList<>();
+        effectInstances.add(new MobEffectInstance(MobEffects.JUMP, 100, 0, false, false, true));
+        effectInstances.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
+        return effectInstances;
     }
 
     @Override
@@ -46,25 +48,13 @@ public final class DragonborneArmorItem extends ITVArmorItem implements ArmorSmi
 
     @Override
     public ItemLike armorPiece(EquipmentSlot slot) {
-        switch (slot)
+        return switch (slot)
         {
-            case HEAD ->
-            {
-                return ITVItems.ENDERITE_HELMET.get();
-            }
-            case CHEST ->
-            {
-                return ITVItems.ENDERITE_CHESTPLATE.get();
-            }
-            case LEGS ->
-            {
-                return ITVItems.ENDERITE_LEGGINGS.get();
-            }
-            case FEET ->
-            {
-                return ITVItems.ENDERITE_BOOTS.get();
-            }
-        }
-        return Items.AIR;
+            case HEAD -> ITVItems.ENDERITE_HELMET.get();
+            case CHEST -> ITVItems.ENDERITE_CHESTPLATE.get();
+            case LEGS -> ITVItems.ENDERITE_LEGGINGS.get();
+            case FEET -> ITVItems.ENDERITE_BOOTS.get();
+            default -> Items.AIR;
+        };
     }
 }

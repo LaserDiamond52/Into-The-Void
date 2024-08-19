@@ -100,6 +100,8 @@
   "entity.into_the_void.void_pirate": "Void Pirate",
   "entity.into_the_void.ender_dragon_hatchling": "Ender Dragon Hatchling",
   "entity.into_the_void.evolved_endermite": "Evolved Endermite",
+  "entity.into_the_void.watcher_minion": "Watcher Minion",
+  "entity.into_the_void.watcher_boss": "The Watcher",
 
   "key.categories.into_the_void": "Into The Void",
   "key.into_the_void.abilityActivate": "Ability Key"

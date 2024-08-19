@@ -2,6 +2,7 @@ package net.laserdiamond.intothevoid.entity.itv;
 
 import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.entity.ai.AttackingEntity;
+import net.laserdiamond.intothevoid.entity.animations.SetupAnimationState;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,10 +13,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -35,13 +33,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
-public class WatcherBossEntity extends Monster implements AttackingEntity {
+public class WatcherBossEntity extends WatcherMinionEntity implements AttackingEntity, SetupAnimationState {
 
     private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(WatcherBossEntity.class, EntityDataSerializers.BOOLEAN);
 
     public WatcherBossEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeout = 0;
 
     @Override
     public void setAttacking(boolean attacking) {
@@ -60,6 +61,28 @@ public class WatcherBossEntity extends Monster implements AttackingEntity {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+
+        if (this.level().isClientSide)
+        {
+            setUpAnimationStates();
+        }
+    }
+
+    @Override
+    public void setUpAnimationStates() {
+        if (this.idleAnimationTimeout <= 0)
+        {
+            this.idleAnimationTimeout = this.random.nextInt(80) + 160;
+            this.idleAnimationState.start(this.tickCount);
+        } else
+        {
+            this.idleAnimationTimeout--;
+        }
+    }
+
+    @Override
     protected void registerGoals() {
 
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -70,6 +93,11 @@ public class WatcherBossEntity extends Monster implements AttackingEntity {
 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(WatcherMinionEntity.class));
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
     }
 
     /**
@@ -99,27 +127,6 @@ public class WatcherBossEntity extends Monster implements AttackingEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENDER_DRAGON_DEATH;
-    }
-
-    /**
-     * Determines if the entity is immune to fire damage
-     * @return True if the entity is immune, false otherwise
-     */
-    @Override
-    public boolean fireImmune() {
-        return true;
-    }
-
-    /**
-     * Determines if the entity is immune to fall damage
-     * @param pFallDistance The distance the entity is falling at
-     * @param pMultiplier The damage multiplier
-     * @param pSource The source of damage
-     * @return True if affected, false otherwise
-     */
-    @Override
-    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
-        return false;
     }
 
     /**
@@ -160,25 +167,6 @@ public class WatcherBossEntity extends Monster implements AttackingEntity {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Determines if the entity can be affected by freezing
-     * @return True if the entity can be affected by freezing, false otherwise
-     */
-    @Override
-    public boolean canFreeze() {
-        return false;
-    }
-
-    /**
-     * Determines if the entity can drown
-     * @param type The fluid type the entity is drowning in
-     * @return True if the entity can drown, false otherwise
-     */
-    @Override
-    public boolean canDrownInFluidType(FluidType type) {
-        return false;
     }
 
     @Override

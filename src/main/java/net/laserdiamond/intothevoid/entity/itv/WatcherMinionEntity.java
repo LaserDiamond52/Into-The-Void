@@ -1,14 +1,18 @@
 package net.laserdiamond.intothevoid.entity.itv;
 
-import net.laserdiamond.intothevoid.entity.ai.AttackingEntity;
-import net.laserdiamond.intothevoid.entity.animations.SetupAnimationState;
+import net.laserdiamond.intothevoid.entity.ai.WatcherAttackGoal;
+import net.laserdiamond.intothevoid.util.RayTrace;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,28 +28,150 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 
-public class WatcherMinionEntity extends Monster implements AttackingEntity {
+import java.util.Optional;
 
-    private static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(WatcherMinionEntity.class, EntityDataSerializers.BOOLEAN);
+public class WatcherMinionEntity extends Monster {
+
+    private static final EntityDataAccessor<Integer> ATTACK_TARGET_ID = SynchedEntityData.defineId(WatcherMinionEntity.class, EntityDataSerializers.INT);
+    private int clientSideAttackTime;
+    private LivingEntity clientSideCachedAttackTarget;
+    private final double stepIncrement = 0.5;
+    private final int distance = 2;
+    private final boolean pierceBlocks = false;
+    private final boolean pierceEntities = true;
 
     public WatcherMinionEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     @Override
-    public void setAttacking(boolean attacking) {
-        this.entityData.set(ATTACKING, attacking);
-    }
-
-    @Override
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
-    }
-
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ATTACKING, false);
+        this.entityData.define(ATTACK_TARGET_ID, 0);
+    }
+
+    public void setActiveAttackTarget(int activeAttackTarget)
+    {
+        this.entityData.set(ATTACK_TARGET_ID, activeAttackTarget);
+    }
+
+    public boolean hasActiveAttackTarget()
+    {
+        return (Integer) this.entityData.get(ATTACK_TARGET_ID) != 0;
+    }
+
+    @Override
+    public void aiStep() {
+        if (this.isAlive())
+        {
+            if (this.hasActiveAttackTarget())
+            {
+                if (this.level().isClientSide)
+                {
+                    if (this.clientSideAttackTime < this.getAttackDuration())
+                    {
+                        this.clientSideAttackTime++;
+                    }
+
+                    LivingEntity activeTarget = this.getActiveAttackTarget();
+                    if (activeTarget != null)
+                    {
+                        this.getLookControl().setLookAt(activeTarget, 90.0F, 90.0F);
+                        this.getLookControl().tick();
+                        /*
+                        double attackAnimationScale = (double) this.getAttackAnimationScale(0.0F);
+                        double xDiff = activeTarget.getX() - this.getX();
+                        double yDiff = activeTarget.getY(0.5) - this.getEyeY();
+                        double zDiff = activeTarget.getZ() - this.getZ();
+                        double $$8 = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+                        xDiff /= $$8;
+                        yDiff /= $$8;
+                        zDiff /= $$8;
+                        double random = this.random.nextDouble();
+
+                        while (random < $$8)
+                        {
+                            random += 1.8 - attackAnimationScale + this.random.nextDouble() * (1.7 - attackAnimationScale);
+
+                            this.level().addParticle(ParticleTypes.REVERSE_PORTAL, this.getX() + xDiff * random, this.getEyeY() + yDiff * random, this.getZ() + zDiff * random, 0.0,0.0,0.0);
+                        }
+
+                         */
+
+                        //RayTrace.rayTraceToVec(this.level(), this.getEyePosition(), this.getActiveAttackTarget().position().add(0, 1,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, ParticleTypes.REVERSE_PORTAL);
+                    }
+                } else
+                {
+                    if (this.getActiveAttackTarget() != null)
+                    {
+                        Iterable<ServerLevel> serverLevels = this.getServer().getAllLevels();
+                        for (ServerLevel serverLevel : serverLevels)
+                        {
+                            if (this.level().equals(serverLevel))
+                            {
+                                RayTrace.rayTraceToVecEntities(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0,this.getActiveAttackTarget().getBbHeight() / 2,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity || e instanceof WatcherBossEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, ParticleTypes.REVERSE_PORTAL);
+                            }
+                        }
+                    }
+                }
+
+                this.setYRot(this.yHeadRot);
+            }
+
+        }
+        super.aiStep();
+    }
+
+    public LivingEntity getActiveAttackTarget()
+    {
+        if (!this.hasActiveAttackTarget())
+        {
+            return null;
+        } else if (this.level().isClientSide)
+        {
+            if (this.clientSideCachedAttackTarget != null)
+            {
+                return this.clientSideCachedAttackTarget;
+            } else
+            {
+                Entity storedTarget = this.level().getEntity(((Integer) this.entityData.get(ATTACK_TARGET_ID)));
+                if (storedTarget instanceof LivingEntity livingEntity)
+                {
+                    this.clientSideCachedAttackTarget = livingEntity;
+                    return this.clientSideCachedAttackTarget;
+                } else
+                {
+                    return null;
+                }
+            }
+        } else
+        {
+            return this.getTarget();
+        }
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        super.onSyncedDataUpdated(pKey);
+        if (ATTACK_TARGET_ID.equals(pKey))
+        {
+            this.clientSideAttackTime = 0;
+            this.clientSideCachedAttackTarget = null;
+        }
+    }
+
+    public float getAttackAnimationScale(float pPartialTick)
+    {
+        return ((float) this.clientSideAttackTime + pPartialTick) / (float) this.getAttackDuration();
+    }
+
+    public int getAttackDuration()
+    {
+        return 60;
+    }
+
+    public int getClientSideAttackTime() {
+        return clientSideAttackTime;
     }
 
     @Override
@@ -53,6 +179,7 @@ public class WatcherMinionEntity extends Monster implements AttackingEntity {
 
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
+        this.goalSelector.addGoal(2, new WatcherAttackGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7D));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 3F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));

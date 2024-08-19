@@ -2,9 +2,11 @@ package net.laserdiamond.intothevoid.client;
 
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.block.entity.ITVBlockEntities;
+import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.network.PacketHandler;
 import net.laserdiamond.intothevoid.network.packet.GKeyAbilityActivate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,16 +24,24 @@ import net.minecraftforge.registries.RegistryObject;
 public class ClientForgeHandler {
 
     /**
-     * Method is run when a key input from the client is detected. If a key with a key binding is pressed, a packet is sent from the client to the server indicating that that key was pressed
-     * @param event InputEvent.Key
+     * Method is run when a key input from the client is detected. If a key with a key binding is pressed, a packet is sent from the client to the server indicating a key being pressed
+     * @param event {@link net.minecraftforge.client.event.InputEvent.Key}
      */
     @SubscribeEvent
     public static void onKeyInput(InputEvent.Key event)
     {
         Minecraft minecraft = Minecraft.getInstance();
-        if (ITVKeyBindings.INSTANCE.abilityActivate.consumeClick())
+        LocalPlayer clientPlayer = minecraft.player;
+        if (ITVKeyBindings.INSTANCE.abilityActivate.consumeClick()) // ON CLIENT
         {
-            PacketHandler.sendToServer(new GKeyAbilityActivate()); // Send packet from client to server when ability keybinding is pressed
+            if (clientPlayer != null)
+            {
+                if (clientPlayer.getMainHandItem().getItem() instanceof GKeyAbility gKeyAbility)
+                {
+                    gKeyAbility.onKeyPressClient(event);
+                    PacketHandler.sendToServer(new GKeyAbilityActivate()); // Send packet from client to server when ability keybinding is pressed
+                }
+            }
         }
     }
 }

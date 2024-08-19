@@ -5,7 +5,6 @@ package net.laserdiamond.intothevoid.entity.client;// Made with Blockbench 4.10.
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.laserdiamond.intothevoid.entity.itv.WatcherBossEntity;
 import net.laserdiamond.intothevoid.entity.itv.WatcherMinionEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HierarchicalModel;
@@ -16,14 +15,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
-public class WatcherModel<T extends Entity> extends HierarchicalModel<T>
+public class WatcherMinionModel extends HierarchicalModel<WatcherMinionEntity>
 {
 
 	private final ModelPart watcher;
 	private final ModelPart head;
 	private final ModelPart eye;
 
-	public WatcherModel(ModelPart root) {
+	public WatcherMinionModel(ModelPart root) {
 		this.watcher = root.getChild("watcher");
 		this.head = watcher.getChild("head");
 		this.eye = head.getChild("eye");
@@ -45,34 +44,20 @@ public class WatcherModel<T extends Entity> extends HierarchicalModel<T>
 	}
 
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(WatcherMinionEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.head.yRot = netHeadYaw * 0.017453292F;
 		this.head.xRot = headPitch * 0.017453292F;
 
 		Entity cameraEntity = Minecraft.getInstance().getCameraEntity();
-		// TODO: Complete
-		if (entity instanceof WatcherBossEntity watcherBossEntity)
+		if (entity.hasActiveAttackTarget())
 		{
-			// TODO: Get Active Attack Target
-			cameraEntity = watcherBossEntity.getTarget();
-		} else if (entity instanceof WatcherMinionEntity watcherMinionEntity)
-		{
-			// TODO: Get Active Attack Target
-			cameraEntity = watcherMinionEntity.getTarget();
+			cameraEntity = entity.getActiveAttackTarget();
 		}
 
 		if (cameraEntity != null)
 		{
 			Vec3 ceEyePos = ((Entity) cameraEntity).getEyePosition(0.0F);
 			Vec3 mobEyePos = entity.getEyePosition();
-			double eyeDifY = ceEyePos.y - mobEyePos.y;
-			if (eyeDifY > 0.0)
-			{
-				this.eye.y = 0.0F;
-			} else
-			{
-				this.eye.y = 1.0F;
-			}
 
 			Vec3 mobViewVec = entity.getViewVector(0.0F);
 			mobViewVec = new Vec3(mobViewVec.x, 0.0, mobViewVec.z);
@@ -86,7 +71,7 @@ public class WatcherModel<T extends Entity> extends HierarchicalModel<T>
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		watcher.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.root().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

@@ -41,9 +41,9 @@ public final class EnderiteArmorItem extends ITVArmorItem implements ArmorSmithi
 
     @Override
     public List<MobEffectInstance> armorEffects() {
-        //List<MobEffectInstance> effects = new ArrayList<>();
-        effects.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
-        return super.armorEffects();
+        List<MobEffectInstance> effectInstances = new ArrayList<>();
+        effectInstances.add(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 100, 0, false, false, true));
+        return effectInstances;
     }
 
     @Override
@@ -53,25 +53,13 @@ public final class EnderiteArmorItem extends ITVArmorItem implements ArmorSmithi
 
     @Override
     public ItemLike armorPiece(EquipmentSlot slot) {
-        switch (slot)
+        return switch (slot)
         {
-            case HEAD ->
-            {
-                return Items.DIAMOND_HELMET;
-            }
-            case CHEST ->
-            {
-                return Items.DIAMOND_CHESTPLATE;
-            }
-            case LEGS ->
-            {
-                return Items.DIAMOND_LEGGINGS;
-            }
-            case FEET ->
-            {
-                return Items.DIAMOND_BOOTS;
-            }
-        }
-        return Items.AIR;
+            case HEAD -> Items.DIAMOND_HELMET;
+            case CHEST -> Items.DIAMOND_CHESTPLATE;
+            case LEGS -> Items.DIAMOND_LEGGINGS;
+            case FEET -> Items.DIAMOND_BOOTS;
+            default -> Items.AIR;
+        };
     }
 }

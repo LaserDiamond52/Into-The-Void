@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.List;
@@ -26,34 +27,34 @@ public final class DragonborneSwordItem extends ITVComplexSwordItem implements G
 
     public DragonborneSwordItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
         super(ITVToolTiers.DRAGONBORNE, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
-        IntoTheVoid.G_KEY_ABILITIES.add(this);
     }
 
     @Override
-    public void onKeyPress(NetworkEvent.Context context) {
+    public void onKeyPressServer(NetworkEvent.Context context) {
 
         ServerPlayer serverPlayer = context.getSender();
         ServerLevel level = serverPlayer.serverLevel().getLevel();
 
-        if (serverPlayer.getMainHandItem().getItem() == this)
+        if (DragonborneCooldown.checkCooldown(serverPlayer))
         {
-            if (DragonborneCooldown.checkCooldown(serverPlayer))
-            {
-                level.playSound(null, serverPlayer.getOnPos(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.PLAYERS, 100, 1);
-                Vec3 playerView = serverPlayer.getLookAngle();
-                double x = serverPlayer.getX();
-                double eyeY = serverPlayer.getEyeY();
-                double z = serverPlayer.getZ();
+            level.playSound(null, serverPlayer.getOnPos(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.PLAYERS, 100, 1);
+            Vec3 playerView = serverPlayer.getLookAngle();
+            double x = serverPlayer.getX();
+            double eyeY = serverPlayer.getEyeY();
+            double z = serverPlayer.getZ();
 
-                DragonborneFireball dragonFireball = new DragonborneFireball(level, serverPlayer, playerView.x, playerView.y, playerView.z);
-                dragonFireball.setPos(x, eyeY, z);
-                level.addFreshEntity(dragonFireball);
-                DragonborneCooldown.setCooldown(serverPlayer, 5);
-            } else
-            {
-                serverPlayer.sendSystemMessage(Component.literal(TextColor.RED + "Ability is on cooldown for " + DragonborneCooldown.getCooldown(serverPlayer) + " seconds"));
-            }
+            DragonborneFireball dragonFireball = new DragonborneFireball(level, serverPlayer, playerView.x, playerView.y, playerView.z);
+            dragonFireball.setPos(x, eyeY, z);
+            level.addFreshEntity(dragonFireball);
+            DragonborneCooldown.setCooldown(serverPlayer, 5);
+        } else
+        {
+            serverPlayer.sendSystemMessage(Component.literal(TextColor.RED + "Ability is on cooldown for " + DragonborneCooldown.getCooldown(serverPlayer) + " seconds"));
         }
+    }
+
+    @Override
+    public void onKeyPressClient(InputEvent.Key inputEvent) {
     }
 
     @Override

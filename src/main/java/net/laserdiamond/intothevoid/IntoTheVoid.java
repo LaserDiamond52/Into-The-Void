@@ -8,7 +8,6 @@ import net.laserdiamond.intothevoid.effects.ITVEffects;
 import net.laserdiamond.intothevoid.entity.ITVEntities;
 import net.laserdiamond.intothevoid.entity.client.*;
 import net.laserdiamond.intothevoid.item.CreativeTabs;
-import net.laserdiamond.intothevoid.item.GKeyAbility;
 import net.laserdiamond.intothevoid.item.ITVItems;
 import net.laserdiamond.intothevoid.item.ITVSimpleItem;
 import net.laserdiamond.intothevoid.item.equipment.tools.dragonborne.DragonborneCooldown;
@@ -45,9 +44,6 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import terrablender.api.SurfaceRuleManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(IntoTheVoid.MODID)
 public class IntoTheVoid
@@ -59,11 +55,6 @@ public class IntoTheVoid
     public static final String MODID = "into_the_void";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    /**
-     * A list of classes that inherit the GKeyAbility interface are added into this list for functionality of the ability key
-     */
-    public static final List<GKeyAbility> G_KEY_ABILITIES = new ArrayList<>();
 
     /**
      * This is the main method of this mod. Listeners and Events that were not registered automatically are registers and added here
@@ -217,8 +208,8 @@ public class IntoTheVoid
             event.registerLayerDefinition(ITVModelLayers.VOID_PIRATE, VoidPirateModel::createBodyLayer);
             event.registerLayerDefinition(ITVModelLayers.ENDER_DRAGON_HATCHLING, EnderDragonHatchlingModel::createBodyLayer);
             event.registerLayerDefinition(ITVModelLayers.EVOLVED_ENDERMITE, EvolvedEndermiteModel::createBodyLayer);
-            event.registerLayerDefinition(ITVModelLayers.WATCHER_BOSS, WatcherModel::createBodyLayer);
-            event.registerLayerDefinition(ITVModelLayers.WATCHER_MINION, WatcherModel::createBodyLayer);
+            event.registerLayerDefinition(ITVModelLayers.WATCHER_BOSS, WatcherBossModel::createBodyLayer);
+            event.registerLayerDefinition(ITVModelLayers.WATCHER_MINION, WatcherMinionModel::createBodyLayer);
         }
 
         /**

@@ -38,7 +38,7 @@ public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
         this.effects = new ArrayList<>();
         this.itemTags = new ArrayList<>();
 
-        int slot = EQUIPMENT_SLOT_INTEGER_HASH_MAP.get(pType.getSlot());
+        int slot = pType.ordinal();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
         UUID uuid = ItemAttributeUUIDs.ARMOR_UUIDS[slot];
         attributeBuilder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", this.getDefense(), AttributeModifier.Operation.ADDITION));
@@ -118,7 +118,7 @@ public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
      */
     public List<MobEffectInstance> armorEffects()
     {
-        return effects;
+        return new ArrayList<>();
     }
 
     /**
@@ -130,7 +130,7 @@ public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player)
     {
-        if (!level.isClientSide())
+        if (!level.isClientSide)
         {
             if (!hasFullArmorOn(player))
             {
@@ -196,21 +196,6 @@ public abstract class ITVArmorItem extends ArmorItem implements ItemTaggable {
         ArmorItem helmet = ((ArmorItem) player.getInventory().getArmor(3).getItem());
 
         return helmet.getMaterial() == armorMaterial && chestplate.getMaterial() == armorMaterial && leggings.getMaterial() == armorMaterial && boots.getMaterial() == armorMaterial;
-    }
-
-    /**
-     * Maps each armor piece equipment slot to the corresponding integer value for retrieving values from to following methods:
-     * <p>getHealthAmount</p>
-     * <p>getMeleeDamageAmount</p>
-     * <p>getSpeedAmount</p>
-     */
-    private static final HashMap<EquipmentSlot, Integer> EQUIPMENT_SLOT_INTEGER_HASH_MAP = new HashMap<>();
-    static
-    {
-        EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.HEAD, 0);
-        EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.CHEST, 1);
-        EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.LEGS, 2);
-        EQUIPMENT_SLOT_INTEGER_HASH_MAP.put(EquipmentSlot.FEET, 3);
     }
 
     /**

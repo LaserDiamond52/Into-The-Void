@@ -16,7 +16,7 @@ import net.minecraft.world.phys.HitResult;
 import java.util.List;
 
 /**
- * An abstract class representing a Dragon Fireball for use with this mod. Functionally, this is the same as a typical Dragon Fireball, but a few extra options are more open to customization
+ * An abstract class representing a Dragon Fireball for use with this mod. Functionally, this is the same as a {@link DragonFireball}, but a few extra options are more open to customization
  * <li>Initial Damage: Set the initial damage when the Dragon Fireball hits an entity</li>
  * <li>Initial Radius: Set the initial radius when the Dragon Fireball lands</li>
  * <li>Toggleable Area Effect Cloud: Set whether an area effect cloud should spawn after impact. Returning this to false will make this effectively behave similarly to a snowball</li>

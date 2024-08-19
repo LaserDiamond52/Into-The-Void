@@ -8,9 +8,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class WatcherBossRenderer extends MobRenderer<WatcherBossEntity, WatcherModel<WatcherBossEntity>> {
+public class WatcherBossRenderer extends MobRenderer<WatcherBossEntity, WatcherBossModel> {
     public WatcherBossRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new WatcherModel<>(pContext.bakeLayer(ITVModelLayers.WATCHER_BOSS)), 0.5F);
+        super(pContext, new WatcherBossModel(pContext.bakeLayer(ITVModelLayers.WATCHER_BOSS)), 0.5F);
     }
 
     /**
@@ -25,7 +25,7 @@ public class WatcherBossRenderer extends MobRenderer<WatcherBossEntity, WatcherM
 
     @Override
     public void render(WatcherBossEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
-        pPoseStack.scale(3.0F, 3.0F, 3.0F);
+        pPoseStack.scale(1.5F, 1.5F, 1.5F);
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
     }
 }

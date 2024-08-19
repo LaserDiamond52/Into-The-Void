@@ -52,11 +52,16 @@ public class ITVEntities {
             () -> EntityType.Builder.of(EvolvedEndermiteEntity::new, MobCategory.MONSTER)
                     .sized(1.75F, 1.75F).build("evolved_endermite"));
 
-
+    /**
+     * A RegistryObject of type "EntityType" of type "WatcherBossEntity" that represents the Watcher Boss
+     */
     public static final RegistryObject<EntityType<WatcherBossEntity>> WATCHER_BOSS = ENTITY_TYPES.register("watcher_boss",
             () -> EntityType.Builder.of(WatcherBossEntity::new, MobCategory.MONSTER)
                     .sized(1.25F, 2F).build("watcher_boss"));
 
+    /**
+     * A RegistryObject of type "EntityType" of type "WatcherMinionEntity" that represents the Watcher Minions
+     */
     public static final RegistryObject<EntityType<WatcherMinionEntity>> WATCHER_MINION = ENTITY_TYPES.register("watcher_minion",
             () -> EntityType.Builder.of(WatcherMinionEntity::new, MobCategory.MONSTER)
                     .sized(1.75F, 1.75F).build("watcher_minion"));
