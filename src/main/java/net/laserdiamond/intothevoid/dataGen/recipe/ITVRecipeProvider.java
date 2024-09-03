@@ -8,6 +8,7 @@ import net.laserdiamond.intothevoid.item.equipment.armor.ArmorSmithing;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolCrafting;
 import net.laserdiamond.intothevoid.item.equipment.tools.ToolSmithing;
 import net.laserdiamond.intothevoid.item.ingredients.smithingTemplates.ITVSmithingTemplateItem;
+import net.laserdiamond.intothevoid.recipe.RefineryRecipeBuilder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -66,7 +67,31 @@ public class ITVRecipeProvider extends RecipeProvider implements IConditionBuild
         woodSetCrafting(consumer); // Crafting recipes for wood types
         endCoreRecipe(consumer); // End Core recipe
         refineryRecipe(consumer); // Refinery block recipe
-        stonecutterRecipes(consumer);
+        stonecutterRecipes(consumer); // Stone cutter recipes
+
+        refineryRecipes(consumer); // Refinery recipes
+    }
+
+    /**
+     * Creates all refinery recipes for this mod.
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void refineryRecipes(Consumer<FinishedRecipe> consumer)
+    {
+        refineryRecipe(Ingredient.of(ITVItems.END_CORE.get()), ITVItems.REFINED_END_CRYSTAL.get(), 1, consumer);
+        refineryRecipe(Ingredient.of(ITVItems.LONSDALEITE.get()), ITVItems.REFINED_LONSDALEITE.get(), 1, consumer);
+    }
+
+    /**
+     * Helper method for creating a refinery recipe
+     * @param ingredient The ingredient items
+     * @param resultItem The result item
+     * @param resultItemCount The amount of the result item when crafted
+     * @param consumer The FinishedRecipe Consumer
+     */
+    protected static void refineryRecipe(Ingredient ingredient, Item resultItem, int resultItemCount, Consumer<FinishedRecipe> consumer)
+    {
+        RefineryRecipeBuilder.createRecipe(ingredient, resultItem, resultItemCount).save(consumer, IntoTheVoid.MODID + ":" + getItemName(resultItem) + "_from_refinery");
     }
 
     /**

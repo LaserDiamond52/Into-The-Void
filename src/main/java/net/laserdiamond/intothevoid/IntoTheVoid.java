@@ -168,7 +168,6 @@ public class IntoTheVoid
             EntityRenderers.register(ITVEntities.WATCHER_BOSS.get(), WatcherBossRenderer::new);
             EntityRenderers.register(ITVEntities.WATCHER_MINION.get(), WatcherMinionRenderer::new);
 
-
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());

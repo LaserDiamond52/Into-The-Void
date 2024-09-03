@@ -20,11 +20,11 @@ import org.jetbrains.annotations.Nullable;
  */
 public class RefineryRecipe implements Recipe<SimpleContainer> {
 
-    private final NonNullList<Ingredient> inputItems;
+    private final Ingredient inputItems;
     private final ItemStack output;
     private final ResourceLocation id;
 
-    public RefineryRecipe(NonNullList<Ingredient> inputItems, ItemStack output, ResourceLocation id) {
+    public RefineryRecipe(Ingredient inputItems, ItemStack output, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
         this.id = id;
@@ -42,7 +42,7 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
         {
             return false;
         }
-        return inputItems.get(RefineryBlockEntity.ITEM_INPUT_SLOT).test(simpleContainer.getItem(RefineryBlockEntity.ITEM_INPUT_SLOT));
+        return inputItems.test(simpleContainer.getItem(RefineryBlockEntity.ITEM_INPUT_SLOT));
     }
 
     /**
@@ -135,15 +135,9 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
 
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result")); // Result Item
 
-            JsonArray ingredients = GsonHelper.getAsJsonArray(jsonObject, "ingredients"); // Ingredient item
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY); // Default ingredient is empty, required stack size is 1
+            Ingredient ingredients = Ingredient.fromJson(GsonHelper.getNonNull(jsonObject, "ingredients")); // Ingredient Item
 
-            for (int i = 0; i < inputs.size(); i++)
-            {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i))); // Fill NonNullList with ingredient
-            }
-
-            return new RefineryRecipe(inputs, output, resourceLocation);
+            return new RefineryRecipe(ingredients, output, resourceLocation);
         }
 
         /**
@@ -154,14 +148,11 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
          */
         @Override
         public @Nullable RefineryRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf friendlyByteBuf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(friendlyByteBuf.readInt(), Ingredient.EMPTY); // Default ingredient is empty
 
-            for (int i = 0; i < inputs.size(); i++)
-            {
-                inputs.set(i, Ingredient.fromNetwork(friendlyByteBuf)); // Fill NonNullList with ingredient
-            }
+            Ingredient input = Ingredient.fromNetwork(friendlyByteBuf); // Ingredient item
+
             ItemStack output = friendlyByteBuf.readItem(); // Result item
-            return new RefineryRecipe(inputs, output, resourceLocation);
+            return new RefineryRecipe(input, output, resourceLocation);
         }
 
         /**
@@ -171,12 +162,7 @@ public class RefineryRecipe implements Recipe<SimpleContainer> {
          */
         @Override
         public void toNetwork(FriendlyByteBuf friendlyByteBuf, RefineryRecipe refineryRecipe) {
-            friendlyByteBuf.writeInt(refineryRecipe.inputItems.size());
-
-            for (Ingredient ingredient : refineryRecipe.getIngredients())
-            {
-                ingredient.toNetwork(friendlyByteBuf); // Write ingredients to buffer
-            }
+            refineryRecipe.inputItems.toNetwork(friendlyByteBuf); // Write ingredients to buffer
 
             friendlyByteBuf.writeItemStack(refineryRecipe.getResultItem(null), false);
         }

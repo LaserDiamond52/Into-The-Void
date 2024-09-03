@@ -1,5 +1,8 @@
 package net.laserdiamond.intothevoid.dataGen;
 
+import com.electronwill.nightconfig.toml.TomlWriter;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.laserdiamond.intothevoid.IntoTheVoid;
 import net.laserdiamond.intothevoid.dataGen.loot.ITVLootTableProvider;
 import net.laserdiamond.intothevoid.dataGen.recipe.ITVRecipeProvider;
@@ -10,11 +13,19 @@ import net.laserdiamond.intothevoid.dataGen.tags.ITVItemTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.core.config.yaml.YamlConfiguration;
 
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -50,5 +61,68 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new ITVEntityTagProvider(packOutput, lookUpProvider, existingFileHelper)); // Entity Tag Provider
         generator.addProvider(event.includeServer(), new ITVWorldGenProvider(packOutput, lookUpProvider)); // World Gen Provider
+
+        /*
+        ResourceLocation loc = new ResourceLocation(IntoTheVoid.MODID, "recipes/test_file.json");
+        try {
+            InputStream inputStream = Minecraft.getInstance().getResourceManager().getResource(loc).get().open();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            Gson gson = new Gson();
+            JsonElement je = gson.fromJson(reader, JsonElement.class);
+            JsonObject object = je.getAsJsonObject();
+        } catch (IOException e)
+        {
+
+        }
+
+         */
+
+        ExistingFileHelper.ResourceType testResourceType = new ExistingFileHelper.ResourceType(PackType.CLIENT_RESOURCES, ".json", "recipes");
+        PackOutput.PathProvider dataPackOutput = generator.getPackOutput().createPathProvider(PackOutput.Target.DATA_PACK, "recipes");
+
+        dataPackOutput.json(new ResourceLocation("test.json"));
+
+        String desktopPath = System.getProperty("user.home") + "/Desktop/";
+
+        JsonObject object = new JsonObject();
+        JsonObject testObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+
+        Path currentRelativePath = Paths.get("");
+        String absoluteRelativePathString = currentRelativePath.toAbsolutePath().toString();
+        String relativePathString = currentRelativePath.toString();
+
+
+        /*
+        try {
+            File file = new File("test");
+            file.mkdirs();
+            FileWriter fileWriter = new FileWriter(file + File.separator + "test_json_file.json");
+
+            object.addProperty("test", "value");
+            object.addProperty("test2", "value2");
+
+            testObject.addProperty("inner", "value");
+            jsonArray.add(testObject);
+            object.add("test3", jsonArray);
+
+            fileWriter.write(object.toString());
+            fileWriter.close();
+
+
+            //File desktopFile = new File("myFile.txt");
+
+            //desktopFile.createNewFile();
+
+            File testFile = new File("myFile.txt");
+            testFile.createNewFile();
+
+        } catch (IOException e) {
+            //throw new RuntimeException(e);
+            System.out.println("FAILED CREATING AND WRITING TO FILE");
+            e.printStackTrace();
+        }
+        */
+
     }
 }

@@ -69,27 +69,11 @@ public class ITVItemModelProvider extends ItemModelProvider {
                     trimmedArmorItem(item);
                 }
 
-            } else if (item.get() instanceof ITVSimpleSwordItem)
+            } else if (item.get() instanceof ITVSimpleSwordItem || item.get() instanceof ITVSimplePickaxeItem || item.get() instanceof ITVSimpleAxeItem || item.get() instanceof ITVSimpleShovelItem || item.get() instanceof ITVSimpleHoeItem)
             {
                 handheldItem(item);
 
-            } else if (item.get() instanceof ITVSimplePickaxeItem)
-            {
-                handheldItem(item);
-
-            } else if (item.get() instanceof ITVSimpleAxeItem)
-            {
-                handheldItem(item);
-
-            } else if (item.get() instanceof ITVSimpleShovelItem)
-            {
-                handheldItem(item);
-
-            } else if (item.get() instanceof ITVSimpleHoeItem)
-            {
-                handheldItem(item);
-
-            } else if (item.get() instanceof SignItem)
+            }else if (item.get() instanceof SignItem)
             {
                 simpleItem(item);
             } else if (item.get() instanceof HangingSignItem)
