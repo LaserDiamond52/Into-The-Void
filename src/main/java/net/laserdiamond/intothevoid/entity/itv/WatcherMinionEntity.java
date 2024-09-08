@@ -2,6 +2,8 @@ package net.laserdiamond.intothevoid.entity.itv;
 
 import net.laserdiamond.intothevoid.entity.ai.WatcherAttackGoal;
 import net.laserdiamond.intothevoid.util.RayTrace;
+import net.laserdiamond.intothevoid.util.RayTraceLaser;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,29 +64,36 @@ public class WatcherMinionEntity extends Monster {
     }
 
     @Override
-    public void aiStep() {
-        attack();
+    public void aiStep()
+    {
+        int i = 0;
+        if (this.isAlive() && this.hasActiveAttackTarget())
+        {
+            i++;
+            attack(i);
+        }
         super.aiStep();
     }
 
-    public void attack()
+    public void attack(int tick)
     {
-        if (this.isAlive())
-        {
-            if (this.hasActiveAttackTarget())
-            {
-                if (this.level().isClientSide)
-                {
-                    if (this.clientSideAttackTime < this.getAttackDuration())
-                    {
-                        this.clientSideAttackTime++;
-                    }
+        this.laser(ParticleTypes.REVERSE_PORTAL);
+    }
 
-                    LivingEntity activeTarget = this.getActiveAttackTarget();
-                    if (activeTarget != null)
-                    {
-                        this.getLookControl().setLookAt(activeTarget, 90.0F, 90.0F);
-                        this.getLookControl().tick();
+    public void laser(ParticleOptions particleOptions)
+    {
+        if (this.level().isClientSide)
+        {
+            if (this.clientSideAttackTime < this.getAttackDuration())
+            {
+                this.clientSideAttackTime++;
+            }
+
+            LivingEntity activeTarget = this.getActiveAttackTarget();
+            if (activeTarget != null)
+            {
+                this.getLookControl().setLookAt(activeTarget, 90.0F, 90.0F);
+                this.getLookControl().tick();
                         /*
                         double attackAnimationScale = (double) this.getAttackAnimationScale(0.0F);
                         double xDiff = activeTarget.getX() - this.getX();
@@ -104,27 +114,27 @@ public class WatcherMinionEntity extends Monster {
 
                          */
 
-                        //RayTrace.rayTraceToVec(this.level(), this.getEyePosition(), this.getActiveAttackTarget().position().add(0, 1,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, ParticleTypes.REVERSE_PORTAL);
-                    }
-                } else
+                //RayTrace.rayTraceToVec(this.level(), this.getEyePosition(), this.getActiveAttackTarget().position().add(0, 1,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, ParticleTypes.REVERSE_PORTAL);
+            }
+        } else
+        {
+            if (this.getActiveAttackTarget() != null)
+            {
+                Iterable<ServerLevel> serverLevels = this.getServer().getAllLevels();
+                for (ServerLevel serverLevel : serverLevels)
                 {
-                    if (this.getActiveAttackTarget() != null)
+                    if (this.level().equals(serverLevel))
                     {
-                        Iterable<ServerLevel> serverLevels = this.getServer().getAllLevels();
-                        for (ServerLevel serverLevel : serverLevels)
-                        {
-                            if (this.level().equals(serverLevel))
-                            {
-                                RayTrace.rayTraceToVecEntities(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0,this.getActiveAttackTarget().getBbHeight() / 2,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity || e instanceof WatcherBossEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, ParticleTypes.REVERSE_PORTAL);
-                            }
-                        }
+                        RayTraceLaser<LivingEntity, Block> rayTraceLaser = new RayTraceLaser<>(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0, this.getActiveAttackTarget().getBbHeight() / 2, 0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, Block.class, distance, pierceBlocks, pierceEntities, particleOptions);
+                        //RayTrace.rayTraceToVecEntities(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0,this.getActiveAttackTarget().getBbHeight() / 2,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity || e instanceof WatcherBossEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, particleOptions);
+
+
                     }
                 }
-
-                this.setYRot(this.yHeadRot);
             }
-
         }
+
+        this.setYRot(this.yHeadRot);
     }
 
     public LivingEntity getActiveAttackTarget()

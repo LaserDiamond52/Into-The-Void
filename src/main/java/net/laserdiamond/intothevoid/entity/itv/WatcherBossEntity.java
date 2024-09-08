@@ -96,9 +96,9 @@ public class WatcherBossEntity extends WatcherMinionEntity implements AttackingE
     }
 
     @Override
-    public void attack() {
+    public void attack(int tick) {
         // TODO: Override this for custom attacks
-        super.attack();
+        //super.attack(tick);
     }
 
     /**
