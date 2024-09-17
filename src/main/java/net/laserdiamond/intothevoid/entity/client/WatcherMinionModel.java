@@ -61,9 +61,13 @@ public class WatcherMinionModel extends HierarchicalModel<WatcherMinionEntity>
 
 			Vec3 mobViewVec = entity.getViewVector(0.0F);
 			mobViewVec = new Vec3(mobViewVec.x, 0.0, mobViewVec.z);
-			Vec3 eyeYRot = (new Vec3(mobEyePos.x - ceEyePos.x, 0.0, mobEyePos.z - ceEyePos.z)).normalize().yRot(1.5707964F);
-			double dot = mobViewVec.dot(eyeYRot);
-			this.eye.x = Mth.sqrt((float) Math.abs(dot)) * 2.0F * (float) Math.signum(dot);
+			Vec3 eyeYRot = (new Vec3(mobEyePos.x - ceEyePos.x, 0.0, mobEyePos.z - ceEyePos.z)).normalize().yRot((float) (Math.PI / 2));
+			Vec3 eyeXRot = (new Vec3(0.0, mobEyePos.y - ceEyePos.y, mobEyePos.z - ceEyePos.z)).normalize().xRot((float) (Math.PI / 2));
+			//Vec3 eyeZRot = (new Vec3(mobEyePos.x - ceEyePos.x, mobEyePos.y - ceEyePos.y, 0.0)).normalize().zRot(1.5707964F);
+			double dotY = mobViewVec.dot(eyeYRot);
+			double dotX = mobViewVec.dot(eyeXRot);
+			this.eye.x = Mth.sqrt((float) Math.abs(dotY)) * 2.0F * (float) Math.signum(dotY);
+			this.eye.y = Mth.sqrt((float) Math.abs(dotX)) * 2.0F * (float) Math.signum(dotX) - 7.5F;
 		}
 
 		this.eye.visible = true;

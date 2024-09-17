@@ -1,10 +1,9 @@
 package net.laserdiamond.intothevoid.entity.itv;
 
 import net.laserdiamond.intothevoid.entity.ai.WatcherAttackGoal;
-import net.laserdiamond.intothevoid.util.RayTrace;
 import net.laserdiamond.intothevoid.util.RayTraceLaser;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -27,10 +26,10 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class WatcherMinionEntity extends Monster {
@@ -80,7 +79,7 @@ public class WatcherMinionEntity extends Monster {
         this.laser(ParticleTypes.REVERSE_PORTAL);
     }
 
-    public void laser(ParticleOptions particleOptions)
+    public void laser(SimpleParticleType particleType)
     {
         if (this.level().isClientSide)
         {
@@ -125,8 +124,16 @@ public class WatcherMinionEntity extends Monster {
                 {
                     if (this.level().equals(serverLevel))
                     {
-                        RayTraceLaser<LivingEntity, Block> rayTraceLaser = new RayTraceLaser<>(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0, this.getActiveAttackTarget().getBbHeight() / 2, 0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, Block.class, distance, pierceBlocks, pierceEntities, particleOptions);
+                        //RayTraceLaser<LivingEntity, Block> rayTraceLaser = new RayTraceLaser<>(serverLevel, this.getEyePosition(), this.getLookAngle(), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, Block.class, 30, pierceBlocks, pierceEntities, particleOptions);
                         //RayTrace.rayTraceToVecEntities(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0,this.getActiveAttackTarget().getBbHeight() / 2,0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity || e instanceof WatcherBossEntity)), LivingEntity.class, distance, pierceBlocks, pierceEntities, particleOptions);
+
+                        //RayTrace.rayTraceEntities()
+                        //RayTraceToVec3D<LivingEntity, Block> rayTraceToVec3D = new RayTraceToVec3D<>(serverLevel, this.getEyePosition(), this.getActiveAttackTarget().position().add(0,this.getActiveAttackTarget().getBbHeight() / 2, 0), stepIncrement, Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, Block.class, distance, pierceBlocks, pierceEntities, particleOptions);
+
+                        RayTraceLaser<LivingEntity> rayTraceLaser = new RayTraceLaser<>(serverLevel, this.getEyePosition(), Optional.of(e -> !(e instanceof WatcherMinionEntity)), LivingEntity.class, List.of())
+                                .setCanPierceEntities()
+                                .setParticle(particleType)
+                                .fireAtVec3D(this.getActiveAttackTarget().position().add(0, this.getActiveAttackTarget().getBbHeight() / 2, 0), distance);
 
 
                     }
@@ -195,9 +202,9 @@ public class WatcherMinionEntity extends Monster {
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
         this.goalSelector.addGoal(2, new WatcherAttackGoal(this));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7D));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 3F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        //this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.7D));
+        //this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 3F));
+        //this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers(WatcherMinionEntity.class));

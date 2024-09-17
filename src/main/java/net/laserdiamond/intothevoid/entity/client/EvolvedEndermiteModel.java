@@ -13,8 +13,10 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
-public class EvolvedEndermiteModel extends HierarchicalModel<EvolvedEndermiteEntity> implements RotatingHead {
+public class EvolvedEndermiteModel extends ITVEntityCreatureModel<EvolvedEndermiteEntity> {
 
 	private final ModelPart evolved_endermite;
 	private final ModelPart body;
@@ -203,8 +205,7 @@ public class EvolvedEndermiteModel extends HierarchicalModel<EvolvedEndermiteEnt
 	 */
 	@Override
 	public void setupAnim(EvolvedEndermiteEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.headRotation(netHeadYaw, headPitch);
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.EVOLVED_ENDERMITE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
 		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.EVOLVED_ENDERMITE_IDLE, ageInTicks, 1F);
@@ -214,7 +215,7 @@ public class EvolvedEndermiteModel extends HierarchicalModel<EvolvedEndermiteEnt
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		evolved_endermite.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		super.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	/**
@@ -223,15 +224,12 @@ public class EvolvedEndermiteModel extends HierarchicalModel<EvolvedEndermiteEnt
 	 */
 	@Override
 	public ModelPart root() {
-		return evolved_endermite;
+		return this.evolved_endermite;
 	}
 
-	@Override
-	public void headRotation(float headYaw, float headPitch) {
-		headYaw = Mth.clamp(headYaw, -30F, 30F);
-		headPitch = Mth.clamp(headPitch, -25F, 25F);
 
-		this.head.xRot = headYaw * ((float) Math.PI / 180F);
-		this.head.yRot = headPitch * ((float) Math.PI / 180F);
+	@Override
+	public ModelPart head() {
+		return this.head;
 	}
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Interface used to help add items tags to items
  */
-public interface ItemTaggable {
+public interface ItemTaggable  {
 
     /**
      * A list of tags that should be applied to the item

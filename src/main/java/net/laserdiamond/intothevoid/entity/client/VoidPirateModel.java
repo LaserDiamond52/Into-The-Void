@@ -12,19 +12,11 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ambient.Bat;
-import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Contains the Void Pirate Model and functionality of its animations. Most of this is auto-generated from exporting the model from BlockBench as a .java file
  */
-public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> implements RotatingHead {
+public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> implements HeadRotation<VoidPirateEntity> {
 
 	private final ModelPart void_pirate, body, head, leftLeg, rightLeg, leftArm, rightArm, torso;
 
@@ -86,7 +78,7 @@ public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> impleme
 	@Override
 	public void setupAnim(VoidPirateEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.headRotation(netHeadYaw, headPitch);
+		this.headRotation(entity, netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.VOID_PIRATE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
 		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.VOID_PIRATE_IDLE, ageInTicks, 1F);
@@ -94,18 +86,8 @@ public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> impleme
 	}
 
 	@Override
-	public void headRotation(float headYaw, float headPitch)
-	{
-		headYaw = Mth.clamp(headYaw, -30f, 30f);
-		headPitch = Mth.clamp(headPitch, -25F, 25F);
-
-		this.head.xRot = headYaw * ((float) Math.PI / 180F);
-		this.head.yRot = headPitch * ((float) Math.PI / 180F);
-	}
-
-	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		void_pirate.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.root().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	/**
@@ -115,5 +97,10 @@ public class VoidPirateModel extends HierarchicalModel<VoidPirateEntity> impleme
 	@Override
 	public ModelPart root() {
 		return void_pirate;
+	}
+
+	@Override
+	public ModelPart head() {
+		return this.head;
 	}
 }

@@ -11,10 +11,8 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.util.Mth;
 
-public class WatcherBossModel extends HierarchicalModel<WatcherBossEntity> implements RotatingHead {
+public class WatcherBossModel extends ITVEntityCreatureModel<WatcherBossEntity> {
 	private final ModelPart watcher;
 	private final ModelPart head;
 	private final ModelPart eye;
@@ -223,32 +221,28 @@ public class WatcherBossModel extends HierarchicalModel<WatcherBossEntity> imple
 
 	@Override
 	public void setupAnim(WatcherBossEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.headRotation(netHeadYaw, headPitch);
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
 		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.WATCHER_BOSS_IDLE, ageInTicks, 1F);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		watcher.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		super.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	public void portalRenderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
 	{
-		portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.portal.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
 	public ModelPart root() {
-		return watcher;
+		return this.watcher;
 	}
 
 	@Override
-	public void headRotation(float headYaw, float headPitch) {
-		headYaw = Mth.clamp(headYaw, -30F, 30F);
-		headPitch = Mth.clamp(headPitch, -25F, 25F);
-
-		this.head.xRot = headYaw * ((float) Math.PI / 180F);
-		this.head.yRot = headPitch * ((float) Math.PI / 180F);	}
+	public ModelPart head() {
+		return this.head;
+	}
 }

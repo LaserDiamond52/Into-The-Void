@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class RefineryScreen extends AbstractContainerScreen<RefineryMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(IntoTheVoid.MODID, "textures/gui/refinery.png");
+
     public RefineryScreen(RefineryMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }

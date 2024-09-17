@@ -33,8 +33,13 @@ public class WatcherBossRenderer extends MobRenderer<WatcherBossEntity, WatcherB
     public void render(WatcherBossEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         pPoseStack.scale(1.5F, 1.5F, 1.5F);
         super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+
+        // Render beam for attacking
     }
 
+    /**
+     * Inner class for rendering portal in the Watcher Boss model
+     */
     static class WatcherBossPortalRenderer extends RenderLayer<WatcherBossEntity, WatcherBossModel>
     {
         private static final RenderType PORTAL_RENDER_TYPE = RenderType.endPortal();

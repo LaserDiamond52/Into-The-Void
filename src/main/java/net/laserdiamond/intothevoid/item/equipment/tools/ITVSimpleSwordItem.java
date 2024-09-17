@@ -29,6 +29,6 @@ public class ITVSimpleSwordItem extends SwordItem implements ItemTaggable {
 
     @Override
     public List<TagKey<Item>> getItemTags() {
-        return itemTags;
+        return this.itemTags;
     }
 }

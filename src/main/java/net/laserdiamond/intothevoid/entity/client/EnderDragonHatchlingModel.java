@@ -18,7 +18,7 @@ import net.minecraft.world.entity.Entity;
 /**
  * Contains the Ender Dragon Hatchling Model and functionality of its animations. Most of this is auto-generated from exporting the model from BlockBench as a .java file
  */
-public class EnderDragonHatchlingModel extends HierarchicalModel<EnderDragonHatchlingEntity> implements RotatingHead {
+public class EnderDragonHatchlingModel extends ITVEntityCreatureModel<EnderDragonHatchlingEntity> {
 
 	private final ModelPart ender_dragon_hatchling;
 	private final ModelPart body;
@@ -40,7 +40,8 @@ public class EnderDragonHatchlingModel extends HierarchicalModel<EnderDragonHatc
 	private final ModelPart right_wing;
 	private final ModelPart left_wing;
 
-	public EnderDragonHatchlingModel(ModelPart root) {
+	public EnderDragonHatchlingModel(ModelPart root)
+	{
 
 		this.ender_dragon_hatchling = root.getChild("ender_dragon_hatchling");
 		this.body = ender_dragon_hatchling.getChild("body");
@@ -150,28 +151,22 @@ public class EnderDragonHatchlingModel extends HierarchicalModel<EnderDragonHatc
 	 */
 	@Override
 	public void setupAnim(EnderDragonHatchlingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.root().getAllParts().forEach(ModelPart::resetPose);
-		this.headRotation(netHeadYaw, headPitch);
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
 		this.animateWalk(ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_IDLE_WALK, limbSwing, limbSwingAmount, 5F, 10F);
 		this.animate(entity.idleAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_IDLE_WALK, ageInTicks, 1F);
 		this.animate(entity.attackAnimationState, ITVAnimationDefinitions.ENDER_DRAGON_HATCHLING_ATTACK, ageInTicks);
 	}
 
-
 	@Override
-	public void headRotation(float headYaw, float headPitch) {
-		headYaw = Mth.clamp(headYaw, -30F, 30F);
-		headPitch = Mth.clamp(headPitch, -25F, 25F);
-
-		this.head.xRot = headYaw * ((float) Math.PI / 180F);
-		this.head.yRot = headPitch * ((float) Math.PI / 180F);
+	public ModelPart head() {
+		return this.head;
 	}
 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		ender_dragon_hatchling.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		super.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	/**
@@ -180,7 +175,7 @@ public class EnderDragonHatchlingModel extends HierarchicalModel<EnderDragonHatc
 	 */
 	@Override
 	public ModelPart root() {
-		return ender_dragon_hatchling;
+		return this.ender_dragon_hatchling;
 	}
 
 }
